@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">"MySEPTA "</string>
+
+    <string name="title_section1">Home</string>
+    <string name="title_section2">Rail</string>
+    <string name="title_section3">Bus</string>
+    <string name="title_section4">Subway</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="action_settings">Settings</string>
+</resources>
