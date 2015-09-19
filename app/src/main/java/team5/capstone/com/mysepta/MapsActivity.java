@@ -13,6 +13,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -110,7 +111,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         };
 
         RailLocationProxy railViews = new RailLocationProxy();
-        railViews.getTrainView(callback);
+        railViews.getRailView(callback);
     }
 
     private void addTrainLocationsToMap(ArrayList<RailModel> trainLocationList) {
@@ -139,26 +140,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         markers = new ArrayList<>();
-        /////----------------------------------Zooming camera to position user-----------------
+
 
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
 
-        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(MapsActivity.this, "GPS Permission Needed", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        //Currently this if statement is causing issues
+        // will address at a later time
+//        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            Toast.makeText(MapsActivity.this, "GPS Permission Needed", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
         Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
         if (location != null) {
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
                     new LatLng(location.getLatitude(), location.getLongitude()), 10));
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
+                    .target(new LatLng(location.getLatitude(), location.getLongitude()))
                     .zoom(10)
-                    .bearing(0)                // Sets the orientation of the camera to east
+                    .bearing(0)
                     .tilt(0)
-                    .build();                   // Creates a CameraPosition from the builder
+                    .build();
             googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         }

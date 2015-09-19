@@ -12,7 +12,7 @@ import retrofit.Callback;
  * Created by Andrew on 9/7/2015.
  */
 public class RailLocationProxy {
-    public void getTrainView(Callback<ArrayList<RailModel>> callBack) {
+    public void getRailView(Callback<ArrayList<RailModel>> callBack) {
         RailLocationInterface railLocationService = RailLocationService.getRailLocationInterface();
 
         railLocationService.locations(callBack);
