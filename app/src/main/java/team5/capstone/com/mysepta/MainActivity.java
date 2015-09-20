@@ -1,49 +1,41 @@
 package team5.capstone.com.mysepta;
 
-import java.util.Locale;
-import java.util.Map;
-
-import android.content.Intent;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 
 import team5.capstone.com.mysepta.Fragment.RecyclerViewFragment;
+import team5.capstone.com.mysepta.Fragment.SubwayItineraryViewFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SubwayItineraryViewFragment.SubwayChangeFragmentListener {
+    private static final String TAG = "MainActivity";
 
     private MaterialViewPager mViewPager;
-
+    private SubwayItineraryViewFragment subwayViewFragment;
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar;
+    private FragmentManager fm;
+    private FragmentPagerAdapter fragmentPagerAdapter;
+    private String subwayTabTitle = "Subway";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         setTitle("");
         mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);
@@ -66,18 +58,19 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
         mDrawer.setDrawerListener(mDrawerToggle);
-
-        mViewPager.getViewPager().setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
-
+        fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
+                Log.d(TAG, String.valueOf(position));
                 switch (position % 4) {
-                    //case 0:
-                    //    return RecyclerViewFragment.newInstance();
-                    //case 1:
-                    //    return RecyclerViewFragment.newInstance();
-                    //case 2:
-                    //    return WebViewFragment.newInstance();
+                    case 0:
+                        return RecyclerViewFragment.newInstance();
+                    case 1:
+                        return RecyclerViewFragment.newInstance();
+                    case 2:
+                        return RecyclerViewFragment.newInstance();
+                    case 3:
+                        return subwayViewFragment = SubwayItineraryViewFragment.newInstance();
                     default:
                         return RecyclerViewFragment.newInstance();
                 }
@@ -98,12 +91,13 @@ public class MainActivity extends AppCompatActivity {
                     case 2:
                         return "Bus";
                     case 3:
-                        return "Subway";
+                        return subwayTabTitle;
                 }
                 return "";
             }
-        });
+        };
 
+        mViewPager.getViewPager().setAdapter(fragmentPagerAdapter);
         mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
             @Override
             public HeaderDesign getHeaderDesign(int page) {
@@ -125,9 +119,6 @@ public class MainActivity extends AppCompatActivity {
                                 R.color.red,
                                 "http://www.tothemobile.com/wp-content/uploads/2014/07/original.jpg");
                 }
-
-                //execute others actions if needed (ex : modify your header logo)
-
                 return null;
             }
         });
@@ -140,10 +131,15 @@ public class MainActivity extends AppCompatActivity {
             logo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    subwayTabTitle = "Subway";
+                    subwayViewFragment.changeAdapterToItineraryView();
                     mViewPager.notifyHeaderChanged();
+                    fragmentPagerAdapter.notifyDataSetChanged();
                     Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
                 }
             });
+
+        fm = getSupportFragmentManager();
     }
 
     @Override
@@ -157,4 +153,15 @@ public class MainActivity extends AppCompatActivity {
         return mDrawerToggle.onOptionsItemSelected(item) ||
                 super.onOptionsItemSelected(item);
     }
+
+
+    @Override
+    public void onItinerarySelection(String line) {
+        subwayTabTitle = line;
+        subwayViewFragment.changeAdapterToScheduleView();
+        fragmentPagerAdapter.notifyDataSetChanged();
+        mViewPager.notifyHeaderChanged();
+    }
 }
+
+
