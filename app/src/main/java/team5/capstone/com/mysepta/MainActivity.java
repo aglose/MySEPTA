@@ -16,12 +16,20 @@ import android.widget.Toast;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 
+import java.util.Set;
+
 import team5.capstone.com.mysepta.Fragment.RecyclerViewFragment;
 import team5.capstone.com.mysepta.Fragment.SubwayItineraryViewFragment;
 
 public class MainActivity extends AppCompatActivity implements SubwayItineraryViewFragment.SubwayChangeFragmentListener {
     /*When you are debugging use this TAG as the first String (i.e. Log.d(TAG, String.valueOf(position));*/
     private static final String TAG = "MainActivity";
+
+    /*Tab Id's*/
+    private static final int HOME_TAB = 0;
+    private static final int RAIL_TAB = 1;
+    private static final int BUS_TAB = 2;
+    private static final int SUBWAY_TAB = 3;
 
     /*Third party library for the Material looking view pager*/
     private MaterialViewPager mViewPager;
@@ -45,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTitle(""); //Set to no title
+        /*Set to no title*/
+        setTitle("");
 
         /*Drawer initialization*/
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -73,16 +82,16 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
             public Fragment getItem(int position) {
                 Log.d(TAG, String.valueOf(position));
                 switch (position % 4) {
-                    case 0:
-                        return RecyclerViewFragment.newInstance(); //HOME
-                    case 1:
-                        return RecyclerViewFragment.newInstance(); //RAIL
-                    case 2:
-                        return RecyclerViewFragment.newInstance(); //BUS
-                    case 3:
-                        return subwayViewFragment = SubwayItineraryViewFragment.newInstance(); //SUBWAY
+                    case HOME_TAB:
+                        return RecyclerViewFragment.newInstance();
+                    case RAIL_TAB:
+                        return RecyclerViewFragment.newInstance();
+                    case BUS_TAB:
+                        return RecyclerViewFragment.newInstance();
+                    case SUBWAY_TAB:
+                        return subwayViewFragment = SubwayItineraryViewFragment.newInstance();
                     default:
-                        return RecyclerViewFragment.newInstance(); //DEFAULT
+                        return RecyclerViewFragment.newInstance();
                 }
             }
 
@@ -94,13 +103,13 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
             @Override
             public CharSequence getPageTitle(int position) {
                 switch (position % 4) {
-                    case 0:
+                    case HOME_TAB:
                         return "Home";
-                    case 1:
+                    case RAIL_TAB:
                         return "Rail";
-                    case 2:
+                    case BUS_TAB:
                         return "Bus";
-                    case 3:
+                    case SUBWAY_TAB:
                         return subwayTabTitle;
                 }
                 return "";
@@ -112,22 +121,22 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
             @Override
             public HeaderDesign getHeaderDesign(int page) {
                 switch (page) {
-                    case 0:
+                    case HOME_TAB:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.green,
-                                "http://www.towerstream.com/wp-content/uploads/2014/03/Philadelphia.jpg"); //HOME
-                    case 1:
+                                "http://www.towerstream.com/wp-content/uploads/2014/03/Philadelphia.jpg");
+                    case RAIL_TAB:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.blue,
-                                "http://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/06/wallpaper_51.jpg"); //RAIL
-                    case 2:
+                                "http://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/06/wallpaper_51.jpg");
+                    case BUS_TAB:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.cyan,
-                                "http://www.droid-life.com/wp-content/uploads/2014/10/lollipop-wallpapers10.jpg"); //BUS
-                    case 3:
+                                "http://www.droid-life.com/wp-content/uploads/2014/10/lollipop-wallpapers10.jpg");
+                    case SUBWAY_TAB:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.red,
-                                "http://www.tothemobile.com/wp-content/uploads/2014/07/original.jpg"); //SUBWAY
+                                "http://www.tothemobile.com/wp-content/uploads/2014/07/original.jpg");
                 }
                 return null;
             }
