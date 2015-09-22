@@ -1,6 +1,5 @@
 package team5.capstone.com.mysepta;
 
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,15 +20,24 @@ import team5.capstone.com.mysepta.Fragment.RecyclerViewFragment;
 import team5.capstone.com.mysepta.Fragment.SubwayItineraryViewFragment;
 
 public class MainActivity extends AppCompatActivity implements SubwayItineraryViewFragment.SubwayChangeFragmentListener {
+    /*When you are debugging use this TAG as the first String (i.e. Log.d(TAG, String.valueOf(position));*/
     private static final String TAG = "MainActivity";
 
+    /*Third party library for the Material looking view pager*/
     private MaterialViewPager mViewPager;
+    private Toolbar toolbar;
+
+    /*We want this Fragment stored when it is statically created to alter it later*/
     private SubwayItineraryViewFragment subwayViewFragment;
+
+    /*Drawer layout*/
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
-    private Toolbar toolbar;
-    private FragmentManager fm;
+
+    /*This is the Adapter that controls the Fragment views in the tabs*/
     private FragmentPagerAdapter fragmentPagerAdapter;
+
+    /*Subway Title that is changed according to the user itinerary choice*/
     private String subwayTabTitle = "Subway";
 
     @Override
@@ -37,15 +45,18 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTitle("");
-        mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);
+        setTitle(""); //Set to no title
 
-        toolbar = mViewPager.getToolbar();
+        /*Drawer initialization*/
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
+        mDrawer.setDrawerListener(mDrawerToggle);
 
+        /*Set up the Material toolbar and pager*/
+        mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);
+        toolbar = mViewPager.getToolbar();
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-
             final ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
                 actionBar.setDisplayHomeAsUpEnabled(true);
@@ -56,23 +67,22 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
             }
         }
 
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
-        mDrawer.setDrawerListener(mDrawerToggle);
+        /*Create the Tab Fragments*/
         fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
                 Log.d(TAG, String.valueOf(position));
                 switch (position % 4) {
                     case 0:
-                        return RecyclerViewFragment.newInstance();
+                        return RecyclerViewFragment.newInstance(); //HOME
                     case 1:
-                        return RecyclerViewFragment.newInstance();
+                        return RecyclerViewFragment.newInstance(); //RAIL
                     case 2:
-                        return RecyclerViewFragment.newInstance();
+                        return RecyclerViewFragment.newInstance(); //BUS
                     case 3:
-                        return subwayViewFragment = SubwayItineraryViewFragment.newInstance();
+                        return subwayViewFragment = SubwayItineraryViewFragment.newInstance(); //SUBWAY
                     default:
-                        return RecyclerViewFragment.newInstance();
+                        return RecyclerViewFragment.newInstance(); //DEFAULT
                 }
             }
 
@@ -105,19 +115,19 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
                     case 0:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.green,
-                                "http://www.towerstream.com/wp-content/uploads/2014/03/Philadelphia.jpg");
+                                "http://www.towerstream.com/wp-content/uploads/2014/03/Philadelphia.jpg"); //HOME
                     case 1:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.blue,
-                                "http://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/06/wallpaper_51.jpg");
+                                "http://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/06/wallpaper_51.jpg"); //RAIL
                     case 2:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.cyan,
-                                "http://www.droid-life.com/wp-content/uploads/2014/10/lollipop-wallpapers10.jpg");
+                                "http://www.droid-life.com/wp-content/uploads/2014/10/lollipop-wallpapers10.jpg"); //BUS
                     case 3:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.red,
-                                "http://www.tothemobile.com/wp-content/uploads/2014/07/original.jpg");
+                                "http://www.tothemobile.com/wp-content/uploads/2014/07/original.jpg"); //SUBWAY
                 }
                 return null;
             }
@@ -139,7 +149,6 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
                 }
             });
 
-        fm = getSupportFragmentManager();
     }
 
     @Override
@@ -154,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
                 super.onOptionsItemSelected(item);
     }
 
-
+    /*Implementation for BSL and MFL Button clicks in Subway Tab*/
     @Override
     public void onItinerarySelection(String line) {
         subwayTabTitle = line;
