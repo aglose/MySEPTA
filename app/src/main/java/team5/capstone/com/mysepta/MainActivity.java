@@ -1,5 +1,6 @@
 package team5.capstone.com.mysepta;
 
+import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.widget.DrawerLayout;
@@ -14,9 +15,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.github.florent37.materialviewpager.MaterialViewPager;
+import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 
+import io.fabric.sdk.android.Fabric;
 import team5.capstone.com.mysepta.Fragment.RecyclerViewFragment;
 import team5.capstone.com.mysepta.Fragment.SubwayItineraryViewFragment;
 
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
         setTitle("");
@@ -127,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
 
         View logo = findViewById(R.id.logo_background);
+        final Context context = this;
         if (logo != null)
             logo.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -135,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
                     subwayViewFragment.changeAdapterToItineraryView();
                     mViewPager.notifyHeaderChanged();
                     fragmentPagerAdapter.notifyDataSetChanged();
+
                     Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -156,9 +163,9 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
 
 
     @Override
-    public void onItinerarySelection(String line) {
+    public void onItinerarySelection(String line){
         subwayTabTitle = line;
-        subwayViewFragment.changeAdapterToScheduleView();
+        subwayViewFragment.changeAdapterToScheduleView(line);
         fragmentPagerAdapter.notifyDataSetChanged();
         mViewPager.notifyHeaderChanged();
     }

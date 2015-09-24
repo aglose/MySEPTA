@@ -18,6 +18,7 @@ import java.util.List;
 
 import team5.capstone.com.mysepta.Adapters.SubwayItineraryViewAdapter;
 import team5.capstone.com.mysepta.Adapters.SubwayScheduleViewAdapter;
+import team5.capstone.com.mysepta.Models.SubwayLocationData;
 import team5.capstone.com.mysepta.R;
 
 /**
@@ -30,10 +31,7 @@ public class SubwayItineraryViewFragment extends Fragment {
     private SubwayItineraryViewAdapter subAdapter;
     private RecyclerView mSubwayView;
     private RecyclerView.Adapter recyclerAdapter;
-
-    //TEST OBJECTS
-    private static final int ITEM_COUNT = 100;
-    private List<Object> mContentItems = new ArrayList<>();
+    private SubwayLocationData subLocData;
 
     public interface SubwayChangeFragmentListener {
         void onItinerarySelection(String line);
@@ -52,8 +50,10 @@ public class SubwayItineraryViewFragment extends Fragment {
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rootView = view;
+        subLocData = new SubwayLocationData(rootView.getContext());
         changeAdapterToItineraryView();
     }
+
     public void changeAdapterToItineraryView(){
         mSubwayView = (RecyclerView) rootView.findViewById(R.id.subwayItineraryView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -67,16 +67,14 @@ public class SubwayItineraryViewFragment extends Fragment {
 
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mSubwayView, null);
     }
-    public void changeAdapterToScheduleView(){
+
+    public void changeAdapterToScheduleView(String line){
         subAdapter.notifyItemRemoved(0); //notify we removed the card from itinerary view
-        recyclerAdapter = new RecyclerViewMaterialAdapter(new SubwayScheduleViewAdapter(mContentItems, rootView.getContext()));
+        recyclerAdapter = new RecyclerViewMaterialAdapter(new SubwayScheduleViewAdapter(line, rootView.getContext()));
 
         mSubwayView.swapAdapter(recyclerAdapter, true);
-        {
-            for (int i = 0; i < ITEM_COUNT; ++i)
-                mContentItems.add(new Object());
-            recyclerAdapter.notifyDataSetChanged();
-        }
+
+        recyclerAdapter.notifyDataSetChanged();
 
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mSubwayView, null);
     }
