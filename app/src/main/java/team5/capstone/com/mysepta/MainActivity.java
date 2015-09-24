@@ -1,7 +1,5 @@
 package team5.capstone.com.mysepta;
 
-import android.content.Context;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,42 +13,59 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
 import com.github.florent37.materialviewpager.MaterialViewPager;
-import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 
-import io.fabric.sdk.android.Fabric;
+import java.util.Set;
+
 import team5.capstone.com.mysepta.Fragment.RecyclerViewFragment;
 import team5.capstone.com.mysepta.Fragment.SubwayItineraryViewFragment;
 
 public class MainActivity extends AppCompatActivity implements SubwayItineraryViewFragment.SubwayChangeFragmentListener {
+    /*When you are debugging use this TAG as the first String (i.e. Log.d(TAG, String.valueOf(position));*/
     private static final String TAG = "MainActivity";
 
+    /*Tab Id's*/
+    private static final int HOME_TAB = 0;
+    private static final int RAIL_TAB = 1;
+    private static final int BUS_TAB = 2;
+    private static final int SUBWAY_TAB = 3;
+
+    /*Third party library for the Material looking view pager*/
     private MaterialViewPager mViewPager;
+    private Toolbar toolbar;
+
+    /*We want this Fragment stored when it is statically created to alter it later*/
     private SubwayItineraryViewFragment subwayViewFragment;
+
+    /*Drawer layout*/
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
-    private Toolbar toolbar;
-    private FragmentManager fm;
+
+    /*This is the Adapter that controls the Fragment views in the tabs*/
     private FragmentPagerAdapter fragmentPagerAdapter;
+
+    /*Subway Title that is changed according to the user itinerary choice*/
     private String subwayTabTitle = "Subway";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
+        /*Set to no title*/
         setTitle("");
-        mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);
 
-        toolbar = mViewPager.getToolbar();
+        /*Drawer initialization*/
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
+        mDrawer.setDrawerListener(mDrawerToggle);
 
+        /*Set up the Material toolbar and pager*/
+        mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);
+        toolbar = mViewPager.getToolbar();
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-
             final ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
                 actionBar.setDisplayHomeAsUpEnabled(true);
@@ -61,20 +76,19 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
             }
         }
 
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
-        mDrawer.setDrawerListener(mDrawerToggle);
+        /*Create the Tab Fragments*/
         fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
                 Log.d(TAG, String.valueOf(position));
                 switch (position % 4) {
-                    case 0:
+                    case HOME_TAB:
                         return RecyclerViewFragment.newInstance();
-                    case 1:
+                    case RAIL_TAB:
                         return RecyclerViewFragment.newInstance();
-                    case 2:
+                    case BUS_TAB:
                         return RecyclerViewFragment.newInstance();
-                    case 3:
+                    case SUBWAY_TAB:
                         return subwayViewFragment = SubwayItineraryViewFragment.newInstance();
                     default:
                         return RecyclerViewFragment.newInstance();
@@ -89,13 +103,13 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
             @Override
             public CharSequence getPageTitle(int position) {
                 switch (position % 4) {
-                    case 0:
+                    case HOME_TAB:
                         return "Home";
-                    case 1:
+                    case RAIL_TAB:
                         return "Rail";
-                    case 2:
+                    case BUS_TAB:
                         return "Bus";
-                    case 3:
+                    case SUBWAY_TAB:
                         return subwayTabTitle;
                 }
                 return "";
@@ -107,19 +121,19 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
             @Override
             public HeaderDesign getHeaderDesign(int page) {
                 switch (page) {
-                    case 0:
+                    case HOME_TAB:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.green,
                                 "http://www.towerstream.com/wp-content/uploads/2014/03/Philadelphia.jpg");
-                    case 1:
+                    case RAIL_TAB:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.blue,
                                 "http://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/06/wallpaper_51.jpg");
-                    case 2:
+                    case BUS_TAB:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.cyan,
                                 "http://www.droid-life.com/wp-content/uploads/2014/10/lollipop-wallpapers10.jpg");
-                    case 3:
+                    case SUBWAY_TAB:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.red,
                                 "http://www.tothemobile.com/wp-content/uploads/2014/07/original.jpg");
@@ -132,7 +146,6 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
 
         View logo = findViewById(R.id.logo_background);
-        final Context context = this;
         if (logo != null)
             logo.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -141,12 +154,10 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
                     subwayViewFragment.changeAdapterToItineraryView();
                     mViewPager.notifyHeaderChanged();
                     fragmentPagerAdapter.notifyDataSetChanged();
-
                     Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
                 }
             });
 
-        fm = getSupportFragmentManager();
     }
 
     @Override
@@ -161,11 +172,11 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
                 super.onOptionsItemSelected(item);
     }
 
-
+    /*Implementation for BSL and MFL Button clicks in Subway Tab*/
     @Override
-    public void onItinerarySelection(String line){
+    public void onItinerarySelection(String line) {
         subwayTabTitle = line;
-        subwayViewFragment.changeAdapterToScheduleView(line);
+        subwayViewFragment.changeAdapterToScheduleView();
         fragmentPagerAdapter.notifyDataSetChanged();
         mViewPager.notifyHeaderChanged();
     }
