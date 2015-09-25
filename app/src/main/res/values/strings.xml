@@ -14,7 +14,6 @@
         <item>8th St &amp; Market St</item>
         <item>Allegheny Station</item>
         <item>AT&amp;T Station</item>
-        <item>Mars</item>
         <item>Cecil B Moore Station</item>
         <item>Chinatown Station</item>
         <item>City Hall Station</item>
@@ -36,6 +35,33 @@
         <item>Tasker Morris Station</item>
         <item>Walnut Locust Station</item>
         <item>Wyoming Station</item>
+    </string-array>
+
+    <string-array name="broad_street_line_sorted">
+        <item>Fern Rock Transportation Center</item>
+        <item>Olney Transportation Center</item>
+        <item>Logan Station</item>
+        <item>Wyoming Station</item>
+        <item>Hunting Park Station</item>
+        <item>Erie Station</item>
+        <item>Allegheny Station</item>
+        <item>North Philadelphia Station</item>
+        <item>Susquehanna Dauphin Station</item>
+        <item>Cecil B Moore Station</item>
+        <item>Girard Station</item>
+        <item>Fairmount Station</item>
+        <item>Spring Garden Station</item>
+        <item>Race Vine Station</item>
+        <item>City Hall Station</item>
+        <item>Walnut Locust Station</item>
+        <item>Lombard South Station</item>
+        <item>Ellsworth Federal Station</item>
+        <item>Tasker Morris Station</item>
+        <item>Snyder Station</item>
+        <item>Oregon Staiton</item>
+        <item>AT&amp;T Station</item>
+        <item>8th St &amp; Market St</item>
+        <item>Chinatown Station</item>
     </string-array>
 
     <string-array name="market_frankford_line">
@@ -68,5 +94,36 @@
         <item>Sppring Garden Station</item>
         <item>Tioga Station</item>
         <item>York Dauphin Station</item>
+    </string-array>
+
+    <string-array name="market_frankford_line_sorted">
+        <item>69th St Transportation Center</item>
+        <item>Millbourne Station</item>
+        <item>63rd St Station</item>
+        <item>60th St Station</item>
+        <item>56th St Station</item>
+        <item>52nd St Station</item>
+        <item>46th St Station</item>
+        <item>40th St Station</item>
+        <item>34th St Station</item>
+        <item>30th St Station</item>
+        <item>15th St Station</item>
+        <item>13th St Station</item>
+        <item>11th St Station</item>
+        <item>8th St Station</item>
+        <item>5th St Station</item>
+        <item>2nd St Station</item>
+        <item>Spring Garden Station</item>
+        <item>Girard Station</item>
+        <item>Berks Station</item>
+        <item>York Dauphin Station</item>
+        <item>Huntingdon Station</item>
+        <item>Somerset Station</item>
+        <item>Allegheny Station</item>
+        <item>Tioga Station</item>
+        <item>Erie Torresdale Station</item>
+        <item>Church Station</item>
+        <item>Arrott Transportation Center</item>
+        <item>Frankford Transportation Center</item>
     </string-array>
 </resources>

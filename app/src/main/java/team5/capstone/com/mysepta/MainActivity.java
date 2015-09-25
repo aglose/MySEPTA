@@ -13,11 +13,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 
 import java.util.Set;
 
+import io.fabric.sdk.android.Fabric;
 import team5.capstone.com.mysepta.Fragment.RecyclerViewFragment;
 import team5.capstone.com.mysepta.Fragment.SubwayItineraryViewFragment;
 
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Fabric.with(this, new Crashlytics());
 
         /*Set to no title*/
         setTitle("");
@@ -176,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
     @Override
     public void onItinerarySelection(String line) {
         subwayTabTitle = line;
-        subwayViewFragment.changeAdapterToScheduleView();
+        subwayViewFragment.changeAdapterToScheduleView(line);
         fragmentPagerAdapter.notifyDataSetChanged();
         mViewPager.notifyHeaderChanged();
     }

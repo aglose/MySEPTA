@@ -24,9 +24,9 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
 
     public SubwayScheduleViewAdapter(String line, Context context){
         if(line.equalsIgnoreCase("MFL")){
-            listLocations = context.getResources().getStringArray(R.array.market_frankford_line);
+            listLocations = context.getResources().getStringArray(R.array.market_frankford_line_sorted);
         }else if(line.equalsIgnoreCase("BSL")){
-            listLocations = context.getResources().getStringArray(R.array.broad_street_line);
+            listLocations = context.getResources().getStringArray(R.array.broad_street_line_sorted);
         }else{
             Log.d(TAG, "Messed up mere");
         }
