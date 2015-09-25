@@ -16,7 +16,7 @@
         android:id="@+id/textView" />
 
     <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/logo_background"
+        android:id="@+id/logo"
         android:layout_width="100dp"
         android:layout_height="100dp"
         />
