@@ -1,6 +1,8 @@
 package team5.capstone.com.mysepta.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,11 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
-
-import team5.capstone.com.mysepta.Models.SubwayLocationData;
-import team5.capstone.com.mysepta.Models.SubwayNextModel;
 import team5.capstone.com.mysepta.R;
+import team5.capstone.com.mysepta.SubwayActivity;
 
 /**
  * Created by Andrew on 9/20/2015.
@@ -45,6 +44,13 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
     @Override
     public void onBindViewHolder(SubwayScheduleHolder holder, int position) {
         holder.locationText.setText(listLocations[position]);
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startSubwayActivity = new Intent(context, SubwayActivity.class);
+                context.startActivity(startSubwayActivity);
+            }
+        });
     }
 
     @Override
@@ -54,10 +60,11 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
 
     public class SubwayScheduleHolder extends RecyclerView.ViewHolder{
         TextView locationText;
+        CardView cardView;
 
         public SubwayScheduleHolder(View itemView) {
             super(itemView);
-
+            cardView = (CardView) itemView.findViewById(R.id.subway_schedule_item_card);
             locationText = (TextView) itemView.findViewById(R.id.nextStopText);
         }
     }

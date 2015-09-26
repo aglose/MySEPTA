@@ -126,4 +126,5 @@
         <item>Arrott Transportation Center</item>
         <item>Frankford Transportation Center</item>
     </string-array>
+    <string name="title_activity_subway">SubwayActivity</string>
 </resources>

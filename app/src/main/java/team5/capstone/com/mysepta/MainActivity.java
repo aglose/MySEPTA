@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         };
 
         mViewPager.getViewPager().setAdapter(fragmentPagerAdapter);
+
         mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
             @Override
             public HeaderDesign getHeaderDesign(int page) {
