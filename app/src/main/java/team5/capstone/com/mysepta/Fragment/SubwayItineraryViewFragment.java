@@ -92,7 +92,7 @@ public class SubwayItineraryViewFragment extends Fragment {
 
     /*After user chooses Subway Line the locations will be displayed via SubwayScheduleViewAdapter*/
     public void changeAdapterToScheduleView(String line){
-        subwayScheduleViewAdapter = new SubwayScheduleViewAdapter(line, getActivity());
+        subwayScheduleViewAdapter = new SubwayScheduleViewAdapter(line, getActivity(), subLocData);
         materialWrapperAdapter = new RecyclerViewMaterialAdapter(subwayScheduleViewAdapter);
         recyclerSubwayView.swapAdapter(materialWrapperAdapter, true);
     }

@@ -16,12 +16,18 @@ import team5.capstone.com.mysepta.CallbackProxies.SubwayLocationProxy;
 
 public class SubwayActivity extends AppCompatActivity {
     private static final String TAG = "SubwayActivity";
+    private static final String STOP_ID_KEY = "StopID";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subway);
-        final TextView text = (TextView) findViewById(R.id.text);
-        SubwayLocationProxy subwayLocationProxy = new SubwayLocationProxy();
+
+        Bundle bundle = this.getIntent().getExtras();
+        int stopID = bundle.getInt(STOP_ID_KEY);
+
+        final TextView text = (TextView) findViewById(R.id.textViewTest);
+        text.setText(String.valueOf(stopID)+" "+bundle.getString("direction")+" "+bundle.getString("location"));
 
         Callback callback = new Callback() {
             @Override
@@ -38,7 +44,8 @@ public class SubwayActivity extends AppCompatActivity {
             }
         };
 
-        subwayLocationProxy.getNextSubwayView(callback, "32144");
+        SubwayLocationProxy subwayLocationProxy = new SubwayLocationProxy();
+        subwayLocationProxy.getNextSubwayView(callback, String.valueOf(stopID));
     }
 
     @Override
