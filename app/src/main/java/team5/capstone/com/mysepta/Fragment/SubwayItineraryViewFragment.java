@@ -47,15 +47,13 @@ public class SubwayItineraryViewFragment extends Fragment {
     /*Location HashMap*/
     private SubwayLocationData subLocData;
 
-    /*Statically create a new stance of this Fragment*/
+    /*Statically create a new instance of this Fragment*/
     public static SubwayItineraryViewFragment newInstance() {
         return new SubwayItineraryViewFragment();
     }
 
-    private LayoutInflater inflater;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        this.inflater = inflater;
         return inflater.inflate(R.layout.fragment_subway_itinerary_view, container, false);
     }
 
@@ -107,7 +105,7 @@ public class SubwayItineraryViewFragment extends Fragment {
             mSubwayFragmentListener = (SubwayChangeFragmentListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnHeadlineSelectedListener");
+                    + " must implement SubwayChangeFragmentListener");
         }
     }
 }

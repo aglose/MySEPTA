@@ -12,6 +12,7 @@ public class SubwayLocationService {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint("http://www3.septa.org").build();
 
-        return restAdapter.create(SubwayLocationInterface.class);
+        SubwayLocationInterface subService = restAdapter.create(SubwayLocationInterface.class);
+        return subService;
     }
 }

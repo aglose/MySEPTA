@@ -2,14 +2,43 @@ package team5.capstone.com.mysepta;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import team5.capstone.com.mysepta.CallbackProxies.SubwayLocationProxy;
 
 public class SubwayActivity extends AppCompatActivity {
+    private static final String TAG = "SubwayActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subway);
+        final TextView text = (TextView) findViewById(R.id.text);
+        SubwayLocationProxy subwayLocationProxy = new SubwayLocationProxy();
+
+        Callback callback = new Callback() {
+            @Override
+            public void success(Object o, Response response) {
+                String responseString = (String) o;
+                text.setText(responseString);
+                Log.d(TAG, responseString);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                Log.d("Debug", "fail");
+            }
+        };
+
+        subwayLocationProxy.getNextSubwayView(callback, "32144");
     }
 
     @Override
