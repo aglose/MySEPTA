@@ -44,6 +44,11 @@
             android:name=".SubwayActivity"
             android:label="@string/title_activity_subway" >
         </activity>
+
+        <activity
+            android:name="RailActivity"
+            android:label="RailActivity">
+        </activity>
     </application>
 
 </manifest>
