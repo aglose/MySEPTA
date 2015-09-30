@@ -30,4 +30,7 @@ dependencies {
     compile ('com.github.florent37:materialviewpager:1.1.2@aar'){
         transitive = true
     }
+    compile 'com.android.support:recyclerview-v7:22.2.0'
+    compile 'com.bignerdranch.android:expandablerecyclerview:1.0.3'
+    compile 'xyz.danoz:recyclerviewfastscroller:0.1.3'
 }

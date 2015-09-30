@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/subway_itinerary_card"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="2dp"
+    android:layout_marginBottom="@dimen/cardMarginVertical"
+    android:layout_marginLeft="@dimen/cardMarginHorizontal"
+    android:layout_marginRight="@dimen/cardMarginHorizontal"
+    android:layout_marginTop="@dimen/cardMarginVertical"
+    app:cardPreventCornerOverlap="false"
+    app:contentPadding="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/relativeLayout">
+
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Live Rail Screen"
+            android:textSize="10dp"
+            android:id="@+id/lrsButton"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:padding="5dp"/>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Static Schedule"
+            android:textSize="10dp"
+            android:id="@+id/ssButton"
+            android:layout_centerVertical="true"
+            android:layout_below="@+id/lrsButton"
+            android:padding="5dp"/>
+
+    </RelativeLayout>
+
+
+
+
+</android.support.v7.widget.CardView>
