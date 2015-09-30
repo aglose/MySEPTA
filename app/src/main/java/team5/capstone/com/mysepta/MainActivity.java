@@ -20,6 +20,7 @@ import com.github.florent37.materialviewpager.header.HeaderDesign;
 import java.util.Set;
 
 import io.fabric.sdk.android.Fabric;
+import team5.capstone.com.mysepta.Fragment.RailItineraryViewFragment;
 import team5.capstone.com.mysepta.Fragment.RecyclerViewFragment;
 import team5.capstone.com.mysepta.Fragment.SubwayItineraryViewFragment;
 
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
 
     /*We want this Fragment stored when it is statically created to alter it later*/
     private SubwayItineraryViewFragment subwayViewFragment;
+    private RailItineraryViewFragment railViewFragment;
 
     /*Drawer layout*/
     private DrawerLayout mDrawer;
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
                     case HOME_TAB:
                         return RecyclerViewFragment.newInstance();
                     case RAIL_TAB:
-                        return RecyclerViewFragment.newInstance();
+                        return railViewFragment = RailItineraryViewFragment.newInstance();
                     case BUS_TAB:
                         return RecyclerViewFragment.newInstance();
                     case SUBWAY_TAB:
