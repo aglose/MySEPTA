@@ -25,6 +25,7 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
     private Context context;
     private String[] listLocations;
     private SubwayLocationData subwayLocationData;
+    private String line;
 
     public SubwayScheduleViewAdapter(String line, Context context, SubwayLocationData subwayLocationData){
         if(line.equalsIgnoreCase("MFL")){
@@ -34,6 +35,7 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
         }else{
             Log.d(TAG, "Messed up mere");
         }
+        this.line = line;
         this.subwayLocationData = subwayLocationData;
         this.context = context;
     }
@@ -53,7 +55,12 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int stopID = subwayLocationData.getStopId(listLocations[position], "default");
+                int stopID;
+                if(line.equalsIgnoreCase("BSL")){
+                    stopID = subwayLocationData.getStopId(listLocations[position], "North");
+                }else{
+                    stopID = subwayLocationData.getStopId(listLocations[position], "East");
+                }
                 Intent startSubwayActivity = new Intent(context, SubwayActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt(STOP_ID_KEY, stopID);
