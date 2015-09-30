@@ -14,8 +14,8 @@ import team5.capstone.com.mysepta.Services.SubwayLocationService;
  * Created by Andrew on 9/20/2015.
  */
 public class SubwayLocationProxy {
-    public void getNextSubwayView(Callback<ArrayList<SubwayNextModel>> callBack) {
+    public void getNextSubwayView(Callback<ArrayList<String>> callBack, String location) {
         SubwayLocationInterface subwayLocationService = SubwayLocationService.getSubwayLocationInterface();
-
+        subwayLocationService.getNextSubwayData(location, callBack);
     }
 }

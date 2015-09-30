@@ -19,7 +19,8 @@
         android:id="@+id/logo_background"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/logo" />
+        android:src="@drawable/logo"
+        />
 
 </LinearLayout>
 

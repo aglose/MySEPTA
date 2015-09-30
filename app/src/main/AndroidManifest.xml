@@ -35,9 +35,14 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" >
         </activity>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="cefcd29e20097cc376a5d63caabdf38d6398af4b" />
+
         <activity
-            android:name=".RailActivity"
-            android:label="@string/title_activity_rail" >
+            android:name=".SubwayActivity"
+            android:label="@string/title_activity_subway" >
         </activity>
     </application>
 

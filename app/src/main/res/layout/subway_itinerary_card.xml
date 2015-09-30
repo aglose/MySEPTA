@@ -9,10 +9,10 @@
     android:layout_height="180dp"
     app:cardCornerRadius="2dp"
     app:cardElevation="2dp"
-    android:layout_marginBottom="@dimen/cardMarginVertical"
+    android:layout_marginBottom="4dp"
     android:layout_marginLeft="@dimen/cardMarginHorizontal"
     android:layout_marginRight="@dimen/cardMarginHorizontal"
-    android:layout_marginTop="@dimen/cardMarginVertical"
+    android:layout_marginTop="4dp"
     app:cardPreventCornerOverlap="false"
     app:contentPadding="0dp">
 
@@ -28,8 +28,9 @@
             android:id="@+id/bslTextView"
             android:textColor="@android:color/black"
             android:layout_gravity="center_horizontal|top"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignBottom="@+id/bslButton"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="59dp" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -39,7 +40,7 @@
             android:textSize="5dp"
             android:id="@+id/bslButton"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_alignStart="@+id/mflButton" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -48,8 +49,9 @@
             android:text="MFL"
             android:textSize="5dp"
             android:id="@+id/mflButton"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/bslButton" />
+            android:layout_alignTop="@+id/mflTextView"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="54dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,7 +60,7 @@
             android:textColor="@android:color/black"
             android:id="@+id/mflTextView"
             android:layout_centerVertical="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignStart="@+id/bslTextView" />
     </RelativeLayout>
 
 
