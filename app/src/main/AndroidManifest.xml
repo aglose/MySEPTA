@@ -42,7 +42,8 @@
 
         <activity
             android:name=".SubwayActivity"
-            android:label="@string/title_activity_subway" >
+            android:label="@string/title_activity_subway"
+            android:theme="@style/SubwayActivityTheme">
         </activity>
 
         <activity

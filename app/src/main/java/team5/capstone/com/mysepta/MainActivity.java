@@ -9,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -159,8 +161,8 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
                 public void onClick(View v) {
                     subwayTabTitle = "Subway";
                     subwayViewFragment.changeAdapterToItineraryView();
-                    mViewPager.notifyHeaderChanged();
                     fragmentPagerAdapter.notifyDataSetChanged();
+                    mViewPager.notifyHeaderChanged();
                     Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -175,8 +177,14 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return mDrawerToggle.onOptionsItemSelected(item) ||
-                super.onOptionsItemSelected(item);
+        if (item != null && item.getItemId() == android.R.id.home) {
+            if (mDrawer.isDrawerOpen(Gravity.RIGHT)) {
+                mDrawer.closeDrawer(Gravity.RIGHT);
+            } else {
+                mDrawer.openDrawer(Gravity.RIGHT);
+            }
+        }
+        return  super.onOptionsItemSelected(item);
     }
 
     /*Implementation for BSL and MFL Button clicks in Subway Tab*/
