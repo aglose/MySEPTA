@@ -4,9 +4,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -16,17 +20,42 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import team5.capstone.com.mysepta.Adapters.SubwayScheduleViewAdapter;
+
 public class SubwayActivity extends AppCompatActivity {
     private static final String TAG = "SubwayActivity";
     private static final String STOP_ID_KEY = "StopID";
     private TextView text;
     private Toolbar toolbar;
+    private RecyclerView recyclerScheduleView;
+    private SubwayScheduleViewAdapter subwayScheduleViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subway);
 
+        initSetup(); //WILL CHANGE THIS LATEr
+
+        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(""); //REMOVE TITLE
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //ENABLE BACK BUTTON
+
+        setUpRecyclerView();
+    }
+
+    private void setUpRecyclerView() {
+        recyclerScheduleView = (RecyclerView) findViewById(R.id.subwayScheduleView);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this); //Notice LinearLayoutManager
+        recyclerScheduleView.setLayoutManager(layoutManager);
+
+        subwayScheduleViewAdapter = new SubwayScheduleViewAdapter();
+
+        recyclerScheduleView.setAdapter(subwayScheduleViewAdapter);
+    }
+
+    private void initSetup(){
         Bundle bundle = this.getIntent().getExtras();
         int stopID = bundle.getInt(STOP_ID_KEY);
 
@@ -38,21 +67,21 @@ public class SubwayActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setTitle(""); //REMOVE TITLE
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //ENABLE BACK BUTTON
     }
 
     Handler handleSMS = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
+            parseResponseString((String) msg.obj);
             text.setText((String) msg.obj);
+            ProgressBar progressBar = (ProgressBar) findViewById(R.id.loading_spinner);
+            progressBar.setVisibility(View.INVISIBLE);
             return false;
         }
     });
+
+    private void parseResponseString(String response) {
+    }
 
     private void getResponseText(final String stringUrl) throws IOException
     {
