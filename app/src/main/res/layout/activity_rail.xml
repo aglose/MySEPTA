@@ -7,42 +7,57 @@
     tools:context="team5.capstone.com.mysepta.RailActivity"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/fromRail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-    <!--
-        <xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller
-            android:id="@+id/fast_scroller_from"
-            android:layout_width="@dimen/scroller"
-            android:layout_height="match_parent"
-            />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tofromfrag">
+        </FrameLayout>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/schedulefrag">
+
+        </FrameLayout>
+
+        <!--
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/toRail"
+                android:id="@+id/fromRail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />
 
-                <xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller
-                    android:id="@+id/fast_scroller_from"
-                    android:layout_width="@dimen/scroller"
-                    android:layout_height="wrap_content"
-                    />
+                    <xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller
+                        android:id="@+id/fast_scroller_from"
+                        android:layout_width="@dimen/scroller"
+                        android:layout_height="match_parent"
+                        />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/toRail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            />
+
+                            <xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller
+                                android:id="@+id/fast_scroller_from"
+                                android:layout_width="@dimen/scroller"
+                                android:layout_height="wrap_content"
+                                />
 
 
 
-                <xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller
-                    android:id="@+id/fast_scroller_to"
-                    android:layout_width="@dimen/scroller"
-                    android:layout_height="wrap_content"
-                    />
+                            <xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller
+                                android:id="@+id/fast_scroller_to"
+                                android:layout_width="@dimen/scroller"
+                                android:layout_height="wrap_content"
+                                />
 
-        -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/railSchedule"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/railSchedule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+-->
 </LinearLayout>
