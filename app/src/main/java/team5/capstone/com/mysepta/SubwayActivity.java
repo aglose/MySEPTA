@@ -19,8 +19,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import team5.capstone.com.mysepta.Adapters.SubwayScheduleViewAdapter;
+import team5.capstone.com.mysepta.Managers.SubwayScheduleManager;
+import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
 
 public class SubwayActivity extends AppCompatActivity {
     private static final String TAG = "SubwayActivity";
@@ -42,15 +45,15 @@ public class SubwayActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(""); //REMOVE TITLE
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //ENABLE BACK BUTTON
 
-        setUpRecyclerView();
+
     }
 
-    private void setUpRecyclerView() {
+    private void setUpRecyclerView(ArrayList<SubwayScheduleItemModel> arrivals) {
         recyclerScheduleView = (RecyclerView) findViewById(R.id.subwayScheduleView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this); //Notice LinearLayoutManager
         recyclerScheduleView.setLayoutManager(layoutManager);
 
-        subwayScheduleViewAdapter = new SubwayScheduleViewAdapter();
+        subwayScheduleViewAdapter = new SubwayScheduleViewAdapter(arrivals);
 
         recyclerScheduleView.setAdapter(subwayScheduleViewAdapter);
     }
@@ -72,7 +75,8 @@ public class SubwayActivity extends AppCompatActivity {
     Handler handleSMS = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            parseResponseString((String) msg.obj);
+            ArrayList<SubwayScheduleItemModel> arrivals =  SubwayScheduleManager.parseResponseString((String) msg.obj);
+            setUpRecyclerView(arrivals);
             text.setText((String) msg.obj);
             ProgressBar progressBar = (ProgressBar) findViewById(R.id.loading_spinner);
             progressBar.setVisibility(View.INVISIBLE);
@@ -80,8 +84,6 @@ public class SubwayActivity extends AppCompatActivity {
         }
     });
 
-    private void parseResponseString(String response) {
-    }
 
     private void getResponseText(final String stringUrl) throws IOException
     {

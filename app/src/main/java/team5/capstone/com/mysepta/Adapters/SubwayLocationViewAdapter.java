@@ -83,8 +83,8 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter<SubwayLocati
 
         public SubwayLocationHolder(View itemView) {
             super(itemView);
-            cardView = (CardView) itemView.findViewById(R.id.subway_schedule_item_card);
-            locationText = (TextView) itemView.findViewById(R.id.nextStopText);
+            cardView = (CardView) itemView.findViewById(R.id.subway_location_item_card);
+            locationText = (TextView) itemView.findViewById(R.id.locationText);
         }
     }
 }

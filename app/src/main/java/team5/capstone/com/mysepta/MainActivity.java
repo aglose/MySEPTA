@@ -187,6 +187,12 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         return  super.onOptionsItemSelected(item);
     }
 
+    //TODO get this onResume shizznit working
+    @Override
+    public void onResume(){
+        super.onResume();
+    }
+
     /*Implementation for BSL and MFL Button clicks in Subway Tab*/
     @Override
     public void onItinerarySelection(String line) {
