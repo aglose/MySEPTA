@@ -12,14 +12,8 @@
         android:id="@+id/action_search"
         android:orderInCategory="200"
         android:title="Search"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/looping_new"
         app:showAsAction="ifRoom"
         ></item>
-    <item
-        android:id="@+id/action_user"
-        android:orderInCategory="300"
-        android:title="User"
-        android:icon="@android:drawable/ic_menu_camera"
-        app:showAsAction="ifRoom"></item>
 
 </menu>

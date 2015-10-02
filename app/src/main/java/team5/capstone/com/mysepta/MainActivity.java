@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -76,11 +77,11 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
             setSupportActionBar(toolbar);
             final ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-                actionBar.setDisplayShowHomeEnabled(true);
+                actionBar.setDisplayHomeAsUpEnabled(false);
+                actionBar.setDisplayShowHomeEnabled(false);
                 actionBar.setDisplayShowTitleEnabled(true);
                 actionBar.setDisplayUseLogoEnabled(false);
-                actionBar.setHomeButtonEnabled(true);
+                actionBar.setHomeButtonEnabled(false);
             }
         }
 
@@ -163,7 +164,6 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
                     subwayViewFragment.changeAdapterToItineraryView();
                     fragmentPagerAdapter.notifyDataSetChanged();
                     mViewPager.notifyHeaderChanged();
-                    Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -177,7 +177,8 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item != null && item.getItemId() == android.R.id.home) {
+        Log.d(TAG, String.valueOf(item.getItemId()));
+        if (item != null && item.getItemId() == R.id.drawer_open_close_item) {
             if (mDrawer.isDrawerOpen(Gravity.RIGHT)) {
                 mDrawer.closeDrawer(Gravity.RIGHT);
             } else {
@@ -191,6 +192,13 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
     @Override
     public void onResume(){
         super.onResume();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
     /*Implementation for BSL and MFL Button clicks in Subway Tab*/

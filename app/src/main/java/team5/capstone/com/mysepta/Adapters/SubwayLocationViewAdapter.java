@@ -21,6 +21,7 @@ import team5.capstone.com.mysepta.SubwayActivity;
 public class SubwayLocationViewAdapter extends RecyclerView.Adapter<SubwayLocationViewAdapter.SubwayLocationHolder> {
     private static final String TAG = "SubwayLocationViewAdapter";
     private static final String STOP_ID_KEY = "StopID";
+    private static final String LOCATION_KEY = "Location";
 
     private Context context;
     private String[] listLocations;
@@ -65,7 +66,7 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter<SubwayLocati
                 Bundle bundle = new Bundle();
                 bundle.putInt(STOP_ID_KEY, stopID);
                 bundle.putString("direction", "default");
-                bundle.putString("location", listLocations[position]);
+                bundle.putString(LOCATION_KEY, listLocations[position]);
                 startSubwayActivity.putExtras(bundle);
                 context.startActivity(startSubwayActivity);
             }

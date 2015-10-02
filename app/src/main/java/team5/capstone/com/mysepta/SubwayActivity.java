@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +29,8 @@ import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
 public class SubwayActivity extends AppCompatActivity {
     private static final String TAG = "SubwayActivity";
     private static final String STOP_ID_KEY = "StopID";
+    private static final String LOCATION_KEY = "Location";
+
     private TextView text;
     private Toolbar toolbar;
     private RecyclerView recyclerScheduleView;
@@ -38,14 +41,11 @@ public class SubwayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subway);
 
-        initSetup(); //WILL CHANGE THIS LATEr
-
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(""); //REMOVE TITLE
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //ENABLE BACK BUTTON
 
-
+        initSetup(); //WILL CHANGE THIS LATEr
     }
 
     private void setUpRecyclerView(ArrayList<SubwayScheduleItemModel> arrivals) {
@@ -61,6 +61,9 @@ public class SubwayActivity extends AppCompatActivity {
     private void initSetup(){
         Bundle bundle = this.getIntent().getExtras();
         int stopID = bundle.getInt(STOP_ID_KEY);
+        String locationTitle = bundle.getString(LOCATION_KEY);
+        Log.d(TAG, locationTitle);
+        getSupportActionBar().setTitle(locationTitle);
 
         text = (TextView) findViewById(R.id.textViewTest);
         text.setText(String.valueOf(stopID) + " " + bundle.getString("direction") + " " + bundle.getString("location"));
@@ -83,7 +86,6 @@ public class SubwayActivity extends AppCompatActivity {
             return false;
         }
     });
-
 
     private void getResponseText(final String stringUrl) throws IOException
     {
