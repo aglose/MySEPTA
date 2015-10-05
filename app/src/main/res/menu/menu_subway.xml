@@ -12,7 +12,7 @@
         android:id="@+id/action_search"
         android:orderInCategory="200"
         android:title="Search"
-        android:icon="@drawable/looping_new"
+        android:icon="@drawable/change_direction"
         app:showAsAction="ifRoom"
         ></item>
 
