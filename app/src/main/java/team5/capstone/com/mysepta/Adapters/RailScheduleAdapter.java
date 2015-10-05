@@ -41,7 +41,7 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
         holder.railText.setText(temp.getRailName());
         holder.railAcr.setText(temp.getRailAcr());
         holder.timeText.setText(temp.getTime());
-        holder.trainText.setText(temp.getRailNumber()+" to "+temp.getStation());
+        holder.trainText.setText("#"+temp.getRailNumber()+" to "+temp.getStation());
     }
 
     @Override

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rail_item_card"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="60dp"
     app:cardCornerRadius="2dp"
     app:cardElevation="2dp"
     android:layout_marginBottom="@dimen/cardMarginVertical"
@@ -25,9 +25,10 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="WTR"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textAllCaps="true"
             android:textStyle="bold"
+            android:textColor="@color/black"
             android:id="@+id/lineName"
             android:padding="5dp"
             android:layout_centerVertical="true"
@@ -38,11 +39,14 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="West Trenton Line"
-            android:textSize="10sp"
+            android:textSize="11sp"
+            android:textColor="@color/black"
             android:id="@+id/trainLabel"
-            android:padding="5dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignRight="@+id/lineName"/>
+            android:paddingLeft="2dp"
+            android:paddingBottom="2dp"
+            android:paddingTop="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/lineName" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -50,9 +54,11 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="12sp"
             android:text="#4340 to Philmont"
+            android:textColor="@color/black"
             android:id="@+id/trainInfo"
-            android:padding="5dp"
-            android:layout_alignBottom="@+id/trainLabel"/>
+            android:padding="2dp"
+            android:layout_alignBottom="@+id/lineName"
+            android:layout_alignStart="@+id/trainLabel" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,6 +66,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="12:00 PM"
             android:textSize="16sp"
+            android:textColor="@color/black"
             android:id="@+id/arrivalTime"
             android:padding="5dp"
             android:layout_centerVertical="true"

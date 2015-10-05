@@ -51,7 +51,7 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-    //    fragmentTransaction.add(R.id.tofromfrag,toFromFrag);
+//        fragmentTransaction.add(R.id.tofromfrag,toFromFrag);
 
 //        fragmentTransaction.commit();
   //      fragmentManager.executePendingTransactions();
