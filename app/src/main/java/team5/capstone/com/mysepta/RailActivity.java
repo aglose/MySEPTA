@@ -6,24 +6,17 @@ import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
-import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import team5.capstone.com.mysepta.Adapters.RailScheduleAdapter;
-import team5.capstone.com.mysepta.Adapters.RailToFromViewAdapter;
 import team5.capstone.com.mysepta.DropDownView.RailChooser;
 import team5.capstone.com.mysepta.DropDownView.RailChooserChild;
+import team5.capstone.com.mysepta.Fragment.RailScheduleFragment;
 import team5.capstone.com.mysepta.Fragment.ToFromFragment;
-import team5.capstone.com.mysepta.Models.RailLocationData;
-import xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller;
 
 public class RailActivity extends AppCompatActivity implements ToFromFragment.OnFragmentInteractionListener{
 

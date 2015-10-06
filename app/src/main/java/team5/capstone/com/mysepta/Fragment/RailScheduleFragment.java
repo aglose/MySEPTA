@@ -1,4 +1,4 @@
-package team5.capstone.com.mysepta;
+package team5.capstone.com.mysepta.Fragment;
 
 
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import team5.capstone.com.mysepta.Adapters.RailScheduleAdapter;
 import team5.capstone.com.mysepta.Adapters.RailToFromViewAdapter;
 import team5.capstone.com.mysepta.Models.RailLocationData;
+import team5.capstone.com.mysepta.R;
 
 
 /**
@@ -44,7 +45,7 @@ public class RailScheduleFragment extends Fragment {
         rails.add(new RailLocationData("WTR","West Trenton","Philmont",778,"12:10 PM"));
         rails.add(new RailLocationData("WTR", "West Trenton", "Philmont", 779, "12:15 PM"));
 
-        railSchedule.setAdapter(new RailScheduleAdapter(rails, view.getContext()));
+        railSchedule.setAdapter(new RailScheduleAdapter(rails, view.getContext(),"Philmont","Temple University"));
 
         // Inflate the layout for this fragment
         return view;

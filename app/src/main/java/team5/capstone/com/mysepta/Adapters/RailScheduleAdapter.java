@@ -20,33 +20,76 @@ import team5.capstone.com.mysepta.RailActivity;
 public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapter.RailScheduleHolder> {
     private Context context;
     private ArrayList<RailLocationData> rails;
+    static final int TYPE_HEADER = 0;
+    static final int TYPE_CELL = 1;
+    private String start;
+    private String end;
 
-    public RailScheduleAdapter(ArrayList<RailLocationData> rails, Context context){
+    public RailScheduleAdapter(ArrayList<RailLocationData> rails, Context context, String start,String end){
         this.rails = rails;
         this.context = context;
+        this.start = start;
+        this.end = end;
+    }
+
+
+    @Override
+    public int getItemViewType(int position) {
+        switch (position) {
+            case 0:
+                return TYPE_HEADER;
+            default:
+                return TYPE_CELL;
+        }
     }
 
     @Override
     public RailScheduleAdapter.RailScheduleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.rail_list_item_card, parent, false);
+        View view;
+
+        switch(viewType) {
+            case TYPE_HEADER:{
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.header_card, parent, false);
+                return new RailScheduleHolder(view);
+            }
+            case TYPE_CELL:{
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.rail_list_item_card, parent, false);
+                return new RailScheduleHolder(view);
+            }
 
 
-        return new RailScheduleHolder(view);
+        }
+
+        return null;
+
     }
 
     @Override
     public void onBindViewHolder(RailScheduleHolder holder, int position) {
-        RailLocationData temp = rails.get(position);
-        holder.railText.setText(temp.getRailName());
-        holder.railAcr.setText(temp.getRailAcr());
-        holder.timeText.setText(temp.getTime());
-        holder.trainText.setText("#"+temp.getRailNumber()+" to "+temp.getStation());
+        switch(getItemViewType(position)) {
+            case TYPE_HEADER:{
+                holder.arrivalStation.setText(start);
+                holder.departureStation.setText(end);
+                holder.cardView2.setBackgroundColor(context.getResources().getColor(R.color.black));
+                break;
+            }
+            case TYPE_CELL:{
+                RailLocationData temp = rails.get(position-1);
+                holder.railText.setText(temp.getRailName());
+                holder.railAcr.setText(temp.getRailAcr());
+                holder.timeText.setText(temp.getTime());
+                holder.trainText.setText("#" + temp.getRailNumber() + " to " + temp.getStation());
+                break;
+            }
+
+        }
     }
 
     @Override
     public int getItemCount() {
-        return rails.size();
+        return rails.size()+1;
     }
 
     public class RailScheduleHolder extends RecyclerView.ViewHolder{
@@ -55,6 +98,9 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
         TextView trainText;
         TextView timeText;
         CardView cardView;
+        CardView cardView2;
+        TextView arrivalStation;
+        TextView departureStation;
 
         public RailScheduleHolder(View itemView) {
             super(itemView);
@@ -63,6 +109,11 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
             railAcr = (TextView) itemView.findViewById(R.id.lineName);
             trainText = (TextView) itemView.findViewById(R.id.trainInfo);
             timeText = (TextView) itemView.findViewById(R.id.arrivalTime);
+
+            arrivalStation = (TextView) itemView.findViewById(R.id.arrivalStation);
+            departureStation = (TextView) itemView.findViewById(R.id.departureStation);
+            cardView2 = (CardView) itemView.findViewById(R.id.header_card);
+
         }
     }
 }
