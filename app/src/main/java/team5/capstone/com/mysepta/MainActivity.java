@@ -13,6 +13,8 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
     /*Drawer layout*/
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
+    private String[] drawerListViewItems;
+    private ListView drawerListView;
 
     /*This is the Adapter that controls the Fragment views in the tabs*/
     private FragmentPagerAdapter fragmentPagerAdapter;
@@ -69,6 +73,16 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
         mDrawer.setDrawerListener(mDrawerToggle);
+
+        // get list items from strings.xml
+        drawerListViewItems = getResources().getStringArray(R.array.drawer_items);
+
+        // get ListView defined in activity_main.xml
+        drawerListView = (ListView) findViewById(R.id.drawer_layout);
+
+        // Set the adapter for the list view
+        drawerListView.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.drawer_listview_item, drawerListViewItems));
 
         /*Set up the Material toolbar and pager*/
         mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);

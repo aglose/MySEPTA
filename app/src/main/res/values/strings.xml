@@ -6,9 +6,16 @@
     <string name="title_section3">Bus</string>
     <string name="title_section4">Subway</string>
 
+
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_maps">Map</string>
     <string name="action_settings">Settings</string>
+
+    <string-array name="drawer_items">
+        <item>Alerts</item>
+        <item>Settings</item>
+        <item>Help and Feedback</item>
+    </string-array>
 
     <string name="from_rail_text">Starting Station</string>
     <string name="to_rail_text">Final Station</string>
