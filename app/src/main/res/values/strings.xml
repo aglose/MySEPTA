@@ -20,6 +20,8 @@
     <string name="from_rail_text">Starting Station</string>
     <string name="to_rail_text">Final Station</string>
 
+
+
     <string-array name="broad_street_line">
         <item>8th St &amp; Market St</item>
         <item>Allegheny</item>
@@ -137,4 +139,16 @@
         <item>Frankford Transportation Center</item>
     </string-array>
     <string name="title_activity_subway">SubwayActivity</string>
+
+    <string-array name="rail_names">
+        <item>Airport</item>
+        <item>Chestnut Hill East</item>
+        <item>Chestnut Hill West</item>
+        <item>Cynwyd</item>
+        <item>Fox Chase</item>
+        <item>Glenside</item>
+    </string-array>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
