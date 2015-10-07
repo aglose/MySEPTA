@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<View xmlns:android="http://schemas.android.com/apk/res/android"
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/right_drawer"
     android:layout_width="320dp"
     android:layout_height="wrap_content"
     android:layout_gravity="right"
+    android:divider="#666"
+    android:dividerHeight="1dp"
+    android:paddingLeft="15sp"
+    android:paddingRight="15sp"
     android:background="@android:color/white"
     android:clickable="true" />
-
-

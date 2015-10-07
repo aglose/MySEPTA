@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         drawerListViewItems = getResources().getStringArray(R.array.drawer_items);
 
         // get ListView defined in activity_main.xml
-        drawerListView = (ListView) findViewById(R.id.drawer_layout);
+        drawerListView = (ListView) findViewById(R.id.right_drawer);
 
         // Set the adapter for the list view
         drawerListView.setAdapter(new ArrayAdapter<String>(this,
