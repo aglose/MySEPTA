@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import team5.capstone.com.mysepta.Fragment.SubwayItineraryViewFragment;
-import team5.capstone.com.mysepta.MainActivity;
+import team5.capstone.com.mysepta.Managers.SubwayScheduleManager;
 import team5.capstone.com.mysepta.R;
 
 /**
@@ -43,6 +43,7 @@ public class SubwayItineraryViewAdapter extends RecyclerView.Adapter<RecyclerVie
             @Override
             public void onClick(View v) {
                 View namebar = view.findViewById(R.id.subway_itinerary_card);
+//                SubwayScheduleManager.createJOUSPObject(); THIS IS USED FOR TESTING
                 ((ViewGroup) namebar.getParent()).removeView(namebar);
                 mSubwayFragmentListener.onItinerarySelection("BSL");
             }
