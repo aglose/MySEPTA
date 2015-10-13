@@ -7,73 +7,89 @@ import com.google.gson.annotations.SerializedName;
  */
 public class NextToArriveRailModel {
 
-    @SerializedName("orig_train") private double latitude;
-    @SerializedName("orig_line") private double longitude;
-    @SerializedName("orig_departure_time") private String trainNumber;
-    @SerializedName("orig_arrival_time") private String destination;
-    @SerializedName("orig_delay") private String nextStop;
-    @SerializedName("term_train") private int late;
-    @SerializedName("term_line") private String source;
-    @SerializedName("term_depart_time") private String track;
-    @SerializedName("term_arrival_time") private String trackChange;
+    @SerializedName("orig_train") private String origTrainNumber;
+    @SerializedName("orig_line") private String origTrainName;
+    @SerializedName("orig_departure_time") private String origDepartureTime;
+    @SerializedName("orig_arrival_time") private String origArrivalTime;
+    @SerializedName("orig_delay") private String origDelay;
+    @SerializedName("term_train") private String conTrainNumber;
+    @SerializedName("term_line") private String conTrainName;
+    @SerializedName("term_depart_time") private String conDepartureTime;
+    @SerializedName("term_arrival_time") private String conArrivalTime;
     @SerializedName("Connection") private String conStation;
     @SerializedName("term_delay") private String conDelay;
     @SerializedName("isdirect") private String isDirect;
 
-    public String getTrainNumber() {
-        return trainNumber;
+    public String getConArrivalTime() {
+        return conArrivalTime;
     }
 
-    public void setTrainNumber(String trainNumber) {
-        this.trainNumber = trainNumber;
+    public String getConDepartureTime() {
+        return conDepartureTime;
     }
 
-    public String getDestination() {
-        return destination;
+    public String getConTrainName() {
+        return conTrainName;
     }
 
-    public void setDestination(String destination) {
-        this.destination = destination;
+    public String getConTrainNumber() {
+        return conTrainNumber;
     }
 
-    public String getNextStop() {
-        return nextStop;
+    public String getOrigArrivalTime() {
+        return origArrivalTime;
     }
 
-    public void setNextStop(String nextStop) {
-        this.nextStop = nextStop;
+    public String getOrigDelay() {
+        return origDelay;
     }
 
-    public int getLate() {
-        return late;
+    public String getOrigDepartureTime() {
+        return origDepartureTime;
     }
 
-    public void setLate(int late) {
-        this.late = late;
+    public String getOrigTrainName() {
+        return origTrainName;
     }
 
-    public String getSource() {
-        return source;
+    public String getOrigTrainNumber() {
+        return origTrainNumber;
     }
 
-    public void setSource(String source) {
-        this.source = source;
+    public void setConArrivalTime(String conArrivalTime) {
+        this.conArrivalTime = conArrivalTime;
     }
 
-    public String getTrack() {
-        return track;
+    public void setConDepartureTime(String conDepartureTime) {
+        this.conDepartureTime = conDepartureTime;
     }
 
-    public void setTrack(String track) {
-        this.track = track;
+    public void setConTrainName(String conTrainName) {
+        this.conTrainName = conTrainName;
     }
 
-    public String getTrackChange() {
-        return trackChange;
+    public void setConTrainNumber(String conTrainNumber) {
+        this.conTrainNumber = conTrainNumber;
     }
 
-    public void setTrackChange(String trackChange) {
-        this.trackChange = trackChange;
+    public void setOrigArrivalTime(String origArrivalTime) {
+        this.origArrivalTime = origArrivalTime;
+    }
+
+    public void setOrigDelay(String origDelay) {
+        this.origDelay = origDelay;
+    }
+
+    public void setOrigDepartureTime(String origDepartureTime) {
+        this.origDepartureTime = origDepartureTime;
+    }
+
+    public void setOrigTrainName(String origTrainName) {
+        this.origTrainName = origTrainName;
+    }
+
+    public void setOrigTrainNumber(String origTrainNumber) {
+        this.origTrainNumber = origTrainNumber;
     }
 
     public String getConStation(){return conStation;}

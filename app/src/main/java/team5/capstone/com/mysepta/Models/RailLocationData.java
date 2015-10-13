@@ -10,17 +10,24 @@ public class RailLocationData {
     private String railName;
     private String railAcr;
 
-    private int railNumber;
+    private String railNumber;
 
     private String station;
     private String time;
 
-    public RailLocationData(String railAcr,String railName,String station,int railNumber,String time){
+    private boolean isConnection;
+
+    public RailLocationData(String railAcr,String railName,String station,String railNumber,String time,boolean isConnection){
         this.railAcr = railAcr;
         this.railName = railName;
         this.railNumber = railNumber;
         this.station = station;
         this.time = time;
+        this.isConnection = isConnection;
+    }
+
+    public void setIsConnection(boolean isConnection) {
+        this.isConnection = isConnection;
     }
 
     public void setRailAcr(String railAcr) {
@@ -31,7 +38,7 @@ public class RailLocationData {
         this.railName = railName;
     }
 
-    public void setRailNumber(int railNumber) {
+    public void setRailNumber(String railNumber) {
         this.railNumber = railNumber;
     }
 
@@ -47,7 +54,7 @@ public class RailLocationData {
         return railName;
     }
 
-    public int getRailNumber() {
+    public String getRailNumber() {
         return railNumber;
     }
 
@@ -61,5 +68,9 @@ public class RailLocationData {
 
     public String getTime() {
         return time;
+    }
+
+    public boolean isConnection() {
+        return isConnection;
     }
 }
