@@ -31,6 +31,7 @@ public class ToFromFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private RecyclerView toFromRec;
     private RailToFromViewAdapter fromRailChoices;
+    private View view;
 
     public ToFromFragment() {
         // Required empty public constructor
@@ -40,7 +41,7 @@ public class ToFromFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_to_from, container, false);
+        view = inflater.inflate(R.layout.fragment_to_from, container, false);
         toFromRec = (RecyclerView) view.findViewById(R.id.fromRail);
         toFromRec.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
@@ -91,8 +92,8 @@ public class ToFromFragment extends Fragment {
     public ArrayList<ParentObject> getRails(){
         ArrayList<ParentObject> rails = new ArrayList<>();
 
-        RailChooser from = new RailChooser("@string/from_rail_text");
-        RailChooser to = new RailChooser("@string/to_rail_text");
+        RailChooser from = new RailChooser(view.getResources().getString(R.string.from_rail_text));
+        RailChooser to = new RailChooser(view.getResources().getString(R.string.to_rail_text));
 
         ArrayList<Object> subRails = new ArrayList<>();
         subRails.add(new RailChooserChild("30th Street"));

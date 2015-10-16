@@ -48,14 +48,9 @@ public class RailScheduleFragment extends Fragment {
         railSchedule = (RecyclerView) view.findViewById(R.id.railSchedule);
         railSchedule.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-       /* rails = new ArrayList<>();
-        rails.add(new RailLocationData("WTR","West Trenton","Philmont","776","12:00 PM",false));
-        rails.add(new RailLocationData("WTR","West Trenton","Philmont","777","12:05 PM",false));
-        rails.add(new RailLocationData("WTR","West Trenton","Philmont","778","12:10 PM",false));
-        rails.add(new RailLocationData("WTR", "West Trenton", "Philmont","779", "12:15 PM",false));
 
-        railSchedule.setAdapter(new RailScheduleAdapter(rails, view.getContext(),"Philmont","Temple University"));*/
-        getNextTrainData("Philmont","Bethayres","5");
+        getNextTrainData("Philmont","Ardmore","5");
+
         // Inflate the layout for this fragment
         return view;
     }

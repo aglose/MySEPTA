@@ -70,13 +70,20 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
     public void onBindViewHolder(RailScheduleHolder holder, int position) {
         switch(getItemViewType(position)) {
             case TYPE_HEADER:{
-                holder.arrivalStation.setText(start);
-                holder.departureStation.setText(end);
+                holder.arrivalStation.setText(end);
+                holder.departureStation.setText(start);
                 holder.cardView2.setBackgroundColor(context.getResources().getColor(R.color.black));
                 break;
             }
             case TYPE_CELL:{
                 RailLocationData temp = rails.get(position-1);
+
+                if(temp.isConnection()){
+                    holder.cardView.setBackgroundColor(context.getResources().getColor(R.color.blue));
+                }
+                else{
+                    holder.cardView.setBackgroundColor(context.getResources().getColor(R.color.white));
+                }
                 holder.railText.setText(temp.getRailName());
                 holder.railAcr.setText(temp.getRailAcr());
                 holder.timeText.setText(temp.getTime());
