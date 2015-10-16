@@ -1,6 +1,7 @@
 package team5.capstone.com.mysepta.Fragment;
 
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -78,11 +82,15 @@ public class RailScheduleFragment extends Fragment {
             Log.d("Debug", "No train data");
         }
 
+        Resources res = getResources();
+
+        List<String> railNames = Arrays.asList(res.getStringArray(R.array.rail_names));
+        List<String> railAcro = Arrays.asList(res.getStringArray(R.array.rail_acro));
         rails = new ArrayList<>();
 
         for(NextToArriveRailModel train : trainList){
             if(train.getIsDirect().equalsIgnoreCase("true")){
-                rails.add(new RailLocationData("ACR",
+                rails.add(new RailLocationData(railAcro.get(railNames.indexOf(train.getOrigTrainName())),
                         train.getOrigTrainName(),
                         finalStation,
                         train.getOrigTrainNumber(),
@@ -90,14 +98,14 @@ public class RailScheduleFragment extends Fragment {
                         false));
             }
             else{
-                rails.add(new RailLocationData("ACR",
+                rails.add(new RailLocationData(railAcro.get(railNames.indexOf(train.getOrigTrainName())),
                         train.getOrigTrainName(),
                         train.getConStation(),
                         train.getOrigTrainNumber(),
                         train.getOrigDepartureTime(),
                         false));
 
-                rails.add(new RailLocationData("ACR",
+                rails.add(new RailLocationData(railAcro.get(railNames.indexOf(train.getConTrainName())),
                         train.getConTrainName(),
                         finalStation,
                         train.getConTrainNumber(),
@@ -109,5 +117,6 @@ public class RailScheduleFragment extends Fragment {
 
         railSchedule.setAdapter(new RailScheduleAdapter(rails, view.getContext(),startStation,finalStation));
     }
+
 
 }
