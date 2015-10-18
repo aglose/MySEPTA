@@ -1,5 +1,6 @@
 package team5.capstone.com.mysepta;
 
+import android.os.Environment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,9 +23,16 @@ import com.crashlytics.android.Crashlytics;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Set;
 
 import io.fabric.sdk.android.Fabric;
+import team5.capstone.com.mysepta.DatabaseHelpers.SubwayScheduleCreatorDbHelper;
 import team5.capstone.com.mysepta.Fragment.RailItineraryViewFragment;
 import team5.capstone.com.mysepta.Fragment.RecyclerViewFragment;
 import team5.capstone.com.mysepta.Fragment.SubwayItineraryViewFragment;
@@ -65,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         setContentView(R.layout.activity_main);
 
         Fabric.with(this, new Crashlytics());
+
+        copyDatabase();
 
         /*Set to no title*/
         setTitle("");
@@ -181,6 +191,27 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
                 }
             });
 
+    }
+
+    //Copy the subway database to local if necessary
+    private void copyDatabase() {
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + SubwayScheduleCreatorDbHelper.DATABASE_NAME);
+        if(!file.exists()){
+            try {
+                InputStream database = getAssets().open("SubwaySchedule.db");
+                OutputStream out = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + SubwayScheduleCreatorDbHelper.DATABASE_NAME);
+
+                byte[] buf = new byte[1024];
+                int len;
+                while ((len = database.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+                database.close();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

@@ -22,6 +22,8 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter<SubwayLocati
     private static final String TAG = "SubwayLocationViewAdapter";
     private static final String STOP_ID_KEY = "StopID";
     private static final String LOCATION_KEY = "Location";
+    private static final String DIRECTION_KEY = "Direction";
+    private static final String LINE_KEY = "Line";
 
     private Context context;
     private String[] listLocations;
@@ -65,7 +67,8 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter<SubwayLocati
                 Intent startSubwayActivity = new Intent(context, SubwayActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt(STOP_ID_KEY, stopID);
-                bundle.putString("direction", "default");
+                bundle.putString(DIRECTION_KEY, "default");
+                bundle.putString(LINE_KEY, line);
                 bundle.putString(LOCATION_KEY, listLocations[position]);
                 startSubwayActivity.putExtras(bundle);
                 context.startActivity(startSubwayActivity);

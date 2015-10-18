@@ -1,16 +1,20 @@
 package team5.capstone.com.mysepta.Models;
 
+import java.sql.Time;
+import java.util.Date;
+
 /**
  * Created by Andrew on 9/20/2015.
  */
 public class SubwayScheduleItemModel {
-    private String time;
+    private String formattedTimeStr;
 
-    public String getTime() {
-        return time;
+    public String getFormattedTimeStr() {
+        return formattedTimeStr;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setFormattedTimeStr(String formattedTimeStr) {
+        this.formattedTimeStr = formattedTimeStr;
     }
+
 }

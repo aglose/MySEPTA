@@ -1,7 +1,5 @@
 package team5.capstone.com.mysepta.Adapters;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,13 +11,13 @@ import java.util.ArrayList;
 
 import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
 import team5.capstone.com.mysepta.R;
-import team5.capstone.com.mysepta.SubwayActivity;
 
 /**
  * Created by tiestodoe on 10/1/15.
  */
 public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwayScheduleViewAdapter.SubwayScheduleHolder> {
     private ArrayList<SubwayScheduleItemModel> arrivals;
+
 
     public SubwayScheduleViewAdapter(ArrayList<SubwayScheduleItemModel> arrivals){
         this.arrivals = arrivals;
@@ -34,7 +32,7 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
 
     @Override
     public void onBindViewHolder(SubwayScheduleHolder holder, int position) {
-        holder.scheduleText.setText(arrivals.get(position).getTime());
+        holder.scheduleText.setText(arrivals.get(position).getFormattedTimeStr());
     }
 
     @Override

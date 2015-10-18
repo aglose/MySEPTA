@@ -1,6 +1,5 @@
 package team5.capstone.com.mysepta.Managers;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,9 +15,8 @@ import java.net.ProtocolException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
-import team5.capstone.com.mysepta.DatabaseHelpers.SubwayScheduleReaderDbHelper;
+import team5.capstone.com.mysepta.DatabaseHelpers.SubwayScheduleCreatorDbHelper;
 
 public class JSOUPScheduleParser{
     private final static String TAG = "JSOUPScheduleParser";
@@ -41,7 +39,7 @@ public class JSOUPScheduleParser{
             BSL_SAT_SOUTHBOUND_URL, BSL_SUN_NORTHBOUND_URL, BSL_SUN_SOUTHBOUND_URL, MFL_WEEKDAY_WESTBOUND_URL,
             MFL_WEEKDAY_EASTBOUND_URL, MFL_SAT_WESTBOUND_URL, MFL_SAT_EASTBOUND_URL, MFL_SUN_WESTBOUND_URL, MFL_SUN_EASTBOUND_URL};
 
-    private SubwayScheduleReaderDbHelper dbHelper;
+    private SubwayScheduleCreatorDbHelper dbHelper;
     private SQLiteDatabase database;
     private ArrayList<ArrayList<String>> columnSQL;
     private ArrayList<String> SUBWAY_DATABASE_COLUMN_NAMES;
@@ -99,7 +97,7 @@ public class JSOUPScheduleParser{
                 }
                 sql.append("INSERT");
                 sql.append(" INTO ");
-                sql.append(SubwayScheduleReaderDbHelper.TABLE_NAME_LIST[websiteNum]);
+                sql.append(SubwayScheduleCreatorDbHelper.TABLE_NAME_LIST[websiteNum]);
                 sql.append('(');
 
                 Object[] bindArgs = null;
@@ -281,7 +279,7 @@ public class JSOUPScheduleParser{
             stopIDSchedulesLIST.add(stopIDSchedules);
 
         }
-        dbHelper = new SubwayScheduleReaderDbHelper(context, columnSQL);
+        dbHelper = new SubwayScheduleCreatorDbHelper(context, columnSQL);
         addSchedules();
     }
 }

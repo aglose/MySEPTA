@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by Andrew on 10/12/2015.
  */
-public class SubwayScheduleReaderDbHelper extends SQLiteOpenHelper {
+public class SubwayScheduleCreatorDbHelper extends SQLiteOpenHelper {
     private static final String TAG = "SubwayScheduleReaderDbHelper";
 
     // If you change the database schema, you must increment the database version.
@@ -81,11 +81,18 @@ public class SubwayScheduleReaderDbHelper extends SQLiteOpenHelper {
     private SQLiteDatabase database;
     private ArrayList<ArrayList<String>> columnNames;
 
-    public SubwayScheduleReaderDbHelper(Context context, ArrayList<ArrayList<String>> columnNames) {
+    //Constructor for the creation
+    public SubwayScheduleCreatorDbHelper(Context context, ArrayList<ArrayList<String>> columnNames) {
         super(context, Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + DATABASE_NAME, null, DATABASE_VERSION);
         Log.d(TAG, Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+DATABASE_NAME);
         this.columnNames = columnNames;
-        createEntries();
+//        createEntries();
+    }
+
+    //Constructor for retrieval
+    public SubwayScheduleCreatorDbHelper(Context context) {
+        super(context, Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + DATABASE_NAME, null, DATABASE_VERSION);
+        Log.d(TAG, Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+DATABASE_NAME);
     }
 
     private void createEntries() {
