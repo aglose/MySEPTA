@@ -20,8 +20,6 @@
     <string name="from_rail_text">Starting Station</string>
     <string name="to_rail_text">Final Station</string>
 
-
-
     <string-array name="broad_street_line">
         <item>8th St &amp; Market St</item>
         <item>Allegheny</item>

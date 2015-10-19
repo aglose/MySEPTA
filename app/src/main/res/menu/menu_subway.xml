@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".SubwayActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/timePicker"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:title="TIME"
+        app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_search"
+        android:id="@+id/change_direction"
         android:orderInCategory="200"
         android:title="Search"
         android:icon="@drawable/change_direction"

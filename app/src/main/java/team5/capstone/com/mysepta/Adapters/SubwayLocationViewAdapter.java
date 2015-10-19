@@ -59,15 +59,18 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter<SubwayLocati
             @Override
             public void onClick(View v) {
                 int stopID;
+                String direction = "";
                 if (line.equalsIgnoreCase("BSL")) {
                     stopID = subwayLocationData.getStopId(listLocations[position], "North");
+                    direction = "NORTH";
                 } else {
                     stopID = subwayLocationData.getStopId(listLocations[position], "East");
+                    direction = "EAST";
                 }
                 Intent startSubwayActivity = new Intent(context, SubwayActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt(STOP_ID_KEY, stopID);
-                bundle.putString(DIRECTION_KEY, "default");
+                bundle.putString(DIRECTION_KEY, direction);
                 bundle.putString(LINE_KEY, line);
                 bundle.putString(LOCATION_KEY, listLocations[position]);
                 startSubwayActivity.putExtras(bundle);
