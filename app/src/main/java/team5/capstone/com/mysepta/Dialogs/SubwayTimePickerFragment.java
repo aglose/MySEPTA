@@ -20,6 +20,7 @@ import team5.capstone.com.mysepta.SubwayActivity;
  * Created by Andrew on 10/18/2015.
  */
 public class SubwayTimePickerFragment extends DialogFragment{
+    /*IMPLEMENTATION IN SUBWAY ACTIVITY*/
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 

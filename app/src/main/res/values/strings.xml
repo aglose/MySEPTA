@@ -34,16 +34,16 @@
         <item>Girard</item>
         <item>Hunting Park</item>
         <item>Logan</item>
-        <item>Lombard South</item>
+        <item>Lombard-South</item>
         <item>North Philadelphia</item>
         <item>Olney Transportation Center</item>
         <item>Oregon</item>
-        <item>Race Vine</item>
+        <item>Race-Vine</item>
         <item>Snyder</item>
         <item>Spring Garden</item>
-        <item>Susquehanna Dauphin</item>
-        <item>Tasker Morris</item>
-        <item>Walnut Locust</item>
+        <item>Susquehanna-Dauphin</item>
+        <item>Tasker-Morris</item>
+        <item>Walnut-Locust</item>
         <item>Wyoming</item>
     </string-array>
 
@@ -56,17 +56,17 @@
         <item>Erie</item>
         <item>Allegheny</item>
         <item>North Philadelphia</item>
-        <item>Susquehanna Dauphin</item>
+        <item>Susquehanna-Dauphin</item>
         <item>Cecil B Moore</item>
         <item>Girard</item>
         <item>Fairmount</item>
         <item>Spring Garden</item>
-        <item>Race Vine</item>
+        <item>Race-Vine</item>
         <item>City Hall</item>
-        <item>Walnut Locust</item>
-        <item>Lombard South</item>
+        <item>Walnut-Locust</item>
+        <item>Lombard-South</item>
         <item>Ellsworth Federal</item>
-        <item>Tasker Morris</item>
+        <item>Tasker-Morris</item>
         <item>Snyder</item>
         <item>Oregon</item>
         <item>AT&amp;T</item>
@@ -95,7 +95,7 @@
         <item>Arrott Transportation Center</item>
         <item>Berks</item>
         <item>Church</item>
-        <item>Erie Torresdale</item>
+        <item>Erie-Torresdale</item>
         <item>Frankford Transportation Center</item>
         <item>Girard</item>
         <item>Huntingdon</item>
@@ -103,7 +103,7 @@
         <item>Somerset</item>
         <item>Spring Garden</item>
         <item>Tioga</item>
-        <item>York Dauphin</item>
+        <item>York-Dauphin</item>
     </string-array>
 
     <string-array name="market_frankford_line_sorted">
@@ -126,12 +126,12 @@
         <item>Spring Garden</item>
         <item>Girard</item>
         <item>Berks</item>
-        <item>York Dauphin</item>
+        <item>York-Dauphin</item>
         <item>Huntingdon</item>
         <item>Somerset</item>
         <item>Allegheny</item>
         <item>Tioga</item>
-        <item>Erie Torresdale</item>
+        <item>Erie-Torresdale</item>
         <item>Church</item>
         <item>Arrott Transportation Center</item>
         <item>Frankford Transportation Center</item>

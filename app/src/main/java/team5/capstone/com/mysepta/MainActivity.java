@@ -1,5 +1,6 @@
 package team5.capstone.com.mysepta;
 
+import android.content.Intent;
 import android.os.Environment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.widget.DrawerLayout;
@@ -33,11 +34,12 @@ import java.util.Set;
 
 import io.fabric.sdk.android.Fabric;
 import team5.capstone.com.mysepta.DatabaseHelpers.SubwayScheduleCreatorDbHelper;
+import team5.capstone.com.mysepta.Fragment.FavoritesFragment;
 import team5.capstone.com.mysepta.Fragment.RailItineraryViewFragment;
 import team5.capstone.com.mysepta.Fragment.RecyclerViewFragment;
 import team5.capstone.com.mysepta.Fragment.SubwayItineraryViewFragment;
 
-public class MainActivity extends AppCompatActivity implements SubwayItineraryViewFragment.SubwayChangeFragmentListener {
+public class MainActivity extends AppCompatActivity implements SubwayItineraryViewFragment.SubwayChangeFragmentListener{
     /*When you are debugging use this TAG as the first String (i.e. Log.d(TAG, String.valueOf(position));*/
     private static final String TAG = "MainActivity";
 
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
     /*We want this Fragment stored when it is statically created to alter it later*/
     private SubwayItineraryViewFragment subwayViewFragment;
     private RailItineraryViewFragment railViewFragment;
+    private FavoritesFragment favoritesFragment;
 
     /*Drawer layout*/
     private DrawerLayout mDrawer;
@@ -116,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
                 Log.d(TAG, String.valueOf(position));
                 switch (position % 4) {
                     case HOME_TAB:
-                        return RecyclerViewFragment.newInstance();
+                        return favoritesFragment = FavoritesFragment.newInstance();
                     case RAIL_TAB:
                         return railViewFragment = RailItineraryViewFragment.newInstance();
                     case BUS_TAB:
@@ -233,10 +236,23 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         return  super.onOptionsItemSelected(item);
     }
 
-    //TODO get this onResume shizznit working
+    //TODO get this onResume, onStop, onPause, onCupid, onDonner, onBlitzen shizznit working
     @Override
     public void onResume(){
         super.onResume();
+        Log.d(TAG, "ON RESUME CALLED");
+    }
+
+    @Override
+     public void onStop(){
+        super.onStop();
+        Log.d(TAG, "ON STOP CALLED");
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        Log.d(TAG, "ON PAUSE CALLED");
     }
 
     @Override

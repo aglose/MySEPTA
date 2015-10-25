@@ -104,22 +104,24 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
                 do {
 
                     String arrival = c.getString(c.getColumnIndex(location));
-                    oldFormat = new SimpleDateFormat("hh:mma");
-                    Date time = oldFormat.parse(arrival.trim());
-                    oldFormat.applyPattern("hh:mm a");
-                    String arrivalNewFormat = oldFormat.format(time);
-                    if(arrivalNewFormat.startsWith("0")){
-                        arrivalNewFormat = arrivalNewFormat.substring(1, arrivalNewFormat.length());
+                    if(!arrival.equalsIgnoreCase("X")){
+                        oldFormat = new SimpleDateFormat("hh:mma");
+                        Date time = oldFormat.parse(arrival.trim());
+                        oldFormat.applyPattern("hh:mm a");
+                        String arrivalNewFormat = oldFormat.format(time);
+                        if(arrivalNewFormat.startsWith("0")){
+                            arrivalNewFormat = arrivalNewFormat.substring(1, arrivalNewFormat.length());
+                        }
+
+
+
+                        SubwayScheduleItemModel newArrival = new SubwayScheduleItemModel();
+                        newArrival.setFormattedTimeStr(arrivalNewFormat);
+
+                        arrivals.add(newArrival);
+
+                        i++;
                     }
-
-
-
-                    SubwayScheduleItemModel newArrival = new SubwayScheduleItemModel();
-                    newArrival.setFormattedTimeStr(arrivalNewFormat);
-
-                    arrivals.add(newArrival);
-
-                    i++;
                 } while (c.moveToNext());
                 c.close();
             }
@@ -284,16 +286,21 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        Log.d(TAG, "Time : "+hourOfDay+" "+minute);
         customTime = true;
-        int hour = 0;
+        int hour = hourOfDay;
+        String zero = "";
         String a = "AM";
         if(hourOfDay > 12){
             hour = hourOfDay%12;
             a = "PM";
+        }else if(hour < 10){
+            hour = 5;
+            zero = "0";
         }
 
         StringBuilder time = new StringBuilder();
-        time.append(String.valueOf(hour));
+        time.append(zero+String.valueOf(hour));
         time.append(":");
         time.append(String.valueOf(minute));
         time.append(a);
