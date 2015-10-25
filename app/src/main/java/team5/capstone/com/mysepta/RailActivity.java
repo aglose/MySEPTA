@@ -7,13 +7,21 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ExpandableListView;
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
+import team5.capstone.com.mysepta.Adapters.RailExpandableAdapter;
 import team5.capstone.com.mysepta.DropDownView.RailChooser;
 import team5.capstone.com.mysepta.DropDownView.RailChooserChild;
 import team5.capstone.com.mysepta.Fragment.RailScheduleFragment;
@@ -30,6 +38,12 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
     RailToFromViewAdapter toRailChoices;*/
 
     private Toolbar toolbar;
+    private ExpandableListView expandableListView;
+    private ArrayList<String> groupList;
+    Map<String,ArrayList<String>> railList;
+    private RailExpandableAdapter railExpandableAdapter;
+    private String start,end;
+    private Fragment scheduleFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,69 +53,57 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Philmont");
+        getSupportActionBar().setTitle("Live View");
 
-        Fragment toFromFrag = new ToFromFragment();
-//        loadFragment(R.id.tofromfrag, toFromFrag, false);
+        expandableListView = (ExpandableListView) findViewById(R.id.tofromlistview);
+        getRails();
+        railExpandableAdapter = new RailExpandableAdapter(this,groupList,railList);
+        expandableListView.setAdapter(railExpandableAdapter);
+        expandableListView.setFastScrollEnabled(true);
 
-        Fragment scheduleFrag = new RailScheduleFragment();
-  //      loadFragment(R.id.schedulefrag, scheduleFrag, false);
+        scheduleFrag = new RailScheduleFragment();
 
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        start = "";
+        end = "";
 
-//        fragmentTransaction.add(R.id.tofromfrag,toFromFrag);
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                final String stationName = (String) railExpandableAdapter.getChild(groupPosition, childPosition);
+                boolean changeFrag = false;
 
-//        fragmentTransaction.commit();
-  //      fragmentManager.executePendingTransactions();
+                if (parent.isGroupExpanded(groupPosition))
+                    parent.collapseGroup(groupPosition);
 
-        fragmentTransaction.add(R.id.schedulefrag,scheduleFrag);
+                if(groupPosition == 0) {
+                    if(!start.equalsIgnoreCase(stationName)) {
+                        start = stationName;
+                        changeFrag = true;
+                        //Log.d("Start",stationName);
+                    }
+                }
+                else {
+                    if (!end.equalsIgnoreCase(stationName)) {
+                        end = stationName;
+                        changeFrag = true;
+                        //Log.d("End",stationName);
+                    }
+                }
 
-        fragmentTransaction.commit();
-        fragmentManager.executePendingTransactions();
+                railExpandableAdapter.updateParent(groupPosition, stationName);
+                railExpandableAdapter.notifyDataSetChanged();
 
+                if (!start.isEmpty() && !end.isEmpty() && changeFrag) {
+                    scheduleFrag = new RailScheduleFragment();
+                    loadFragment(R.id.schedulefrag, scheduleFrag, false);
+                }
 
-
-        /*scheduleView = (RecyclerView) findViewById(R.id.railSchedule);
-        scheduleView.setLayoutManager(new LinearLayoutManager(this));
-
-        fromRail = (RecyclerView) findViewById(R.id.fromRail);
-        fromRail.setLayoutManager(new LinearLayoutManager(this));
-
-
-        //toRail = (RecyclerView) findViewById(R.id.toRail);
-        //toRail.setLayoutManager(new LinearLayoutManager(this));
-        fromScroll = (VerticalRecyclerViewFastScroller) findViewById(R.id.fast_scroller_from);
-        toScroll = (VerticalRecyclerViewFastScroller) findViewById(R.id.fast_scroller_to);
-
-        fromScroll.setRecyclerView(fromRail);
-        toScroll.setRecyclerView(toRail);
-
-        fromRail.setOnScrollListener(fromScroll.getOnScrollListener());
-        toRail.setOnScrollListener(toScroll.getOnScrollListener());
-
-        fromRailChoices = new RailToFromViewAdapter(this,getRails());
-        fromRailChoices.setCustomParentAnimationViewId(R.id.parent_list_item_expand_arrow);
-        fromRailChoices.setParentClickableViewAnimationDefaultDuration();
-        fromRailChoices.setParentAndIconExpandOnClick(true);
-
-        fromRail.setAdapter(fromRailChoices);
+                return true;
+            }
+        });
 
 
-        toRailChoices = new RailToFromViewAdapter(this,getRails());
-        toRailChoices.setCustomParentAnimationViewId(R.id.parent_list_item_expand_arrow);
-        toRailChoices.setParentClickableViewAnimationDefaultDuration();
-        toRailChoices.setParentAndIconExpandOnClick(true);
 
-        toRail.setAdapter(toRailChoices);
-
-        ArrayList<RailLocationData> rails = new ArrayList<>();
-        rails.add(new RailLocationData("WTR","West Trenton","Philmont",776,"12:00 PM"));
-        rails.add(new RailLocationData("WTR","West Trenton","Philmont",777,"12:05 PM"));
-        rails.add(new RailLocationData("WTR","West Trenton","Philmont",778,"12:10 PM"));
-        rails.add(new RailLocationData("WTR","West Trenton","Philmont",779,"12:15 PM"));
-
-        fromRail.swapAdapter(new RailScheduleAdapter(rails, this),true);*/
 
 
     }
@@ -130,26 +132,32 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
 
     }
 
-    public ArrayList<ParentObject> getRails(){
-        ArrayList<ParentObject> rails = new ArrayList<>();
+    public void getRails(){
+        String start = this.getResources().getString(R.string.from_rail_text);
+        String end = this.getResources().getString(R.string.to_rail_text);
+        ArrayList<String> stationNames = new ArrayList<>(Arrays.asList(this.getResources().getStringArray(R.array.station_names)));
 
-        RailChooser from = new RailChooser("@string/from_rail_text");
-        RailChooser to = new RailChooser("@string/to_rail_text");
+        groupList = new ArrayList<String>();
 
-        ArrayList<Object> subRails = new ArrayList<>();
-        subRails.add(new RailChooserChild("30th Street"));
-        subRails.add(new RailChooserChild("Temple University"));
-        from.setChildObjectList(subRails);
-        to.setChildObjectList(subRails);
-        rails.add(from);
-        rails.add(to);
+        groupList.add(start);
+        groupList.add(end);
 
-        return rails;
+        railList = new LinkedHashMap<String,ArrayList<String>>();
+
+        railList.put(start, stationNames);
+        railList.put(end,stationNames);
     }
 
     public void loadFragment(int paneId,Fragment fragment,boolean placeOnBackStack){
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        Bundle args = new Bundle();
+        args.putString("start",start);
+        args.putString("end",end);
+        args.putString("results","5");
+
+        fragment.setArguments(args);
 
         fragmentTransaction.replace(paneId, fragment);
 
