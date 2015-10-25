@@ -43,6 +43,7 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
     Map<String,ArrayList<String>> railList;
     private RailExpandableAdapter railExpandableAdapter;
     private String start,end;
+    private Fragment scheduleFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
         railExpandableAdapter = new RailExpandableAdapter(this,groupList,railList);
         expandableListView.setAdapter(railExpandableAdapter);
 
-        final Fragment scheduleFrag = new RailScheduleFragment();
+        scheduleFrag = new RailScheduleFragment();
 
         start = "";
         end = "";
@@ -77,14 +78,14 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
                     if(!start.equalsIgnoreCase(stationName)) {
                         start = stationName;
                         changeFrag = true;
-                        Log.d("Start",stationName);
+                        //Log.d("Start",stationName);
                     }
                 }
                 else {
                     if (!end.equalsIgnoreCase(stationName)) {
                         end = stationName;
                         changeFrag = true;
-                        Log.d("End",stationName);
+                        //Log.d("End",stationName);
                     }
                 }
 
@@ -92,6 +93,7 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
                 railExpandableAdapter.notifyDataSetChanged();
 
                 if (!start.isEmpty() && !end.isEmpty() && changeFrag) {
+                    scheduleFrag = new RailScheduleFragment();
                     loadFragment(R.id.schedulefrag, scheduleFrag, false);
                 }
 
