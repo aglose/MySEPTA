@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import android.view.ViewGroup;
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import team5.capstone.com.mysepta.Adapters.RailToFromViewAdapter;
 import team5.capstone.com.mysepta.DropDownView.RailChooser;
@@ -26,12 +29,14 @@ import team5.capstone.com.mysepta.R;
  * {@link ToFromFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class ToFromFragment extends Fragment {
+public class ToFromFragment extends Fragment implements RailToFromViewAdapter.onChildClickedListener{
 
     private OnFragmentInteractionListener mListener;
     private RecyclerView toFromRec;
     private RailToFromViewAdapter fromRailChoices;
     private View view;
+    private String startStation,endStation;
+    private int size;
 
     public ToFromFragment() {
         // Required empty public constructor
@@ -42,6 +47,9 @@ public class ToFromFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_to_from, container, false);
+
+        startStation = endStation = null;
+
         toFromRec = (RecyclerView) view.findViewById(R.id.fromRail);
         toFromRec.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
@@ -51,6 +59,24 @@ public class ToFromFragment extends Fragment {
         fromRailChoices.setParentAndIconExpandOnClick(true);
 
         toFromRec.setAdapter(fromRailChoices);
+        size = toFromRec.getChildCount();
+
+        toFromRec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int loc = (int) v.getTag(R.string.loc_tag);
+                String name = (String) v.getTag(R.string.name_tag);
+
+                if(size/2 > loc){
+                    startStation = name;
+                    Log.d("Start Rail",startStation);
+                }
+                else{
+                    endStation = name;
+                    Log.d("End Rail",endStation);
+                }
+            }
+        });
 
         // Inflate the layout for this fragment
         return view;
@@ -74,6 +100,20 @@ public class ToFromFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void childClicked(String childText, int position) {
+        int temp = toFromRec.getChildCount();
+        if(temp/2 > position) {
+            startStation = childText;
+            Log.d("Start Rail",startStation);
+        }
+        else {
+            endStation = childText;
+            Log.d("End Rail",endStation);
+        }
+
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -95,9 +135,16 @@ public class ToFromFragment extends Fragment {
         RailChooser from = new RailChooser(view.getResources().getString(R.string.from_rail_text));
         RailChooser to = new RailChooser(view.getResources().getString(R.string.to_rail_text));
 
+        String[] stationNames = view.getResources().getStringArray(R.array.station_names);
+
         ArrayList<Object> subRails = new ArrayList<>();
-        subRails.add(new RailChooserChild("30th Street"));
-        subRails.add(new RailChooserChild("Temple University"));
+
+        for(String name:stationNames){
+            subRails.add(new RailChooserChild(name));
+        }
+        //subRails.add(new RailChooserChild("30th Street"));
+        //subRails.add(new RailChooserChild("Temple University"));
+
         from.setChildObjectList(subRails);
         to.setChildObjectList(subRails);
         rails.add(from);

@@ -11,6 +11,14 @@
             layout="@layout/subway_toolbar"
             ></include>
 
+        <ExpandableListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:id="@+id/tofromlistview">
+        </ExpandableListView>
+
         <FrameLayout
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"

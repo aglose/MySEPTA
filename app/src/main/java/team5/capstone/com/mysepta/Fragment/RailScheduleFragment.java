@@ -37,6 +37,9 @@ public class RailScheduleFragment extends Fragment {
     private RecyclerView railSchedule;
     private ArrayList<RailLocationData> rails;
     private View view;
+    private String start;
+    private String end;
+    private String numResults;
 
     public RailScheduleFragment() {
         // Required empty public constructor
@@ -48,12 +51,15 @@ public class RailScheduleFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_rail_schedule, container, false);
 
-
         railSchedule = (RecyclerView) view.findViewById(R.id.railSchedule);
         railSchedule.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
+        Bundle args = getArguments();
+        start = args.getString("start","Philmont");
+        end = args.getString("end","Ardmore");
+        numResults = args.getString("results","5");
 
-        getNextTrainData("Philmont","Ardmore","5");
+        getNextTrainData(start,end,numResults);
 
         // Inflate the layout for this fragment
         return view;
