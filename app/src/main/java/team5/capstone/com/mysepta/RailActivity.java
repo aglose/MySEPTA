@@ -59,6 +59,7 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
         getRails();
         railExpandableAdapter = new RailExpandableAdapter(this,groupList,railList);
         expandableListView.setAdapter(railExpandableAdapter);
+        expandableListView.setFastScrollEnabled(true);
 
         scheduleFrag = new RailScheduleFragment();
 

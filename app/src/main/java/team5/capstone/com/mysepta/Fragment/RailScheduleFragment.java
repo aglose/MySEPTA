@@ -40,6 +40,10 @@ public class RailScheduleFragment extends Fragment {
     private String start;
     private String end;
     private String numResults;
+    private List<String> railNames;
+    private List<String> railAcro;
+    private List<String> stationNames;
+    private List<String> apiStationNames;
 
     public RailScheduleFragment() {
         // Required empty public constructor
@@ -53,6 +57,13 @@ public class RailScheduleFragment extends Fragment {
 
         railSchedule = (RecyclerView) view.findViewById(R.id.railSchedule);
         railSchedule.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        Resources res = getResources();
+
+        railNames = Arrays.asList(res.getStringArray(R.array.rail_names));
+        railAcro = Arrays.asList(res.getStringArray(R.array.rail_acro));
+        stationNames = Arrays.asList(res.getStringArray(R.array.station_names));
+        apiStationNames = Arrays.asList(res.getStringArray(R.array.station_names_api));
 
         Bundle args = getArguments();
         start = args.getString("start","Philmont");
@@ -80,7 +91,8 @@ public class RailScheduleFragment extends Fragment {
         };
 
         NextToArriveRailProxy railViews = new NextToArriveRailProxy();
-        railViews.getRailView(startStation,endStation,numResults,callback);
+        railViews.getRailView(apiStationNames.get(stationNames.indexOf(startStation)),
+                apiStationNames.get(stationNames.indexOf(endStation)),numResults,callback);
     }
 
     private void setupRailAdapter(ArrayList<NextToArriveRailModel> trainList,String finalStation,String startStation){
@@ -88,10 +100,6 @@ public class RailScheduleFragment extends Fragment {
             Log.d("Debug", "No train data");
         }
 
-        Resources res = getResources();
-
-        List<String> railNames = Arrays.asList(res.getStringArray(R.array.rail_names));
-        List<String> railAcro = Arrays.asList(res.getStringArray(R.array.rail_acro));
         rails = new ArrayList<>();
 
         for(NextToArriveRailModel train : trainList){
