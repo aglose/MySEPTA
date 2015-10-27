@@ -9,9 +9,14 @@ import java.util.ArrayList;
 import retrofit.Callback;
 
 /**
+ * Proxy to call functions to retrieve rail location data.
  * Created by Andrew on 9/7/2015.
  */
 public class RailLocationProxy {
+    /**
+     * Retrieve rail location data.
+     * @param callBack callback to hold train data
+     */
     public void getRailView(Callback<ArrayList<RailModel>> callBack) {
         RailLocationInterface railLocationService = RailLocationService.getRailLocationInterface();
 

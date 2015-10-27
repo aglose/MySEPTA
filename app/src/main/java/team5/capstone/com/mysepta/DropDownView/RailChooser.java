@@ -5,6 +5,7 @@ import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 import java.util.List;
 
 /**
+ * Model to hold parent for expandable list
  * Created by Kevin on 9/23/15.
  */
 public class RailChooser implements ParentObject {

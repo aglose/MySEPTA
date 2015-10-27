@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
+ * Retrieve train map.
  * Created by tiestodoe on 9/7/15.
  */
 public class RetrieveTrainMapTask extends AsyncTask<InputStream, Void, Void>{
@@ -23,16 +24,29 @@ public class RetrieveTrainMapTask extends AsyncTask<InputStream, Void, Void>{
     private ArrayList<PolylineOptions> listLines = null;
     private final int[] trainColors = {Color.BLACK, Color.BLUE, Color.GREEN, Color.MAGENTA, Color.CYAN, Color.RED, Color.YELLOW, Color.rgb(255, 0, 0), Color.rgb(255, 0, 255), Color.rgb(255, 255, 222), Color.rgb(255, 0, 13), Color.rgb(33,0,255)};
 
+    /**
+     * Constructor
+     * @param googleMap google map to generate
+     */
     public RetrieveTrainMapTask(GoogleMap googleMap){
         this.googleMap = googleMap;
     }
 
+    /**
+     * Draw train lines
+     * @param result no value
+     */
     protected void onPostExecute(Void result) {
         for (PolylineOptions line : listLines) {
             googleMap.addPolyline(line);
         }
     }
 
+    /**
+     * Asynchronously retrieve train coordinates.
+     * @param stream stream of data
+     * @return nothing
+     */
     @Override
     protected Void doInBackground(InputStream... stream) {
 

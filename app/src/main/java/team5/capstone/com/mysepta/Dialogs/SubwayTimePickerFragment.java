@@ -17,9 +17,15 @@ import team5.capstone.com.mysepta.Adapters.SubwayScheduleViewAdapter;
 import team5.capstone.com.mysepta.SubwayActivity;
 
 /**
+ * Create dialog to allow date to be chosen.
  * Created by Andrew on 10/18/2015.
  */
 public class SubwayTimePickerFragment extends DialogFragment{
+    /**
+     * Constructor
+     * @param savedInstanceState saved state on close
+     * @return Dialog
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
