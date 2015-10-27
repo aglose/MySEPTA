@@ -3,6 +3,7 @@ package team5.capstone.com.mysepta.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import java.util.Map;
 import team5.capstone.com.mysepta.R;
 
 /**
+ * Creates adapter to create functionality of RailExpandableView.
  * Created by Kevin on 10/24/15.
  */
 public class RailExpandableAdapter extends BaseExpandableListAdapter {
@@ -25,6 +27,12 @@ public class RailExpandableAdapter extends BaseExpandableListAdapter {
     private ArrayList<String> tags;
     private LayoutInflater inflater;
 
+    /**
+     * Constructor
+     * @param context activity
+     * @param rails List of parent values
+     * @param railChoices Map with parent value keys to List of children
+     */
     public RailExpandableAdapter(Activity context, ArrayList<String> rails, Map<String,ArrayList<String>> railChoices){
         this.context = context;
         this.rails = rails;
@@ -33,41 +41,84 @@ public class RailExpandableAdapter extends BaseExpandableListAdapter {
         this.tags = new ArrayList<>(rails);
     }
 
+    /**
+     * Retrieve count of parents.
+     * @return Number of parents
+     */
     @Override
     public int getGroupCount() {
         return tags.size();
     }
 
+    /**
+     * Return children count under parent at groupPosition.
+     * @param groupPosition parent position
+     * @return child count under parent
+     */
     @Override
     public int getChildrenCount(int groupPosition) {
         return railChoices.get(tags.get(groupPosition)).size();
     }
 
+    /**
+     * Retrieves parent value (is String but returns object).
+     * @param groupPosition parent position
+     * @return Object parent value (is String)
+     */
     @Override
     public Object getGroup(int groupPosition) {
         return rails.get(groupPosition);
     }
 
+    /**
+     * Retrieves child value (is String but returns object).
+     * @param groupPosition parent location
+     * @param childPosition child location
+     * @return Object child value (is String)
+     */
     @Override
     public Object getChild(int groupPosition, int childPosition) {
         return railChoices.get(tags.get(groupPosition)).get(childPosition);
     }
 
+    /**
+     * Return parent id.
+     * @param groupPosition parent location
+     * @return parentID = parent location
+     */
     @Override
     public long getGroupId(int groupPosition) {
         return groupPosition;
     }
 
+    /**
+     * Returns child id.
+     * @param groupPosition parent position
+     * @param childPosition child position
+     * @return childID = child position
+     */
     @Override
     public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
     }
 
+    /**
+     * Check if ids are stable
+     * @return false
+     */
     @Override
     public boolean hasStableIds() {
         return false;
     }
 
+    /**
+     * Initialize parent view.
+     * @param groupPosition parent view position
+     * @param isExpanded true if parent expanded, else false
+     * @param convertView parent view
+     * @param parent group parent is a part of
+     * @return initialized parent view
+     */
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         String railDirection = (String) getGroup(groupPosition);
@@ -81,6 +132,15 @@ public class RailExpandableAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
+    /**
+     * Initialize child view at childPosition under groupPosition.
+     * @param groupPosition parent position
+     * @param childPosition child position
+     * @param isLastChild is last child in parent
+     * @param convertView child view
+     * @param parent parent viewgroup
+     * @return initialized child view
+     */
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         final String stopName = (String) getChild(groupPosition, childPosition);
@@ -95,12 +155,23 @@ public class RailExpandableAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
+    /**
+     * Checks if child can be selected.
+     * @param groupPosition parent position
+     * @param childPosition child position
+     * @return true
+     */
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
 
     public void updateParent(int groupPosition,String newValue){
-        rails.set(groupPosition,newValue);
+        try{
+            rails.get(groupPosition);
+            rails.set(groupPosition,newValue);
+        }catch (ArrayIndexOutOfBoundsException e){
+            Log.d("Invalid groupPosition: ",e.toString());
+        }
     }
 }

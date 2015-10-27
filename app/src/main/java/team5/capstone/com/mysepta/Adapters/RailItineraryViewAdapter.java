@@ -12,11 +12,18 @@ import team5.capstone.com.mysepta.R;
 import team5.capstone.com.mysepta.RailActivity;
 
 /**
+ * Creates adapter to handle RailItinerary view.
  * Created by Kevin on 9/28/15.
  */
 public class RailItineraryViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
 
+    /**
+     * Create recyclerView.viewholder and setup button listeners.
+     * @param parent parent viewgroup
+     * @param viewType type of view
+     * @return holder for rail home screen
+     */
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext())
@@ -45,11 +52,20 @@ public class RailItineraryViewAdapter extends RecyclerView.Adapter<RecyclerView.
         };
     }
 
+    /**
+     * Empty method that must be overwritten.
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
     }
 
+    /**
+     * Count of cards in adapter.
+     * @return 1
+     */
     @Override
     public int getItemCount() {
         return 1;
