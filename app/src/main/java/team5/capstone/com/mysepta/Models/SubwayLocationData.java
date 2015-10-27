@@ -7,6 +7,7 @@ import java.util.HashMap;
 import team5.capstone.com.mysepta.R;
 
 /**
+ * Model to hold subway stop id data.
  * Created by tiestodoe on 9/24/15.
  */
 public class SubwayLocationData {
@@ -24,6 +25,12 @@ public class SubwayLocationData {
         buildList();
     }
 
+    /**
+     * Get stop id
+     * @param locationKey location
+     * @param direction direction
+     * @return stop id
+     */
     public int getStopId(String locationKey, String direction){
         if(direction.equalsIgnoreCase("North")){
             return subwayStopIdLocationMap_NORTH_BSL.get(locationKey);
@@ -37,6 +44,9 @@ public class SubwayLocationData {
         return 0;
     }
 
+    /**
+     * populate stop ids
+     */
     //TODO: NIGHT OWL
     private void buildList(){
         //Intialize Maps

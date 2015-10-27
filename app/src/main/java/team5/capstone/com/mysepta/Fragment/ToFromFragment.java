@@ -105,12 +105,20 @@ public class ToFromFragment extends Fragment implements RailToFromViewAdapter.on
         }
     }
 
+    /**
+     * Detach fragment.
+     */
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
 
+    /**
+     * Update child text.
+     * @param childText new text
+     * @param position child position
+     */
     @Override
     public void childClicked(String childText, int position) {
         int temp = toFromRec.getChildCount();

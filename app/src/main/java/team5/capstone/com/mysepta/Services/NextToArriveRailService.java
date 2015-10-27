@@ -12,6 +12,7 @@ import retrofit.converter.GsonConverter;
 import team5.capstone.com.mysepta.Interfaces.NextToArriveRailInterface;
 
 /**
+ *
  * Created by Kevin on 10/7/15.
  */
 public class NextToArriveRailService {
