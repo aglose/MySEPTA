@@ -32,7 +32,7 @@
         <item>Cecil B Moore</item>
         <item>Chinatown</item>
         <item>City Hall</item>
-        <item>Ellsworth Federal</item>
+        <item>Ellsworth-Federal</item>
         <item>Erie</item>
         <item>Fairmount</item>
         <item>Fern Rock Transportation Center</item>
@@ -70,7 +70,7 @@
         <item>City Hall</item>
         <item>Walnut-Locust</item>
         <item>Lombard-South</item>
-        <item>Ellsworth Federal</item>
+        <item>Ellsworth-Federal</item>
         <item>Tasker-Morris</item>
         <item>Snyder</item>
         <item>Oregon</item>
@@ -93,8 +93,7 @@
         <item>5th St</item>
         <item>60th St</item>
         <item>63rd St</item>
-        <item>69th St Transportation Center</item>
-        <item>69th St Transportation Center</item>
+        <item>69th Street Transportation Center</item>
         <item>8th St</item>
         <item>Allegheny</item>
         <item>Arrott Transportation Center</item>
@@ -112,7 +111,7 @@
     </string-array>
 
     <string-array name="market_frankford_line_sorted">
-        <item>69th St Transportation Center</item>
+        <item>69th Street Transportation Center</item>
         <item>Millbourne</item>
         <item>63rd St</item>
         <item>60th St</item>

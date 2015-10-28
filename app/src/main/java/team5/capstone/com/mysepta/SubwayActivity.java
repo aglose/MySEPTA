@@ -67,6 +67,10 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         Bundle bundle = this.getIntent().getExtras();
         stopID = bundle.getInt(STOP_ID_KEY);
         location = bundle.getString(LOCATION_KEY);
+
+        Log.d(TAG, location);
+
+
         direction = bundle.getString(DIRECTION_KEY);
         line = bundle.getString(LINE_KEY);
 
@@ -74,6 +78,15 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //ENABLE BACK BUTTON
         getSupportActionBar().setTitle(location);
+
+        /**
+         * This is a temporary bug fix for a crash, column name in database is incorrect
+         */
+        if(location.equalsIgnoreCase("34th St")){
+            location = "34th";
+        }else if(location.equalsIgnoreCase("56th St")){
+            location = "56nd St";
+        }
 
         dbHelper = new SubwayScheduleCreatorDbHelper(this);
     }
