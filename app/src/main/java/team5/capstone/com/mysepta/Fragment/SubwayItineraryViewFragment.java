@@ -19,6 +19,7 @@ import team5.capstone.com.mysepta.Models.SubwayLocationData;
 import team5.capstone.com.mysepta.R;
 
 /**
+ * Fragment for subway section of home screen.
  * Created by Andrew on 9/20/2015.
  */
 public class SubwayItineraryViewFragment extends Fragment {
@@ -27,6 +28,10 @@ public class SubwayItineraryViewFragment extends Fragment {
 
     /*Subway Button click listener*/
     private SubwayChangeFragmentListener mSubwayFragmentListener;
+
+    /**
+     * interface for fragment change
+     */
     public interface SubwayChangeFragmentListener {
         void onItinerarySelection(String line);
     }
@@ -45,17 +50,32 @@ public class SubwayItineraryViewFragment extends Fragment {
     /*Location HashMap*/
     private SubwayLocationData subLocData;
 
-    /*Statically create a new instance of this Fragment*/
+    /**
+     * Statically create a new instance of this Fragment
+     * @return new fragment
+     */
     public static SubwayItineraryViewFragment newInstance() {
         return new SubwayItineraryViewFragment();
     }
 
+    /**
+     * Create view.
+     * @param inflater layout inflater
+     * @param container parent view group
+     * @param savedInstanceState saved state on close
+     * @return current inflated view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_subway_itinerary_view, container, false);
     }
 
 
+    /**
+     * Initialize view
+     * @param view current item view
+     * @param savedInstanceState saved state on close
+     */
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -75,7 +95,9 @@ public class SubwayItineraryViewFragment extends Fragment {
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerSubwayView, null);
     }
 
-    /*Initial and default Subway Tab View*/
+    /**
+     * Initial and default Subway Tab View
+     */
     public void changeAdapterToItineraryView(){
         if(subwayLocationViewAdapter != null){
             recyclerSubwayView = (RecyclerView) rootView.findViewById(R.id.subwayItineraryView);
@@ -88,13 +110,20 @@ public class SubwayItineraryViewFragment extends Fragment {
         }
     }
 
-    /*After user chooses Subway Line the locations will be displayed via SubwayLocationViewAdapter*/
+    /**
+     * After user chooses Subway Line the locations will be displayed via SubwayLocationViewAdapter
+     *@param line name of line
+     */
     public void changeAdapterToScheduleView(String line){
         subwayLocationViewAdapter = new SubwayLocationViewAdapter(line, getActivity(), subLocData);
         materialWrapperAdapter = new RecyclerViewMaterialAdapter(subwayLocationViewAdapter);
         recyclerSubwayView.swapAdapter(materialWrapperAdapter, true);
     }
 
+    /**
+     * attach new fragment
+     * @param activity activity being attached to
+     */
     @Override
     public void onAttach(Activity activity){
         super.onAttach(activity);

@@ -14,8 +14,6 @@ import android.view.ViewGroup;
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import team5.capstone.com.mysepta.Adapters.RailToFromViewAdapter;
 import team5.capstone.com.mysepta.DropDownView.RailChooser;
@@ -24,10 +22,8 @@ import team5.capstone.com.mysepta.R;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ToFromFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
+ * This fragment is currently not in use.  This fragment generates an expandable list view and
+ * populates it.  It then waits for the view to be clicked and generates the clicked values.
  */
 public class ToFromFragment extends Fragment implements RailToFromViewAdapter.onChildClickedListener{
 
@@ -38,11 +34,22 @@ public class ToFromFragment extends Fragment implements RailToFromViewAdapter.on
     private String startStation,endStation;
     private int size;
 
+    /**
+     * Empty constructor.
+     */
     public ToFromFragment() {
         // Required empty public constructor
     }
 
 
+    /**
+     * Create initial expandable list view.  Initialize and get layout items. Initialize expandable
+     * adapter.  Set listener for children.
+     * @param inflater inflator for activity this belongs to
+     * @param container group this belongs to
+     * @param savedInstanceState saved values for orientation change
+     * @return ToFromFragment view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -83,6 +90,10 @@ public class ToFromFragment extends Fragment implements RailToFromViewAdapter.on
     }
 
 
+    /**
+     * Initialize fragment listener and
+     * @param activity activity to which this fragment belongs.
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -94,12 +105,20 @@ public class ToFromFragment extends Fragment implements RailToFromViewAdapter.on
         }
     }
 
+    /**
+     * Detach fragment.
+     */
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
 
+    /**
+     * Update child text.
+     * @param childText new text
+     * @param position child position
+     */
     @Override
     public void childClicked(String childText, int position) {
         int temp = toFromRec.getChildCount();
@@ -115,20 +134,16 @@ public class ToFromFragment extends Fragment implements RailToFromViewAdapter.on
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * No current function.  Would be used to setup interaction with this fragment.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
 
+    /**
+     * Generate list of valid rails
+     * @return ArrayList of parent objects and their children.
+     */
     public ArrayList<ParentObject> getRails(){
         ArrayList<ParentObject> rails = new ArrayList<>();
 

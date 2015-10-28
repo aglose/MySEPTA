@@ -9,6 +9,7 @@ import com.bignerdranch.expandablerecyclerview.ViewHolder.ParentViewHolder;
 import team5.capstone.com.mysepta.R;
 
 /**
+ * Create parent view holder for expandable list
  * Created by Kevin on 9/23/15.
  */
 public class StationChooserParentViewHolder extends ParentViewHolder{
@@ -16,6 +17,10 @@ public class StationChooserParentViewHolder extends ParentViewHolder{
         public TextView directionTextView;
         public ImageButton mParentDropDownArrow;
 
+    /**
+     * Constructor
+     * @param itemView current item view
+     */
         public StationChooserParentViewHolder(View itemView) {
             super(itemView);
 

@@ -3,6 +3,7 @@ package team5.capstone.com.mysepta.Models;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * Model to hold next to arrive data.
  * Created by Kevin on 10/7/15.
  */
 public class NextToArriveRailModel {

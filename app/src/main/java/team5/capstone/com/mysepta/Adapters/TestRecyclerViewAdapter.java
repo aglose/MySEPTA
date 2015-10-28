@@ -14,6 +14,7 @@ import team5.capstone.com.mysepta.MapsActivity;
 import team5.capstone.com.mysepta.R;
 
 /**
+ * Adapter created for test purposes.
  * Created by Andrew on 9/19/2015.
  */
 public class TestRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -24,11 +25,21 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     static final int TYPE_CELL = 1;
     Context context;
 
+    /**
+     * Constructor
+     * @param contents list of items
+     * @param context activity
+     */
     public TestRecyclerViewAdapter(List<Object> contents, Context context) {
         this.context = context;
         this.contents = contents;
     }
 
+    /**
+     * Return view type
+     * @param position item position
+     * @return TYPE_HEADER if position 0, otherwise TYPE_CELL
+     */
     @Override
     public int getItemViewType(int position) {
         switch (position) {
@@ -39,11 +50,21 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
+    /**
+     * Get item count
+     * @return size of contents
+     */
     @Override
     public int getItemCount() {
         return contents.size();
     }
 
+    /**
+     * Create view holder and set onclicklistener
+     * @param parent parent viewgroup
+     * @param viewType type of item view
+     * @return view holder
+     */
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = null;
@@ -74,6 +95,11 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
 
+    /**
+     * Initialize view holder
+     * @param holder current view holder
+     * @param position current item position
+     */
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (getItemViewType(position)) {

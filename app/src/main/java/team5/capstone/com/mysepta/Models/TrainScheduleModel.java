@@ -3,6 +3,7 @@ package team5.capstone.com.mysepta.Models;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * Model for static train data.
  * Created by Kevin on 10/21/15.
  */
 public class TrainScheduleModel {

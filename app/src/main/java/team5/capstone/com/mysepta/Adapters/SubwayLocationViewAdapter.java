@@ -16,6 +16,7 @@ import team5.capstone.com.mysepta.R;
 import team5.capstone.com.mysepta.SubwayActivity;
 
 /**
+ * Adapter for subway location view fragment.
  * Created by Andrew on 9/20/2015.
  */
 public class SubwayLocationViewAdapter extends RecyclerView.Adapter<SubwayLocationViewAdapter.SubwayLocationHolder> {
@@ -30,6 +31,12 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter<SubwayLocati
     private SubwayLocationData subwayLocationData;
     private String line;
 
+    /**
+     * Constructor
+     * @param line name of subway line
+     * @param context activity
+     * @param subwayLocationData stop data
+     */
     public SubwayLocationViewAdapter(String line, Context context, SubwayLocationData subwayLocationData){
         if(line.equalsIgnoreCase("MFL")){
             listLocations = context.getResources().getStringArray(R.array.market_frankford_line_sorted);
@@ -43,7 +50,12 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter<SubwayLocati
         this.context = context;
     }
 
-
+    /**
+     * Inflate view holder.
+     * @param parent parent view group
+     * @param viewType view type
+     * @return subway location holder
+     */
     @Override
     public SubwayLocationViewAdapter.SubwayLocationHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = null;
@@ -52,6 +64,11 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter<SubwayLocati
         return new SubwayLocationHolder(view);
     }
 
+    /**
+     * Initialize and bind view holder.  Starts subway activity and passes data.
+     * @param holder current item holder
+     * @param position current item position
+     */
     @Override
     public void onBindViewHolder(SubwayLocationHolder holder, final int position) {
         holder.locationText.setText(listLocations[position]);
@@ -79,15 +96,26 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter<SubwayLocati
         });
     }
 
+    /**
+     * Get number of items.
+     * @return number of listLocations
+     */
     @Override
     public int getItemCount() {
         return listLocations.length;
     }
 
+    /**
+     * Holder for subway locations
+     */
     public class SubwayLocationHolder extends RecyclerView.ViewHolder{
         TextView locationText;
         CardView cardView;
 
+        /**
+         * Constructor
+         * @param itemView item view
+         */
         public SubwayLocationHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.subway_location_item_card);

@@ -3,6 +3,7 @@ package team5.capstone.com.mysepta.Models;
 import com.google.android.gms.maps.model.LatLng;
 
 /**
+ * Model to hold coordinate data.
  * Created by Andrew on 9/7/2015.
  */
 public class Coordinates {

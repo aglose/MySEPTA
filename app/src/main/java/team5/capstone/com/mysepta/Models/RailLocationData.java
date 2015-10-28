@@ -3,6 +3,7 @@ package team5.capstone.com.mysepta.Models;
 import java.util.HashMap;
 
 /**
+ * Model to hold rail location data for rail live schedule.
  * Created by Kevin on 9/30/15.
  */
 public class RailLocationData {

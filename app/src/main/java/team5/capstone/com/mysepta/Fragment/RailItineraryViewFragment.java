@@ -19,6 +19,7 @@ import team5.capstone.com.mysepta.Adapters.RailItineraryViewAdapter;
 import team5.capstone.com.mysepta.R;
 
 /**
+ * Fragment for rail view in home screen.
  * Created by kevin on 9/28/15.
  */
 public class RailItineraryViewFragment extends Fragment {
@@ -29,15 +30,31 @@ public class RailItineraryViewFragment extends Fragment {
 
     private List<Object> mContentItems = new ArrayList<>();
 
+    /**
+     * Create new instance of RailItineraryViewFragment
+     * @return new fragment
+     */
     public static RailItineraryViewFragment newInstance() {
         return new RailItineraryViewFragment();
     }
 
+    /**
+     * Create fragment view
+     * @param inflater layout inflater
+     * @param container parent container
+     * @param savedInstanceState saved state on close
+     * @return view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_rail_itinerary_view, container, false);
     }
 
+    /**
+     * initialize view.
+     * @param view current fragment view
+     * @param savedInstanceState saved state on close
+     */
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

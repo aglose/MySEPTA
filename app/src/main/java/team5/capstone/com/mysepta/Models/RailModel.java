@@ -4,6 +4,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * Model to hold train view data.
  * Created by Andrew on 9/7/2015.
  */
 public class RailModel {

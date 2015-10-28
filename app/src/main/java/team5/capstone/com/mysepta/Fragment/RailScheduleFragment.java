@@ -30,7 +30,7 @@ import team5.capstone.com.mysepta.R;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment for rail schedule.
  */
 public class RailScheduleFragment extends Fragment {
 
@@ -45,11 +45,20 @@ public class RailScheduleFragment extends Fragment {
     private List<String> stationNames;
     private List<String> apiStationNames;
 
+    /**
+     * Empty constructor
+     */
     public RailScheduleFragment() {
         // Required empty public constructor
     }
 
-
+    /**
+     * Create and initialize schedule view
+     * @param inflater layout inflater
+     * @param container parent view group
+     * @param savedInstanceState saved instance on close
+     * @return fragment view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,6 +85,12 @@ public class RailScheduleFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Retrieve NextToArrive trains from strating station to ending station.
+     * @param startStation starting station for schedule
+     * @param endStation ending station for schedule
+     * @param numResults number of results
+     */
     private void getNextTrainData(final String startStation, final String endStation,String numResults) {
         Callback callback = new Callback() {
             @Override
@@ -95,6 +110,12 @@ public class RailScheduleFragment extends Fragment {
                 apiStationNames.get(stationNames.indexOf(endStation)),numResults,callback);
     }
 
+    /**
+     * Iinitialize rail adapter and set it.
+     * @param trainList list of trains to arrive
+     * @param finalStation final station
+     * @param startStation starting station
+     */
     private void setupRailAdapter(ArrayList<NextToArriveRailModel> trainList,String finalStation,String startStation){
         if(trainList.isEmpty()){
             Log.d("Debug", "No train data");

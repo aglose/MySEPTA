@@ -15,6 +15,7 @@ import team5.capstone.com.mysepta.R;
 import team5.capstone.com.mysepta.RailActivity;
 
 /**
+ * Adapter to define functionality of rail schedule fragment.
  * Created by Kevin on 9/30/15.
  */
 public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapter.RailScheduleHolder> {
@@ -25,6 +26,13 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
     private String start;
     private String end;
 
+    /**
+     * Constructor
+     * @param rails List of rail data
+     * @param context activity
+     * @param start starting station
+     * @param end ending station
+     */
     public RailScheduleAdapter(ArrayList<RailLocationData> rails, Context context, String start,String end){
         this.rails = rails;
         this.context = context;
@@ -33,6 +41,11 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
     }
 
 
+    /**
+     * Check type of item view.
+     * @param position location of view
+     * @return TYPE_HEADER if in position 0, otherwise TYPE_CELL
+     */
     @Override
     public int getItemViewType(int position) {
         switch (position) {
@@ -43,6 +56,12 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
         }
     }
 
+    /**
+     * Create viewholder
+     * @param parent parent viewgroup
+     * @param viewType type of item view
+     * @return rail schedule holder for view
+     */
     @Override
     public RailScheduleAdapter.RailScheduleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
@@ -66,6 +85,11 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
 
     }
 
+    /**
+     * Initialize view parameters and bind them.
+     * @param holder holder for view
+     * @param position position of view
+     */
     @Override
     public void onBindViewHolder(RailScheduleHolder holder, int position) {
         switch(getItemViewType(position)) {
@@ -94,11 +118,18 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
         }
     }
 
+    /**
+     * Return number of items.
+     * @return number of rails + headers
+     */
     @Override
     public int getItemCount() {
         return rails.size()+1;
     }
 
+    /**
+     * Creates holder for views to make item views easily retrievable.
+     */
     public class RailScheduleHolder extends RecyclerView.ViewHolder{
         TextView railText;
         TextView railAcr;
@@ -109,6 +140,10 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
         TextView arrivalStation;
         TextView departureStation;
 
+        /**
+         * Constructor
+         * @param itemView current item
+         */
         public RailScheduleHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.rail_item_card);
