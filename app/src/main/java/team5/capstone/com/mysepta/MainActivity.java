@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         return true;
     }
 
-    /*Implementation for BSL and MFL Button clicks in Subway Tab*/
+    /*Implementation for BSL and MFL Button clicks in Subway Tab */
     @Override
     public void onItinerarySelection(String line) {
         subwayTabTitle = line;
