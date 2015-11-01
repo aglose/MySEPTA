@@ -6,7 +6,7 @@
     android:layout_height="60dp">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/subway_itinerary_card"
+        android:id="@+id/favoriteFragmentHeader"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardCornerRadius="2dp"

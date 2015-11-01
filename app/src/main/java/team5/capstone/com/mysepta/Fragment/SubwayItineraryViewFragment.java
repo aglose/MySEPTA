@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,7 +29,6 @@ public class SubwayItineraryViewFragment extends Fragment {
 
     /*Subway Button click listener*/
     private SubwayChangeFragmentListener mSubwayFragmentListener;
-
     /**
      * interface for fragment change
      */
@@ -81,7 +81,6 @@ public class SubwayItineraryViewFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rootView = view;
         subLocData = new SubwayLocationData(rootView.getContext());
-
         recyclerSubwayView = (RecyclerView) rootView.findViewById(R.id.subwayItineraryView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity()); //Notice LinearLayoutManager
         recyclerSubwayView.setLayoutManager(layoutManager);
@@ -100,6 +99,7 @@ public class SubwayItineraryViewFragment extends Fragment {
      */
     public void changeAdapterToItineraryView(){
         if(subwayLocationViewAdapter != null){
+
             recyclerSubwayView = (RecyclerView) rootView.findViewById(R.id.subwayItineraryView);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity()); //Notice LinearLayoutManager
             recyclerSubwayView.setLayoutManager(layoutManager);
@@ -117,7 +117,7 @@ public class SubwayItineraryViewFragment extends Fragment {
     public void changeAdapterToScheduleView(String line){
         subwayLocationViewAdapter = new SubwayLocationViewAdapter(line, getActivity(), subLocData);
         materialWrapperAdapter = new RecyclerViewMaterialAdapter(subwayLocationViewAdapter);
-        recyclerSubwayView.swapAdapter(materialWrapperAdapter, true);
+        recyclerSubwayView.setAdapter(materialWrapperAdapter);
     }
 
     /**

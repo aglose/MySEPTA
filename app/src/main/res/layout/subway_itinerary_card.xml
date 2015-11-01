@@ -1,72 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/subway_itinerary_card"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
-    app:cardCornerRadius="2dp"
-    app:cardElevation="2dp"
-    android:layout_marginBottom="4dp"
-    android:layout_marginLeft="@dimen/cardMarginHorizontal"
-    android:layout_marginRight="@dimen/cardMarginHorizontal"
-    android:layout_marginTop="4dp"
-    app:cardPreventCornerOverlap="false"
-    app:contentPadding="0dp">
+    android:layout_height="180dp">
 
-    <RelativeLayout
+    <android.support.v7.widget.CardView
+
+        android:id="@+id/subway_itinerary_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/relativeLayout">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Broad Street Line"
-            android:id="@+id/bslTextView"
-            android:textColor="@android:color/black"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_alignBottom="@+id/bslButton"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="59dp" />
+        app:cardCornerRadius="2dp"
+        app:cardElevation="2dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="@dimen/cardMarginHorizontal"
+        android:layout_marginRight="@dimen/cardMarginHorizontal"
+        android:layout_marginTop="4dp">
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="BSL"
-            android:textSize="5dp"
-            android:id="@+id/bslButton"
-            android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/mflButton" />
+        <RelativeLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/relativeLayout">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Broad Street Line"
+                android:id="@+id/bslTextView"
+                android:textColor="@android:color/black"
+                android:layout_alignBaseline="@+id/bslButton"
+                android:layout_alignBottom="@+id/bslButton"
+                android:layout_alignStart="@+id/mflTextView" />
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="MFL"
-            android:textSize="5dp"
-            android:id="@+id/mflButton"
-            android:layout_alignTop="@+id/mflTextView"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="54dp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Market Frankford Line"
-            android:textColor="@android:color/black"
-            android:id="@+id/mflTextView"
-            android:layout_centerVertical="true"
-            android:layout_alignStart="@+id/bslTextView" />
-    </RelativeLayout>
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="BSL"
+                android:textSize="15dp"
+                android:id="@+id/bslButton"
+                android:layout_above="@+id/mflButton"
+                android:layout_alignStart="@+id/mflButton" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="MFL"
+                android:textSize="15dp"
+                android:id="@+id/mflButton"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/mflTextView"
+                android:layout_marginStart="42dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Market Frankford Line"
+                android:textColor="@android:color/black"
+                android:id="@+id/mflTextView"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="40dp" />
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>
 
 
 
-
-</android.support.v7.widget.CardView>
 
 
 

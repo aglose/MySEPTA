@@ -165,15 +165,15 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
                     case RAIL_TAB:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.blue,
-                                "http://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2014/06/wallpaper_51.jpg");
+                                "http://www.uwishunu.com/wp-content/uploads/2012/08/boathouse-row-philadelphia-sunset1-680uw.jpg");
                     case BUS_TAB:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.cyan,
-                                "http://www.droid-life.com/wp-content/uploads/2014/10/lollipop-wallpapers10.jpg");
+                                "http://cdn.gobankingrates.com/wp-content/uploads/banks-in-philadelphia.jpg");
                     case SUBWAY_TAB:
                         return HeaderDesign.fromColorResAndUrl(
                                 R.color.red,
-                                "http://www.tothemobile.com/wp-content/uploads/2014/07/original.jpg");
+                                "https://www.issueone.org/wp-content/uploads/2015/06/Philly-Skyline.jpg");
                 }
                 return null;
             }

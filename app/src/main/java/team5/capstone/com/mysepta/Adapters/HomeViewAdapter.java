@@ -1,6 +1,8 @@
 package team5.capstone.com.mysepta.Adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -86,6 +88,7 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
         Log.d(TAG, "bindViewHolder position: "+position);
 
         if(getItemViewType(position) == TYPE_HEADER){
+            ((HomeViewHeaderHolder)holder).headerCard.setCardBackgroundColor(ContextCompat.getColor(context, R.color.headerBlue));
             if(position == 0){
                 ((HomeViewHeaderHolder)holder).headerText.setText("Subway");
             }else if(position == 4){
@@ -110,9 +113,11 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
 
     public class HomeViewHeaderHolder extends RecyclerView.ViewHolder{
         TextView headerText;
+        CardView headerCard;
         public HomeViewHeaderHolder(View itemView) {
             super(itemView);
             headerText = (TextView) itemView.findViewById(R.id.header_title);
+            headerCard = (CardView) itemView.findViewById(R.id.favoriteFragmentHeader);
         }
     }
 
