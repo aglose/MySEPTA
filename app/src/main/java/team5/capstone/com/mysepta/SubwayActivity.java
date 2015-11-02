@@ -16,6 +16,10 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -57,7 +61,6 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subway);
-
         initSetup();
         ArrayList arrivals = retrieveDatabaseInfo();
         setUpRecyclerView(arrivals);
@@ -184,6 +187,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         subwayScheduleViewAdapter = new SubwayScheduleViewAdapter(arrivals);
 
         recyclerScheduleView.setAdapter(subwayScheduleViewAdapter);
+
     }
 
     private String chooseTable() {

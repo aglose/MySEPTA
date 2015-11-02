@@ -3,9 +3,11 @@ package team5.capstone.com.mysepta.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +21,15 @@ import team5.capstone.com.mysepta.SubwayActivity;
  * Adapter for subway location view fragment.
  * Created by Andrew on 9/20/2015.
  */
-public class SubwayLocationViewAdapter extends RecyclerView.Adapter<SubwayLocationViewAdapter.SubwayLocationHolder> {
+public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
     private static final String TAG = "SubwayLocationViewAdapter";
     private static final String STOP_ID_KEY = "StopID";
     private static final String LOCATION_KEY = "Location";
     private static final String DIRECTION_KEY = "Direction";
     private static final String LINE_KEY = "Line";
+
+    private static final int TYPE_HEADER = 0;
+    private static final int TYPE_CELL = 1;
 
     private Context context;
     private String[] listLocations;
@@ -50,6 +55,16 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter<SubwayLocati
         this.context = context;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        switch (position) {
+            case 0:
+                return TYPE_HEADER;
+            default:
+                return TYPE_CELL;
+        }
+    }
+
     /**
      * Inflate view holder.
      * @param parent parent view group
@@ -57,11 +72,19 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter<SubwayLocati
      * @return subway location holder
      */
     @Override
-    public SubwayLocationViewAdapter.SubwayLocationHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = null;
-        view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.subway_list_item_card, parent, false);
-        return new SubwayLocationHolder(view);
+
+        if(viewType == TYPE_HEADER){
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.subway_list_item_header, parent, false);
+            return new SubwayLocationHeaderHolder(view){};
+        }else{
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.subway_list_item_card, parent, false);
+
+            return new SubwayLocationItemHolder(view);
+        }
     }
 
     /**
@@ -70,45 +93,52 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter<SubwayLocati
      * @param position current item position
      */
     @Override
-    public void onBindViewHolder(SubwayLocationHolder holder, final int position) {
-        holder.locationText.setText(listLocations[position]);
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int stopID;
-                String direction = "";
-                if (line.equalsIgnoreCase("BSL")) {
-                    stopID = subwayLocationData.getStopId(listLocations[position], "North");
-                    direction = "NORTH";
-                } else {
-                    stopID = subwayLocationData.getStopId(listLocations[position], "East");
-                    direction = "EAST";
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+
+        if(getItemViewType(position) == TYPE_HEADER){
+            ((SubwayLocationHeaderHolder)holder).header.setCardBackgroundColor(ContextCompat.getColor(context, R.color.headerBlue));
+            ((SubwayLocationHeaderHolder)holder).headerText.setGravity(Gravity.CENTER);
+        }else{
+            ((SubwayLocationItemHolder)holder).locationText.setText(listLocations[position-1]);
+            ((SubwayLocationItemHolder)holder).cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int stopID;
+                    String direction = "";
+                    if (line.equalsIgnoreCase("BSL")) {
+                        stopID = subwayLocationData.getStopId(listLocations[position], "North");
+                        direction = "NORTH";
+                    } else {
+                        stopID = subwayLocationData.getStopId(listLocations[position], "East");
+                        direction = "EAST";
+                    }
+                    Intent startSubwayActivity = new Intent(context, SubwayActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(STOP_ID_KEY, stopID);
+                    bundle.putString(DIRECTION_KEY, direction);
+                    bundle.putString(LINE_KEY, line);
+                    bundle.putString(LOCATION_KEY, listLocations[position]);
+                    startSubwayActivity.putExtras(bundle);
+                    context.startActivity(startSubwayActivity);
                 }
-                Intent startSubwayActivity = new Intent(context, SubwayActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt(STOP_ID_KEY, stopID);
-                bundle.putString(DIRECTION_KEY, direction);
-                bundle.putString(LINE_KEY, line);
-                bundle.putString(LOCATION_KEY, listLocations[position]);
-                startSubwayActivity.putExtras(bundle);
-                context.startActivity(startSubwayActivity);
-            }
-        });
+            });
+        }
+
     }
 
     /**
      * Get number of items.
-     * @return number of listLocations
+     * @return number of listLocations and header
      */
     @Override
     public int getItemCount() {
-        return listLocations.length;
+        return listLocations.length+1;
     }
 
     /**
      * Holder for subway locations
      */
-    public class SubwayLocationHolder extends RecyclerView.ViewHolder{
+    public class SubwayLocationItemHolder extends RecyclerView.ViewHolder{
         TextView locationText;
         CardView cardView;
 
@@ -116,10 +146,24 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter<SubwayLocati
          * Constructor
          * @param itemView item view
          */
-        public SubwayLocationHolder(View itemView) {
+        public SubwayLocationItemHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.subway_location_item_card);
             locationText = (TextView) itemView.findViewById(R.id.locationText);
+        }
+    }
+
+    public class SubwayLocationHeaderHolder extends RecyclerView.ViewHolder{
+        CardView header;
+        TextView headerText;
+        /**
+         * Constructor
+         * @param itemView item view
+         */
+        public SubwayLocationHeaderHolder(View itemView) {
+            super(itemView);
+            header = (CardView) itemView.findViewById(R.id.subwayLocationHeader);
+            headerText = (TextView) itemView.findViewById(R.id.header_title);
         }
     }
 }
