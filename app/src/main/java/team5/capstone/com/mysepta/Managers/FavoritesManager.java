@@ -9,11 +9,12 @@ import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
  * Created by Andrew on 10/24/2015.
  */
 public class FavoritesManager {
-    private ArrayList<SubwayScheduleItemModel> subwayFavoriteList = new ArrayList<>();
-    private ArrayList<RailLocationData> railFavoriteList = new ArrayList<>();
+    private static ArrayList<SubwayScheduleItemModel> subwayFavoriteList = new ArrayList<>();
+    private static ArrayList<RailLocationData> railFavoriteList = new ArrayList<>();
+    private static FavoritesManager fragmentManager = null;
 
-    //Just for testing, will be removed later
-    public FavoritesManager(){
+    protected FavoritesManager() {
+        // Exists only to defeat instantiation, and testing purposes until mocking is unnecessary.
         SubwayScheduleItemModel d = new SubwayScheduleItemModel();
         d.setFormattedTimeStr("Subway Arrival #1");
         subwayFavoriteList.add(d);
@@ -32,17 +33,30 @@ public class FavoritesManager {
         railFavoriteList.add(f);
     }
 
+    public static FavoritesManager getInstance() {
+        if(fragmentManager == null) {
+            fragmentManager = new FavoritesManager();
+        }
+        return fragmentManager;
+    }
+
     public ArrayList getFavoriteList(){
         ArrayList fullList = new ArrayList<>();
         fullList.addAll(subwayFavoriteList);
         fullList.addAll(railFavoriteList);
         return fullList;
     }
+
     public ArrayList getSubwayList(){
         return subwayFavoriteList;
     }
 
     public ArrayList getRailList(){
         return railFavoriteList;
+    }
+
+    public static boolean addSubwayLineToFavorites(String location){
+        subwayFavoriteList.get(0).setFormattedTimeStr("Successful add for line: "+location);
+        return false;
     }
 }

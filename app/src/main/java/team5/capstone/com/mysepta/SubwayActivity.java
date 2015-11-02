@@ -1,7 +1,9 @@
 package team5.capstone.com.mysepta;
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,10 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.TimePicker;
-
-import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,6 +28,7 @@ import java.util.Date;
 import team5.capstone.com.mysepta.Adapters.SubwayScheduleViewAdapter;
 import team5.capstone.com.mysepta.DatabaseHelpers.SubwayScheduleCreatorDbHelper;
 import team5.capstone.com.mysepta.Dialogs.SubwayTimePickerFragment;
+import team5.capstone.com.mysepta.Managers.FavoritesManager;
 import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
 
 public class SubwayActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
@@ -72,7 +72,6 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         location = bundle.getString(LOCATION_KEY);
 
         Log.d(TAG, location);
-
 
         direction = bundle.getString(DIRECTION_KEY);
         line = bundle.getString(LINE_KEY);
@@ -128,8 +127,6 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
                         if(arrivalNewFormat.startsWith("0")){
                             arrivalNewFormat = arrivalNewFormat.substring(1, arrivalNewFormat.length());
                         }
-
-
 
                         SubwayScheduleItemModel newArrival = new SubwayScheduleItemModel();
                         newArrival.setFormattedTimeStr(arrivalNewFormat);
@@ -286,7 +283,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
 
         switch (id) {
             case android.R.id.home:
-                finish();
+                endActivity();
                 return true;
             case R.id.change_direction:
                 changeDirection();
@@ -294,10 +291,25 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
             case R.id.timePicker:
                 launchTimePicker();
                 return true;
+            case R.id.favoriteIcon:
+                addLineToFavorites();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    private void endActivity() {
+        Intent resultIntent = new Intent();
+        setResult(Activity.RESULT_OK, resultIntent);
+        finish();
+    }
+
+    private void addLineToFavorites() {
+        FavoritesManager.addSubwayLineToFavorites(location);
+
+        Toast.makeText(SubwayActivity.this, "Added to Favorites", Toast.LENGTH_SHORT).show();
     }
 
 

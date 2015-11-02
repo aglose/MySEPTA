@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import team5.capstone.com.mysepta.MainActivity;
 import team5.capstone.com.mysepta.Models.SubwayLocationData;
 import team5.capstone.com.mysepta.R;
 import team5.capstone.com.mysepta.SubwayActivity;
@@ -31,7 +32,7 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_CELL = 1;
 
-    private Context context;
+    private MainActivity context;
     private String[] listLocations;
     private SubwayLocationData subwayLocationData;
     private String line;
@@ -42,7 +43,7 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
      * @param context activity
      * @param subwayLocationData stop data
      */
-    public SubwayLocationViewAdapter(String line, Context context, SubwayLocationData subwayLocationData){
+    public SubwayLocationViewAdapter(String line, MainActivity context, SubwayLocationData subwayLocationData){
         if(line.equalsIgnoreCase("MFL")){
             listLocations = context.getResources().getStringArray(R.array.market_frankford_line_sorted);
         }else if(line.equalsIgnoreCase("BSL")){
@@ -119,7 +120,8 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
                     bundle.putString(LINE_KEY, line);
                     bundle.putString(LOCATION_KEY, listLocations[position]);
                     startSubwayActivity.putExtras(bundle);
-                    context.startActivity(startSubwayActivity);
+
+                    context.startActivityForResult(startSubwayActivity, 0);
                 }
             });
         }

@@ -1,5 +1,6 @@
 package team5.capstone.com.mysepta;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Environment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -38,6 +39,7 @@ import team5.capstone.com.mysepta.Fragment.FavoritesFragment;
 import team5.capstone.com.mysepta.Fragment.RailItineraryViewFragment;
 import team5.capstone.com.mysepta.Fragment.RecyclerViewFragment;
 import team5.capstone.com.mysepta.Fragment.SubwayItineraryViewFragment;
+import team5.capstone.com.mysepta.Managers.FavoritesManager;
 
 public class MainActivity extends AppCompatActivity implements SubwayItineraryViewFragment.SubwayChangeFragmentListener{
     /*When you are debugging use this TAG as the first String (i.e. Log.d(TAG, String.valueOf(position));*/
@@ -52,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
     /*Third party library for the Material looking view pager*/
     private MaterialViewPager mViewPager;
     private Toolbar toolbar;
+
+    /*The FavoritesManager SINGLETON*/
+    private FavoritesManager favoritesManager;
 
     /*We want this Fragment stored when it is statically created to alter it later*/
     private SubwayItineraryViewFragment subwayViewFragment;
@@ -183,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
 
         View logo = findViewById(R.id.logo_background);
-        if (logo != null)
+        if (logo != null) {
             logo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -193,7 +198,9 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
                     mViewPager.notifyHeaderChanged();
                 }
             });
+        }
 
+        favoritesManager = FavoritesManager.getInstance();
     }
 
     //Copy the subway database to local if necessary
@@ -269,6 +276,19 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         subwayViewFragment.changeAdapterToScheduleView(line);
         fragmentPagerAdapter.notifyDataSetChanged();
         mViewPager.notifyHeaderChanged();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (0) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    favoritesFragment.refreshFavorites();
+                }
+                break;
+            }
+        }
     }
 }
 

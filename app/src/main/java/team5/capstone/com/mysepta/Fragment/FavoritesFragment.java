@@ -42,6 +42,7 @@ public class FavoritesFragment extends Fragment {
     private static final int ITEM_COUNT = 5;
 
     private FavoritesManager favoritesManager;
+    private HomeViewAdapter homeViewAdapter;
 
     /*Keep track of the rootView to pass to the adapters*/
     private View rootView;
@@ -65,10 +66,9 @@ public class FavoritesFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerHomeView.setLayoutManager(layoutManager);
 
-        favoritesManager = new FavoritesManager();
+        favoritesManager = FavoritesManager.getInstance();
 
-        HomeViewAdapter homeViewAdapter = new HomeViewAdapter(favoritesManager);
-
+        homeViewAdapter = new HomeViewAdapter(favoritesManager);
 
         mAdapter = new RecyclerViewMaterialAdapter(homeViewAdapter);
         recyclerHomeView.setAdapter(mAdapter);
@@ -76,7 +76,13 @@ public class FavoritesFragment extends Fragment {
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerHomeView, null);
     }
 
+    public void refreshFavorites(){
+        favoritesManager = FavoritesManager.getInstance();
+        homeViewAdapter = new HomeViewAdapter(favoritesManager);
 
+        mAdapter = new RecyclerViewMaterialAdapter(homeViewAdapter);
+        recyclerHomeView.setAdapter(mAdapter);
+    }
 
 
 }

@@ -16,8 +16,10 @@ import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapte
 
 import team5.capstone.com.mysepta.Adapters.SubwayItineraryViewAdapter;
 import team5.capstone.com.mysepta.Adapters.SubwayLocationViewAdapter;
+import team5.capstone.com.mysepta.MainActivity;
 import team5.capstone.com.mysepta.Models.SubwayLocationData;
 import team5.capstone.com.mysepta.R;
+import team5.capstone.com.mysepta.SubwayActivity;
 
 /**
  * Fragment for subway section of home screen.
@@ -115,7 +117,7 @@ public class SubwayItineraryViewFragment extends Fragment {
      *@param line name of line
      */
     public void changeAdapterToScheduleView(String line){
-        subwayLocationViewAdapter = new SubwayLocationViewAdapter(line, getActivity(), subLocData);
+        subwayLocationViewAdapter = new SubwayLocationViewAdapter(line, (MainActivity) getActivity(), subLocData);
         materialWrapperAdapter = new RecyclerViewMaterialAdapter(subwayLocationViewAdapter);
         recyclerSubwayView.setAdapter(materialWrapperAdapter);
     }

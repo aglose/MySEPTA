@@ -7,6 +7,12 @@
         android:orderInCategory="100"
         android:title="TIME"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/favoriteIcon"
+        android:orderInCategory="200"
+        android:icon="@drawable/star_icon"
+        android:title="FAVORITE"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/change_direction"
