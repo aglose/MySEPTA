@@ -247,6 +247,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
     @Override
     public void onResume(){
         super.onResume();
+        favoritesFragment.refreshFavorites();
         Log.d(TAG, "ON RESUME CALLED");
     }
 
@@ -254,6 +255,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
      public void onStop(){
         super.onStop();
         Log.d(TAG, "ON STOP CALLED");
+
     }
 
     @Override

@@ -56,6 +56,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
     private SubwayScheduleCreatorDbHelper dbHelper;
     private Date pickedDate;
     private boolean customTime = false;
+    private Menu mOptionsMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -269,6 +270,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.mOptionsMenu = menu;
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_subway, menu);
         return true;
@@ -308,7 +310,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
 
     private void addLineToFavorites() {
         FavoritesManager.addSubwayLineToFavorites(location);
-
+        mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(R.drawable.star_icon);
         Toast.makeText(SubwayActivity.this, "Added to Favorites", Toast.LENGTH_SHORT).show();
     }
 
