@@ -4,13 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rail_itinerary_card"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
+    android:layout_height="60dp"
     app:cardCornerRadius="2dp"
     app:cardElevation="2dp"
-    android:layout_marginBottom="@dimen/cardMarginVertical"
+    android:layout_marginBottom="4dp"
     android:layout_marginLeft="@dimen/cardMarginHorizontal"
     android:layout_marginRight="@dimen/cardMarginHorizontal"
-    android:layout_marginTop="@dimen/cardMarginVertical"
+    android:layout_marginTop="4dp"
     app:cardPreventCornerOverlap="false"
     app:contentPadding="0dp">
 
@@ -19,7 +19,14 @@
         android:layout_height="match_parent"
         android:id="@+id/relativeLayout">
 
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rail_itinerary_label"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/black"
+            android:gravity="center"/>
+<!--
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="match_parent"
@@ -41,6 +48,7 @@
             android:layout_centerVertical="true"
             android:layout_below="@+id/lrsButton"
             android:padding="5dp"/>
+            -->
 
     </RelativeLayout>
 

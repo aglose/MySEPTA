@@ -21,8 +21,8 @@
     <string name="to_rail_text">Final Station</string>
     <string name="loc_tag">0</string>
     <string name="name_tag">1</string>
-
-
+    <string name="live_rail_label"><b>Live Schedule Planner</b></string>
+    <string name="static_rail_header"><u><b>Schedules</b></u></string>
 
 
     <string-array name="broad_street_line">

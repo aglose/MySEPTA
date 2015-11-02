@@ -3,6 +3,7 @@ package team5.capstone.com.mysepta.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -63,8 +64,9 @@ public class RailItineraryViewFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        mAdapter = new RecyclerViewMaterialAdapter(new RailItineraryViewAdapter());
+        mAdapter = new RecyclerViewMaterialAdapter(new RailItineraryViewAdapter(this.getContext()));
         mRecyclerView.setAdapter(mAdapter);
+
 
 
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
