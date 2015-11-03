@@ -124,8 +124,9 @@ public class RailScheduleFragment extends Fragment {
         rails = new ArrayList<>();
 
         for(NextToArriveRailModel train : trainList){
+            Log.d("Train name:",train.getOrigTrainName());
             if(train.getIsDirect().equalsIgnoreCase("true")){
-                rails.add(new RailLocationData(railAcro.get(railNames.indexOf(train.getOrigTrainName())),
+                rails.add(new RailLocationData(railAcro.get(railNames.indexOf(train.getOrigTrainName().trim())),
                         train.getOrigTrainName(),
                         finalStation,
                         train.getOrigTrainNumber(),
@@ -133,14 +134,14 @@ public class RailScheduleFragment extends Fragment {
                         false));
             }
             else{
-                rails.add(new RailLocationData(railAcro.get(railNames.indexOf(train.getOrigTrainName())),
+                rails.add(new RailLocationData(railAcro.get(railNames.indexOf(train.getOrigTrainName().trim())),
                         train.getOrigTrainName(),
                         train.getConStation(),
                         train.getOrigTrainNumber(),
                         train.getOrigDepartureTime(),
                         false));
 
-                rails.add(new RailLocationData(railAcro.get(railNames.indexOf(train.getConTrainName())),
+                rails.add(new RailLocationData(railAcro.get(railNames.indexOf(train.getConTrainName().trim())),
                         train.getConTrainName(),
                         finalStation,
                         train.getConTrainNumber(),

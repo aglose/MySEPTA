@@ -66,7 +66,7 @@ public class FavoritesFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerHomeView.setLayoutManager(layoutManager);
 
-        favoritesManager = FavoritesManager.getInstance();
+        favoritesManager = FavoritesManager.getInstance(getContext());
 
         homeViewAdapter = new HomeViewAdapter(favoritesManager);
 
@@ -77,7 +77,7 @@ public class FavoritesFragment extends Fragment {
     }
 
     public void refreshFavorites(){
-        favoritesManager = FavoritesManager.getInstance();
+        favoritesManager = FavoritesManager.getInstance(getContext());
         homeViewAdapter = new HomeViewAdapter(favoritesManager);
 
         mAdapter = new RecyclerViewMaterialAdapter(homeViewAdapter);

@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
             });
         }
 
-        favoritesManager = FavoritesManager.getInstance();
+        favoritesManager = FavoritesManager.getInstance(this);
     }
 
     //Copy the subway database to local if necessary
@@ -256,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
      public void onStop(){
         super.onStop();
         Log.d(TAG, "ON STOP CALLED");
-
+        favoritesManager.storeSharedPreferences();
     }
 
     @Override

@@ -124,7 +124,7 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
                     if(!mOptionsMenu.findItem(R.id.favoriteIcon).isVisible()){
                         mOptionsMenu.findItem(R.id.favoriteIcon).setVisible(true);
                     }
-                    favorite = checkFavorite();
+                    checkFavorite();
                     scheduleFrag = new RailScheduleFragment();
                     loadFragment(R.id.schedulefrag, scheduleFrag, false);
                 }
@@ -238,10 +238,12 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
     private boolean checkFavorite(){
         if(FavoritesManager.checkForFavoriteRailLine(start,end)){
             mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(R.drawable.star_icon);
+            favorite=true;
             return true;
         }
         else{
             mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(android.R.drawable.star_big_off);
+            favorite=false;
             return false;
         }
     }

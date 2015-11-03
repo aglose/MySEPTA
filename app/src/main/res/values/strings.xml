@@ -24,6 +24,9 @@
     <string name="live_rail_label"><b>Live Schedule Planner</b></string>
     <string name="static_rail_header"><u><b>Schedules</b></u></string>
 
+    <string name="subway_favorites_key">mysepta.com.capstone.team5.subway</string>
+    <string name="rail_favorites_key">mysepta.com.capstone.team5.rail</string>
+    <string name="favorites_key">mysepta.com.capstone.team5</string>
 
     <string-array name="broad_street_line">
         <item>8th St &amp; Market St</item>

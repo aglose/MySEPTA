@@ -9,6 +9,14 @@ import java.util.Date;
 public class SubwayScheduleItemModel {
     private String formattedTimeStr;
 
+    public SubwayScheduleItemModel(){
+
+    }
+
+    public SubwayScheduleItemModel(String formattedTimeStr){
+        this.formattedTimeStr = formattedTimeStr;
+    }
+
     public String getFormattedTimeStr() {
         return formattedTimeStr;
     }
