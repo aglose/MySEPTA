@@ -2,6 +2,7 @@ package team5.capstone.com.mysepta.Managers;
 
 import java.util.ArrayList;
 
+import team5.capstone.com.mysepta.Models.FavoriteRailModel;
 import team5.capstone.com.mysepta.Models.RailLocationData;
 import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
 
@@ -10,7 +11,7 @@ import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
  */
 public class FavoritesManager {
     private static ArrayList<SubwayScheduleItemModel> subwayFavoriteList = new ArrayList<>();
-    private static ArrayList<RailLocationData> railFavoriteList = new ArrayList<>();
+    private static ArrayList<FavoriteRailModel> railFavoriteList = new ArrayList<>();
     private static FavoritesManager fragmentManager = null;
 
     protected FavoritesManager() {
@@ -25,11 +26,11 @@ public class FavoritesManager {
         d.setFormattedTimeStr("Subway Arrival #3");
         subwayFavoriteList.add(d);
 
-        RailLocationData f = new RailLocationData("null","test","test", "fff ","Rail Arrival #1", true);
+        FavoriteRailModel f = new FavoriteRailModel("Philmont","Ambler");
         railFavoriteList.add(f);
-        f = new RailLocationData("null","test","test", "fff ","Rail Arrival #2", true);
+        f = new FavoriteRailModel("test","Rail Arrival #1");
         railFavoriteList.add(f);
-        f = new RailLocationData("null","test","test", "fff ","Rail Arrival #3", true);
+        f = new FavoriteRailModel("test","Rail Arrival #1");
         railFavoriteList.add(f);
     }
 

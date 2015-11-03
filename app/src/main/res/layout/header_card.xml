@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:id="@+id/arrivalLabel"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:text="@string/to_rail_text"
             android:textSize="14sp"
             android:padding="5dp"/>
@@ -35,7 +35,7 @@
             android:layout_below="@+id/arrivalLabel"
             android:layout_alignParentEnd="true"
             android:id="@+id/arrivalStation"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:text="Philmont"
             android:textSize="14sp"
             android:padding="5dp"/>
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:id="@+id/departureLabel"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:text="@string/from_rail_text"
             android:textSize="14sp"
             android:padding="5dp"/>
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/departureLabel"
             android:id="@+id/departureStation"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:text="@string/from_rail_text"
             android:textSize="14sp"
             android:padding="5dp"/>

@@ -18,7 +18,7 @@
     </string-array>
 
     <string name="from_rail_text">Starting Station</string>
-    <string name="to_rail_text">Final Station</string>
+    <string name="to_rail_text">Ending Station</string>
     <string name="loc_tag">0</string>
     <string name="name_tag">1</string>
     <string name="live_rail_label"><b>Live Schedule Planner</b></string>
@@ -149,7 +149,7 @@
         <item>Cynwyd</item>
         <item>Fox Chase</item>
         <item>Glenside</item>
-        <item>Landsdale/Doylestown</item>
+        <item>Lansdale/Doylestown</item>
         <item>Media/Elwyn</item>
         <item>Manayunk/Norristown</item>
         <item>Paoli/Thorndale</item>

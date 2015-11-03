@@ -49,8 +49,8 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
     @Override
     public int getItemViewType(int position) {
         switch (position) {
-            case 0:
-                return TYPE_HEADER;
+            //case 0:
+              //  return TYPE_HEADER;
             default:
                 return TYPE_CELL;
         }
@@ -100,7 +100,7 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
                 break;
             }
             case TYPE_CELL:{
-                RailLocationData temp = rails.get(position-1);
+                RailLocationData temp = rails.get(position);
 
                 if(temp.isConnection()){
                     holder.cardView.setBackgroundColor(context.getResources().getColor(R.color.blue));
@@ -124,7 +124,7 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
      */
     @Override
     public int getItemCount() {
-        return rails.size()+1;
+        return rails.size();
     }
 
     /**

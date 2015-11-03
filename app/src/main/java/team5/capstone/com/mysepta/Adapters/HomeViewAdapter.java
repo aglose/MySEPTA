@@ -1,6 +1,7 @@
 package team5.capstone.com.mysepta.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +14,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import team5.capstone.com.mysepta.Fragment.FavoritesFragment;
+import team5.capstone.com.mysepta.MainActivity;
 import team5.capstone.com.mysepta.Managers.FavoritesManager;
+import team5.capstone.com.mysepta.Models.FavoriteRailModel;
 import team5.capstone.com.mysepta.Models.RailLocationData;
 import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
 import team5.capstone.com.mysepta.R;
+import team5.capstone.com.mysepta.RailActivity;
 
 /**
  * Created by Andrew on 10/28/2015.
@@ -77,7 +81,7 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
         }else if(viewType == TYPE_RAIL){
             Log.d(TAG, "railTYPEEEEEEEEEEEEEEEEEE");
             view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.favorites_list_item_rail, parent, false);
+                    .inflate(R.layout.header_card, parent, false);
             return new HomeViewRailItemHolder(view){};
         }
         return null;
@@ -105,8 +109,18 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
             /*KEVIN THIS IS WHERE YOU WILL IMPLEMENT YOUR CODE */
             int listPosition = position - headerCount - 3; //3 represents the number of list items from the subway list
             Log.d(TAG, "List position: "+listPosition);
-            RailLocationData schedule = (RailLocationData) favoritesManager.getRailList().get(listPosition);
-            ((HomeViewRailItemHolder)holder).testItem.setText(schedule.getTime());
+            final FavoriteRailModel schedule = (FavoriteRailModel) favoritesManager.getRailList().get(listPosition);
+            ((HomeViewRailItemHolder)holder).startingStation.setText(schedule.getStartingStation());
+            ((HomeViewRailItemHolder)holder).endingStation.setText(schedule.getEndingStation());
+            ((HomeViewRailItemHolder)holder).cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, RailActivity.class);
+                    intent.putExtra(context.getString(R.string.name_tag),schedule.getStartingStation());
+                    intent.putExtra(context.getString(R.string.loc_tag),schedule.getEndingStation());
+                    context.startActivity(intent);
+                }
+            });
         }
 
     }
@@ -130,10 +144,15 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
     }
 
     public class HomeViewRailItemHolder extends RecyclerView.ViewHolder{
-        TextView testItem;
+        TextView startingStation;
+        TextView endingStation;
+        CardView cardView;
+
         public HomeViewRailItemHolder(View itemView) {
             super(itemView);
-            testItem = (TextView) itemView.findViewById(R.id.testRail);
+            cardView = (CardView) itemView.findViewById(R.id.header_card);
+            startingStation = (TextView) itemView.findViewById(R.id.departureStation);
+            endingStation = (TextView) itemView.findViewById(R.id.arrivalStation);
         }
     }
 }

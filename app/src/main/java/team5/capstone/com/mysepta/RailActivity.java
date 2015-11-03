@@ -3,6 +3,7 @@ package team5.capstone.com.mysepta;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -65,6 +66,27 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
 
         start = "";
         end = "";
+
+        Intent args = getIntent();
+        String tempStart = args.getStringExtra(getResources().getString(R.string.name_tag));
+        String tempEnd = args.getStringExtra(getResources().getString(R.string.loc_tag));
+
+        if(tempStart != null) {
+            start = tempStart;
+            railExpandableAdapter.updateParent(0, start);
+            railExpandableAdapter.notifyDataSetChanged();
+        }
+
+        if(tempEnd != null) {
+            end = tempEnd;
+            railExpandableAdapter.updateParent(1, end);
+            railExpandableAdapter.notifyDataSetChanged();
+        }
+
+        if(!start.isEmpty() && !end.isEmpty()){
+            scheduleFrag = new RailScheduleFragment();
+            loadFragment(R.id.schedulefrag, scheduleFrag, false);
+        }
 
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
