@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import team5.capstone.com.mysepta.MainActivity;
 import team5.capstone.com.mysepta.Models.FavoriteRailModel;
 import team5.capstone.com.mysepta.Models.RailLocationData;
 import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
@@ -18,15 +19,30 @@ import team5.capstone.com.mysepta.R;
  * Created by Andrew on 10/24/2015.
  */
 public class FavoritesManager {
-    private static ArrayList<SubwayScheduleItemModel> subwayFavoriteList = new ArrayList<>();
-    private static ArrayList<FavoriteRailModel> railFavoriteList = new ArrayList<>();
+    private static ArrayList<SubwayScheduleItemModel> subwayFavoriteList;
+    private static ArrayList<FavoriteRailModel> railFavoriteList;
     private static FavoritesManager fragmentManager = null;
     private SharedPreferences prefs;
-    private Context context;
+    private MainActivity context;
 
-    protected FavoritesManager(Context context) {
+    private FavoritesManager() {
+        buildFromPreferences();
+    }
 
+    public static FavoritesManager getInstance() {
+        if(fragmentManager == null) {
+            fragmentManager = new FavoritesManager();
+        }
+        return fragmentManager;
+    }
+
+    public void setContext(MainActivity context){
         this.context = context;
+    }
+
+    private void buildFromPreferences() {
+        subwayFavoriteList = new ArrayList<>();
+        railFavoriteList = new ArrayList<>();
         prefs = context.getSharedPreferences(context.getString(R.string.favorites_key), Context.MODE_PRIVATE);
 
         Log.d("Favorite's Manager","Preferences Init");
@@ -65,13 +81,6 @@ public class FavoritesManager {
         f = new FavoriteRailModel("test","Rail Arrival #1");
         railFavoriteList.add(f);
         */
-    }
-
-    public static FavoritesManager getInstance(Context context) {
-        if(fragmentManager == null) {
-            fragmentManager = new FavoritesManager(context);
-        }
-        return fragmentManager;
     }
 
     public ArrayList getFavoriteList(){

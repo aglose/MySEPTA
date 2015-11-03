@@ -36,8 +36,8 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
     int headerCount = 1;
     Context context;
 
-    public HomeViewAdapter(FavoritesManager favoritesManager) {
-        this.favoritesManager = favoritesManager;
+    public HomeViewAdapter() {
+        this.favoritesManager = FavoritesManager.getInstance();
     }
 
     @Override
@@ -89,7 +89,6 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
                     .inflate(R.layout.favorites_list_item_subway, parent, false);
             return new HomeViewSubwayItemHolder(view){};
         }else if(viewType == TYPE_RAIL){
-            Log.d(TAG, "railTYPEEEEEEEEEEEEEEEEEE");
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.header_card, parent, false);
             return new HomeViewRailItemHolder(view){};
@@ -99,8 +98,6 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Log.d(TAG, "bindViewHolder position: "+position);
-
         if(getItemViewType(position) == TYPE_HEADER){
             ((HomeViewHeaderHolder)holder).headerCard.setCardBackgroundColor(ContextCompat.getColor(context, R.color.headerBlue));
             if(position == 0){

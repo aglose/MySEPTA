@@ -200,7 +200,8 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
             });
         }
 
-        favoritesManager = FavoritesManager.getInstance(this);
+        favoritesManager = FavoritesManager.getInstance();
+        favoritesManager.setContext(this);
     }
 
     //Copy the subway database to local if necessary
@@ -243,12 +244,13 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         return  super.onOptionsItemSelected(item);
     }
 
-    //TODO get this onResume, onStop, onPause, onCupid, onDonner, onBlitzen shizznit working
+    //TODO get this onResume, onStop, onPause, onCupid, onDonner, onBlitzen working
     @Override
     public void onResume(){
         super.onResume();
-        if(favoritesFragment != null)
+        if(favoritesFragment != null){
             favoritesFragment.refreshFavorites();
+        }
         Log.d(TAG, "ON RESUME CALLED");
     }
 
@@ -287,18 +289,6 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         mViewPager.notifyHeaderChanged();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            case (0) : {
-                if (resultCode == Activity.RESULT_OK) {
-                    //favoritesFragment.refreshFavorites();
-                }
-                break;
-            }
-        }
-    }
 }
 
 
