@@ -47,6 +47,15 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
+        if(position == 0 || position == favoritesManager.getSubwayList().size() + 1)
+            return TYPE_HEADER;
+        else if(position < favoritesManager.getSubwayList().size() + 1)
+            return TYPE_SUBWAY;
+        else
+            return TYPE_RAIL;
+
+
+        /*
         switch (position) {
             case 0:
                 return TYPE_HEADER;
@@ -63,6 +72,7 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
             default:
                 return -1;
         }
+        */
     }
 
     @Override
@@ -95,7 +105,7 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
             ((HomeViewHeaderHolder)holder).headerCard.setCardBackgroundColor(ContextCompat.getColor(context, R.color.headerBlue));
             if(position == 0){
                 ((HomeViewHeaderHolder)holder).headerText.setText("Subway");
-            }else if(position == 4){
+            }else if(position == favoritesManager.getSubwayList().size() + 1){
                 headerCount++;
                 ((HomeViewHeaderHolder)holder).headerText.setText("Regional Rail");
             }
@@ -107,7 +117,7 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
             ((HomeViewSubwayItemHolder)holder).listItem.setText(schedule.getFormattedTimeStr());
         }else if(getItemViewType(position) == TYPE_RAIL){
             /*KEVIN THIS IS WHERE YOU WILL IMPLEMENT YOUR CODE */
-            int listPosition = position - headerCount - 3; //3 represents the number of list items from the subway list
+            int listPosition = position - headerCount - favoritesManager.getSubwayList().size(); //3 represents the number of list items from the subway list
             Log.d(TAG, "List position: "+listPosition);
             final FavoriteRailModel schedule = (FavoriteRailModel) favoritesManager.getRailList().get(listPosition);
             ((HomeViewRailItemHolder)holder).startingStation.setText(schedule.getStartingStation());

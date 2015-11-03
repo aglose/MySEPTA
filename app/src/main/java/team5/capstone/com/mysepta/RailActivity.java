@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
@@ -27,6 +28,7 @@ import team5.capstone.com.mysepta.DropDownView.RailChooser;
 import team5.capstone.com.mysepta.DropDownView.RailChooserChild;
 import team5.capstone.com.mysepta.Fragment.RailScheduleFragment;
 import team5.capstone.com.mysepta.Fragment.ToFromFragment;
+import team5.capstone.com.mysepta.Managers.FavoritesManager;
 
 public class RailActivity extends AppCompatActivity implements ToFromFragment.OnFragmentInteractionListener{
 
@@ -45,6 +47,8 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
     private RailExpandableAdapter railExpandableAdapter;
     private String start,end;
     private Fragment scheduleFrag;
+    private Menu mOptionsMenu;
+    private boolean favorite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,7 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
 
         start = "";
         end = "";
+        favorite = false;
 
         Intent args = getIntent();
         String tempStart = args.getStringExtra(getResources().getString(R.string.name_tag));
@@ -116,6 +121,10 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
                 railExpandableAdapter.notifyDataSetChanged();
 
                 if (!start.isEmpty() && !end.isEmpty() && changeFrag) {
+                    if(!mOptionsMenu.findItem(R.id.favoriteIcon).isVisible()){
+                        mOptionsMenu.findItem(R.id.favoriteIcon).setVisible(true);
+                    }
+                    favorite = checkFavorite();
                     scheduleFrag = new RailScheduleFragment();
                     loadFragment(R.id.schedulefrag, scheduleFrag, false);
                 }
@@ -132,8 +141,16 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.mOptionsMenu = menu;
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_rail, menu);
+
+        if(start.isEmpty() || end.isEmpty()){
+            mOptionsMenu.findItem(R.id.favoriteIcon).setVisible(false);
+        }
+        else
+            checkFavorite();
+
         return true;
     }
 
@@ -147,6 +164,14 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
         switch(id){
             case android.R.id.home:
                 finish();
+                return true;
+            case R.id.favoriteIcon:
+                if(favorite){
+                    removeLineFromFavorites();
+                }
+                else{
+                    addLineToFavorites();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -177,7 +202,7 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
         Bundle args = new Bundle();
         args.putString("start",start);
         args.putString("end",end);
-        args.putString("results","5");
+        args.putString("results", "5");
 
         fragment.setArguments(args);
 
@@ -194,5 +219,30 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    private void addLineToFavorites() {
+        FavoritesManager.addRailLineToFavorites(start, end);
+        mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(R.drawable.star_icon);
+        favorite = true;
+        Toast.makeText(RailActivity.this, "Added to Favorites", Toast.LENGTH_SHORT).show();
+    }
+
+    private void removeLineFromFavorites() {
+        FavoritesManager.removeRailLineFromFavorites(start, end);
+        mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(android.R.drawable.star_big_off);
+        favorite = false;
+        Toast.makeText(RailActivity.this, "Removed from Favorites", Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean checkFavorite(){
+        if(FavoritesManager.checkForFavoriteRailLine(start,end)){
+            mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(R.drawable.star_icon);
+            return true;
+        }
+        else{
+            mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(android.R.drawable.star_big_off);
+            return false;
+        }
     }
 }
