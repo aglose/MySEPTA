@@ -256,13 +256,19 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
      public void onStop(){
         super.onStop();
         Log.d(TAG, "ON STOP CALLED");
-        favoritesManager.storeSharedPreferences();
     }
 
     @Override
     public void onPause(){
         super.onPause();
         Log.d(TAG, "ON PAUSE CALLED");
+    }
+
+    @Override
+    public void onDestroy(){
+        favoritesManager.storeSharedPreferences();
+        super.onDestroy();
+        Log.d(TAG, "ON DESTROY CALLED");
     }
 
     @Override

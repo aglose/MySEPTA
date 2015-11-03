@@ -42,7 +42,6 @@ public class FavoritesManager {
         String[] station;
         for(String railString : rail){
             station = railString.split("-",2);
-            Log.d("Rail Favorite",railString);
             railFavoriteList.add(new FavoriteRailModel(station[0],station[1]));
         }
 
