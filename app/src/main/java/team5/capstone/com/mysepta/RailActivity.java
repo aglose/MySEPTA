@@ -120,7 +120,12 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
                 railExpandableAdapter.updateParent(groupPosition, stationName);
                 railExpandableAdapter.notifyDataSetChanged();
 
-                if (!start.isEmpty() && !end.isEmpty() && changeFrag) {
+                if(start.equalsIgnoreCase(end)){
+                    mOptionsMenu.findItem(R.id.favoriteIcon).setVisible(false);
+                    scheduleFrag = new RailScheduleFragment();
+                    loadFragment(R.id.schedulefrag, scheduleFrag, false);
+                }
+                else if (!start.isEmpty() && !end.isEmpty() && changeFrag) {
                     if(!mOptionsMenu.findItem(R.id.favoriteIcon).isVisible()){
                         mOptionsMenu.findItem(R.id.favoriteIcon).setVisible(true);
                     }
