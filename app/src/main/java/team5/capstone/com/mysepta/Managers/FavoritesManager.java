@@ -26,7 +26,8 @@ public class FavoritesManager {
     private MainActivity context;
 
     private FavoritesManager() {
-        buildFromPreferences();
+        subwayFavoriteList = new ArrayList<>();
+        railFavoriteList = new ArrayList<>();
     }
 
     public static FavoritesManager getInstance() {
@@ -38,11 +39,13 @@ public class FavoritesManager {
 
     public void setContext(MainActivity context){
         this.context = context;
+        buildFromPreferences();
     }
 
     private void buildFromPreferences() {
         subwayFavoriteList = new ArrayList<>();
         railFavoriteList = new ArrayList<>();
+
         prefs = context.getSharedPreferences(context.getString(R.string.favorites_key), Context.MODE_PRIVATE);
 
         Log.d("Favorite's Manager","Preferences Init");
@@ -149,6 +152,9 @@ public class FavoritesManager {
     }
 
     public void storeSharedPreferences(){
+        if(prefs == null)
+            return;
+
         Set<String> subway = new HashSet<>();
         Set<String> rail = new HashSet<>();
 
