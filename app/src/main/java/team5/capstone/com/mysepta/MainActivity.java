@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -31,9 +33,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Set;
 
 import io.fabric.sdk.android.Fabric;
+import team5.capstone.com.mysepta.Adapters.TestRecyclerViewAdapter;
 import team5.capstone.com.mysepta.DatabaseHelpers.SubwayScheduleCreatorDbHelper;
 import team5.capstone.com.mysepta.Fragment.FavoritesFragment;
 import team5.capstone.com.mysepta.Fragment.RailItineraryViewFragment;
@@ -66,8 +70,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
     /*Drawer layout*/
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
-    private String[] drawerListViewItems;
-    private ListView drawerListView;
+    private RecyclerView drawerListView;
 
     /*This is the Adapter that controls the Fragment views in the tabs*/
     private FragmentPagerAdapter fragmentPagerAdapter;
@@ -87,35 +90,35 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         /*Set to no title*/
         setTitle("");
 
-        /*Drawer initialization*/
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
-        mDrawer.setDrawerListener(mDrawerToggle);
-
-        // get list items from strings.xml
-        drawerListViewItems = getResources().getStringArray(R.array.drawer_items);
-
-        // get ListView defined in activity_main.xml
-        drawerListView = (ListView) findViewById(R.id.right_drawer);
-
-        // Set the adapter for the list view
-        drawerListView.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_listview_item, drawerListViewItems));
-
-        /*Set up the Material toolbar and pager*/
         mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);
+
         toolbar = mViewPager.getToolbar();
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);       // Creating a layout Manager
+        drawerListView = (RecyclerView) findViewById(R.id.left_drawer); // Assigning the RecyclerView Object to the xml View
+        drawerListView.setHasFixedSize(true);                            // Letting the system know that the list objects are of fixed size
+
+        TestRecyclerViewAdapter mAdapter = new TestRecyclerViewAdapter(new ArrayList<>(), this);
+
+        drawerListView.setAdapter(mAdapter);                              // Setting the adapter to RecyclerView
+        drawerListView.setLayoutManager(mLayoutManager);
+
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             final ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(false);
-                actionBar.setDisplayShowHomeEnabled(false);
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setDisplayShowHomeEnabled(true);
                 actionBar.setDisplayShowTitleEnabled(true);
                 actionBar.setDisplayUseLogoEnabled(false);
-                actionBar.setHomeButtonEnabled(false);
+                actionBar.setHomeButtonEnabled(true);
             }
         }
+
+        //The listener to press the menu which triggers the drawer to open
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
+        mDrawer.setDrawerListener(mDrawerToggle);
 
         /*Create the Tab Fragments*/
         fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -225,25 +228,6 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         }
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d(TAG, String.valueOf(item.getItemId()));
-        if (item != null && item.getItemId() == R.id.drawer_open_close_item) {
-            if (mDrawer.isDrawerOpen(Gravity.RIGHT)) {
-                mDrawer.closeDrawer(Gravity.RIGHT);
-            } else {
-                mDrawer.openDrawer(Gravity.RIGHT);
-            }
-        }
-        return  super.onOptionsItemSelected(item);
-    }
-
     //TODO get this onResume, onStop, onPause, onCupid, onDonner, onBlitzen working
     @Override
     public void onResume(){
@@ -257,6 +241,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
     @Override
      public void onStop(){
         super.onStop();
+        favoritesManager.storeSharedPreferences();
         Log.d(TAG, "ON STOP CALLED");
     }
 
@@ -268,16 +253,21 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
 
     @Override
     public void onDestroy(){
-        favoritesManager.storeSharedPreferences();
+
         super.onDestroy();
         Log.d(TAG, "ON DESTROY CALLED");
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return mDrawerToggle.onOptionsItemSelected(item) ||
+                super.onOptionsItemSelected(item);
     }
 
     /*Implementation for BSL and MFL Button clicks in Subway Tab */
