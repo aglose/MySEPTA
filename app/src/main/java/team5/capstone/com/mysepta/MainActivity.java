@@ -40,6 +40,7 @@ import java.util.ArrayList;
 
 import io.fabric.sdk.android.Fabric;
 import team5.capstone.com.mysepta.Adapters.DrawerAdapter;
+import team5.capstone.com.mysepta.Fragment.RecyclerViewFragment;
 import team5.capstone.com.mysepta.Helpers.SubwayScheduleCreatorDbHelper;
 import team5.capstone.com.mysepta.Fragment.FavoritesFragment;
 import team5.capstone.com.mysepta.Fragment.RailItineraryViewFragment;
@@ -142,11 +143,11 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
                     case RAIL_TAB:
                         return railViewFragment = RailItineraryViewFragment.newInstance();
                     case BUS_TAB:
-                        return DrawerFragment.newInstance();
+                        return RecyclerViewFragment.newInstance();
                     case SUBWAY_TAB:
                         return subwayViewFragment = SubwayItineraryViewFragment.newInstance();
                     default:
-                        return DrawerFragment.newInstance();
+                        return RecyclerViewFragment.newInstance();
                 }
             }
 
