@@ -12,30 +12,35 @@ import android.view.ViewGroup;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import team5.capstone.com.mysepta.Adapters.TestRecyclerViewAdapter;
+import team5.capstone.com.mysepta.Adapters.DrawerAdapter;
 import team5.capstone.com.mysepta.R;
 
 /**
- * Temporary recycler view fragment.
- * Created by florentchampigny on 24/04/15.
+ *
  */
-public class RecyclerViewFragment extends Fragment {
+public class DrawerFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private static final int ITEM_COUNT = 100;
+    //private static final int ITEM_COUNT = 100;
 
-    private List<Object> mContentItems = new ArrayList<>();
+    private String mNavTitles[] = {"Alerts","Settings","Help & Feedback"};
+    private int mIcons[] = {R.drawable.ic_alerts,R.drawable.ic_settings,R.drawable.ic_help};
+
+    private String name = "Username";
+    private String email = "username@gmail.com";
+
+    private int profile = R.drawable.profile;
+
+
+
 
     /**
      * Create new instance of fragment
      * @return new fragment
      */
-    public static RecyclerViewFragment newInstance() {
-        return new RecyclerViewFragment();
+    public static DrawerFragment newInstance() {
+        return new DrawerFragment();
     }
 
     /**
@@ -63,14 +68,12 @@ public class RecyclerViewFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        mAdapter = new RecyclerViewMaterialAdapter(new TestRecyclerViewAdapter(mContentItems, view.getContext()));
+        mAdapter = new RecyclerViewMaterialAdapter(new DrawerAdapter(mNavTitles,mIcons,name, email, profile));
         mRecyclerView.setAdapter(mAdapter);
 
-        {
-            for (int i = 0; i < ITEM_COUNT; ++i)
-                mContentItems.add(new Object());
+
             mAdapter.notifyDataSetChanged();
-        }
+
 
 
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);

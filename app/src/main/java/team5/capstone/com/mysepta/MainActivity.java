@@ -1,5 +1,7 @@
 package team5.capstone.com.mysepta;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Environment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.widget.DrawerLayout;
@@ -11,17 +13,25 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.transition.Slide;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,11 +39,11 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 import io.fabric.sdk.android.Fabric;
-import team5.capstone.com.mysepta.Adapters.TestRecyclerViewAdapter;
+import team5.capstone.com.mysepta.Adapters.DrawerAdapter;
 import team5.capstone.com.mysepta.Helpers.SubwayScheduleCreatorDbHelper;
 import team5.capstone.com.mysepta.Fragment.FavoritesFragment;
 import team5.capstone.com.mysepta.Fragment.RailItineraryViewFragment;
-import team5.capstone.com.mysepta.Fragment.RecyclerViewFragment;
+import team5.capstone.com.mysepta.Fragment.DrawerFragment;
 import team5.capstone.com.mysepta.Fragment.SubwayItineraryViewFragment;
 import team5.capstone.com.mysepta.Managers.FavoritesManager;
 
@@ -46,6 +56,12 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
     private static final int RAIL_TAB = 1;
     private static final int BUS_TAB = 2;
     private static final int SUBWAY_TAB = 3;
+
+    String TITLES[] = {"Alerts","Settings","Help & Feedback"};
+    int ICONS[] = {R.drawable.ic_alerts,R.drawable.ic_settings,R.drawable.ic_help};
+    String NAME = "Username";
+    String EMAIL = "username@gmail.com";
+    int PROFILE = R.drawable.profile;
 
     /*Third party library for the Material looking view pager*/
     private MaterialViewPager mViewPager;
@@ -63,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private RecyclerView drawerListView;
+    RecyclerView.Adapter mAdapter;
+    RecyclerView.LayoutManager mLayoutManager;
 
     /*This is the Adapter that controls the Fragment views in the tabs*/
     private FragmentPagerAdapter fragmentPagerAdapter;
@@ -92,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         drawerListView = (RecyclerView) findViewById(R.id.left_drawer); // Assigning the RecyclerView Object to the xml View
         drawerListView.setHasFixedSize(true);                            // Letting the system know that the list objects are of fixed size
 
-        TestRecyclerViewAdapter mAdapter = new TestRecyclerViewAdapter(new ArrayList<>(), this);
+        DrawerAdapter mAdapter = new DrawerAdapter(TITLES,ICONS,NAME,EMAIL,PROFILE);
 
         drawerListView.setAdapter(mAdapter);                              // Setting the adapter to RecyclerView
         drawerListView.setLayoutManager(mLayoutManager);
@@ -124,11 +142,11 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
                     case RAIL_TAB:
                         return railViewFragment = RailItineraryViewFragment.newInstance();
                     case BUS_TAB:
-                        return RecyclerViewFragment.newInstance();
+                        return DrawerFragment.newInstance();
                     case SUBWAY_TAB:
                         return subwayViewFragment = SubwayItineraryViewFragment.newInstance();
                     default:
-                        return RecyclerViewFragment.newInstance();
+                        return DrawerFragment.newInstance();
                 }
             }
 
