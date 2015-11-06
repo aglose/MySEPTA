@@ -1,7 +1,5 @@
 package team5.capstone.com.mysepta;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Environment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.widget.DrawerLayout;
@@ -13,35 +11,26 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.transition.Explode;
-import android.transition.Fade;
 import android.transition.Slide;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Set;
 
 import io.fabric.sdk.android.Fabric;
 import team5.capstone.com.mysepta.Adapters.TestRecyclerViewAdapter;
-import team5.capstone.com.mysepta.DatabaseHelpers.SubwayScheduleCreatorDbHelper;
+import team5.capstone.com.mysepta.Helpers.SubwayScheduleCreatorDbHelper;
 import team5.capstone.com.mysepta.Fragment.FavoritesFragment;
 import team5.capstone.com.mysepta.Fragment.RailItineraryViewFragment;
 import team5.capstone.com.mysepta.Fragment.RecyclerViewFragment;
@@ -245,9 +234,6 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
     @Override
     public void onResume(){
         super.onResume();
-        if(favoritesFragment != null){
-            favoritesFragment.refreshFavorites();
-        }
         Log.d(TAG, "ON RESUME CALLED");
     }
 

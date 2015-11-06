@@ -26,16 +26,9 @@ import team5.capstone.com.mysepta.R;
 /**
  * Created by Andrew on 10/24/2015.
  */
-public class FavoritesFragment extends Fragment {
+public class FavoritesFragment extends Fragment{
     /*DEBUG TAG*/
     private static final String TAG = "FavoritesFragment";
-
-    /*Subway Button click listener*/
-    private FavoritesFragmentListener mFavoritesFragmentListener;
-
-    public interface FavoritesFragmentListener {
-        void removeItems();
-    }
 
     private RecyclerView recyclerHomeView;
     private RecyclerView.Adapter mAdapter;
@@ -65,24 +58,17 @@ public class FavoritesFragment extends Fragment {
         recyclerHomeView = (RecyclerView) view.findViewById(R.id.homeRecyclerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerHomeView.setLayoutManager(layoutManager);
+        recyclerHomeView.setHasFixedSize(false);
 
         favoritesManager = FavoritesManager.getInstance();
 
         homeViewAdapter = new HomeViewAdapter();
 
         mAdapter = new RecyclerViewMaterialAdapter(homeViewAdapter);
-        recyclerHomeView.setAdapter(mAdapter);
+        favoritesManager.setAdapter(mAdapter);
 
+        recyclerHomeView.setAdapter(mAdapter);
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerHomeView, null);
     }
-
-    public void refreshFavorites(){
-        favoritesManager = FavoritesManager.getInstance();
-        homeViewAdapter = new HomeViewAdapter();
-
-        mAdapter = new RecyclerViewMaterialAdapter(homeViewAdapter);
-        recyclerHomeView.setAdapter(mAdapter);
-    }
-
 
 }

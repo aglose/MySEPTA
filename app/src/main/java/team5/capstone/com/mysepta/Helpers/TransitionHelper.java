@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package team5.capstone.com.mysepta;
+package team5.capstone.com.mysepta.Helpers;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;

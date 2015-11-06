@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import team5.capstone.com.mysepta.DatabaseHelpers.SubwayScheduleCreatorDbHelper;
+import team5.capstone.com.mysepta.Helpers.SubwayScheduleCreatorDbHelper;
 
 public class JSOUPScheduleParser{
     private final static String TAG = "JSOUPScheduleParser";

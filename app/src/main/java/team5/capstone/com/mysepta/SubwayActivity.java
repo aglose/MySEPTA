@@ -1,6 +1,5 @@
 package team5.capstone.com.mysepta;
 
-import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.DialogFragment;
@@ -20,7 +19,6 @@ import android.util.Log;
 import android.util.Property;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
@@ -34,7 +32,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import team5.capstone.com.mysepta.Adapters.SubwayScheduleViewAdapter;
-import team5.capstone.com.mysepta.DatabaseHelpers.SubwayScheduleCreatorDbHelper;
+import team5.capstone.com.mysepta.Helpers.SubwayScheduleCreatorDbHelper;
 import team5.capstone.com.mysepta.Dialogs.SubwayTimePickerFragment;
 import team5.capstone.com.mysepta.Managers.FavoritesManager;
 import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;

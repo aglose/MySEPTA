@@ -2,6 +2,7 @@ package team5.capstone.com.mysepta.Managers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v7.widget.RecyclerView;
 import android.util.ArraySet;
 import android.util.Log;
 
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import team5.capstone.com.mysepta.Adapters.HomeViewAdapter;
+import team5.capstone.com.mysepta.Fragment.FavoritesFragment;
 import team5.capstone.com.mysepta.MainActivity;
 import team5.capstone.com.mysepta.Models.FavoriteRailModel;
 import team5.capstone.com.mysepta.Models.RailLocationData;
@@ -18,12 +21,13 @@ import team5.capstone.com.mysepta.R;
 /**
  * Created by Andrew on 10/24/2015.
  */
-public class FavoritesManager {
+public class FavoritesManager{
     private static ArrayList<SubwayScheduleItemModel> subwayFavoriteList;
     private static ArrayList<FavoriteRailModel> railFavoriteList;
     private static FavoritesManager fragmentManager = null;
     private SharedPreferences prefs;
     private MainActivity context;
+    private static RecyclerView.Adapter adapter;
 
     private FavoritesManager() {
         subwayFavoriteList = new ArrayList<>();
@@ -40,6 +44,10 @@ public class FavoritesManager {
     public void setContext(MainActivity context){
         this.context = context;
         buildFromPreferences();
+    }
+
+    public void setAdapter(RecyclerView.Adapter adapter){
+        this.adapter = adapter;
     }
 
     private void buildFromPreferences() {
@@ -111,6 +119,7 @@ public class FavoritesManager {
 
         if(checkForFavoriteRailModel(favoriteRailModel) == -1){
             railFavoriteList.add(favoriteRailModel);
+            adapter.notifyItemInserted(railFavoriteList.size() + HomeViewAdapter.HEADER_AMOUNT);
             return true;
         }
 
@@ -124,6 +133,7 @@ public class FavoritesManager {
 
         if(loc != -1){
             railFavoriteList.remove(loc);
+            adapter.notifyItemRemoved(loc + subwayFavoriteList.size() + HomeViewAdapter.HEADER_AMOUNT);
             return true;
         }
 
@@ -170,4 +180,5 @@ public class FavoritesManager {
         //prefs.edit().putStringSet(context.getString(R.string.subway_favorites_key),subway).apply();
         prefs.edit().putStringSet(context.getString(R.string.rail_favorites_key), rail).apply();
     }
+
 }

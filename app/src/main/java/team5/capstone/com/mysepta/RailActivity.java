@@ -252,4 +252,11 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
             return false;
         }
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FavoritesManager favoritesManager = FavoritesManager.getInstance();
+        favoritesManager.storeSharedPreferences();
+    }
 }

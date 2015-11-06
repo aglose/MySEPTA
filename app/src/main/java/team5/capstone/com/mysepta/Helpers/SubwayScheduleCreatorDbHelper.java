@@ -1,4 +1,4 @@
-package team5.capstone.com.mysepta.DatabaseHelpers;
+package team5.capstone.com.mysepta.Helpers;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 import android.util.Log;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**

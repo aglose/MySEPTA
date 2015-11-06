@@ -1,12 +1,9 @@
 package team5.capstone.com.mysepta.Adapters;
 
 import android.app.ActivityOptions;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.util.Pair;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,7 +17,6 @@ import team5.capstone.com.mysepta.MainActivity;
 import team5.capstone.com.mysepta.Models.SubwayLocationData;
 import team5.capstone.com.mysepta.R;
 import team5.capstone.com.mysepta.SubwayActivity;
-import team5.capstone.com.mysepta.TransitionHelper;
 
 /**
  * Adapter for subway location view fragment.

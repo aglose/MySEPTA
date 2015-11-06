@@ -29,7 +29,7 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
     private static final String TAG = "HomeViewAdapter";
     FavoritesManager favoritesManager;
 
-    static final int HEADER_AMOUNT = 2;
+    public static final int HEADER_AMOUNT = 2;
     static final int TYPE_HEADER = 99;
     static final int TYPE_SUBWAY = 100;
     static final int TYPE_RAIL = 101;
@@ -77,6 +77,7 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        this.favoritesManager = FavoritesManager.getInstance();
         View view = null;
         Log.d(TAG, "viewType: " + viewType + "\nHeadercount: " + headerCount);
         context = parent.getContext();
@@ -103,7 +104,9 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
             if(position == 0){
                 ((HomeViewHeaderHolder)holder).headerText.setText("Subway");
             }else if(position == favoritesManager.getSubwayList().size() + 1){
-                headerCount++;
+                if(headerCount != 2){
+                    headerCount++;
+                }
                 ((HomeViewHeaderHolder)holder).headerText.setText("Regional Rail");
             }
         }else if(getItemViewType(position) == TYPE_SUBWAY){
@@ -113,8 +116,7 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
             SubwayScheduleItemModel schedule = (SubwayScheduleItemModel) favoritesManager.getSubwayList().get(listPosition);
             ((HomeViewSubwayItemHolder)holder).listItem.setText(schedule.getFormattedTimeStr());
         }else if(getItemViewType(position) == TYPE_RAIL){
-            /*KEVIN THIS IS WHERE YOU WILL IMPLEMENT YOUR CODE */
-            int listPosition = position - headerCount - favoritesManager.getSubwayList().size(); //3 represents the number of list items from the subway list
+            int listPosition = position - headerCount - favoritesManager.getSubwayList().size();
             Log.d(TAG, "List position: "+listPosition);
             final FavoriteRailModel schedule = (FavoriteRailModel) favoritesManager.getRailList().get(listPosition);
             ((HomeViewRailItemHolder)holder).startingStation.setText(schedule.getStartingStation());
