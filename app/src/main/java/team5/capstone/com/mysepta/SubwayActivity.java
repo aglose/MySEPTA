@@ -1,20 +1,28 @@
 package team5.capstone.com.mysepta;
 
-import android.app.Activity;
+import android.animation.Animator;
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Property;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -57,6 +65,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
     private Date pickedDate;
     private boolean customTime = false;
     private Menu mOptionsMenu;
+    private TextView directionText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,20 +76,20 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         setUpRecyclerView(arrivals);
     }
 
+
     private void initSetup(){
         Bundle bundle = this.getIntent().getExtras();
         stopID = bundle.getInt(STOP_ID_KEY);
         location = bundle.getString(LOCATION_KEY);
-
-        Log.d(TAG, location);
-
         direction = bundle.getString(DIRECTION_KEY);
         line = bundle.getString(LINE_KEY);
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //ENABLE BACK BUTTON
-        getSupportActionBar().setTitle(location);
+        getSupportActionBar().setTitle("");
+
+        animateHeaderText();
 
         /**
          * This is a temporary bug fix for a crash, column name in database is incorrect
@@ -92,6 +101,33 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         }
 
         dbHelper = new SubwayScheduleCreatorDbHelper(this);
+    }
+
+    private void animateHeaderText() {
+        CardView cardView = (CardView) findViewById(R.id.subwayHeader);
+        cardView.setCardBackgroundColor(ContextCompat.getColor(this, R.color.headerBlue));
+        TextView headerText = (TextView) findViewById(R.id.locationHeaderText);
+        headerText.setText(location);
+        headerText.setTextColor(Color.GRAY);
+
+        final Property<TextView, Integer> property = new Property<TextView, Integer>(int.class, "textColor") {
+            @Override
+            public Integer get(TextView object) {
+                return object.getCurrentTextColor();
+            }
+
+            @Override
+            public void set(TextView object, Integer value) {
+                object.setTextColor(value);
+            }
+        };
+
+        final ObjectAnimator animator = ObjectAnimator.ofInt(headerText, property, Color.WHITE);
+        animator.setStartDelay(800L);
+        animator.setDuration(333L);
+        animator.setEvaluator(new ArgbEvaluator());
+        animator.setInterpolator(new DecelerateInterpolator(2));
+        animator.start();
     }
 
     private ArrayList retrieveDatabaseInfo() {
@@ -189,8 +225,8 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
     }
 
     private String chooseTable() {
-        TextView directionText = (TextView) findViewById(R.id.direction);
-        directionText.setText(direction+" BOUND");
+        directionText = (TextView) findViewById(R.id.direction);
+        directionText.setText(direction+"BOUND");
         String tableName = "";
         Calendar c = Calendar.getInstance();
         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
@@ -248,6 +284,10 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
     }
 
     private void changeDirection() {
+        ObjectAnimator animation = ObjectAnimator.ofFloat(directionText, "rotationX", 0.0f, 360f);
+        animation.setDuration(800);
+        animation.setInterpolator(new AccelerateDecelerateInterpolator());
+        animation.start();
         if(direction.equalsIgnoreCase("NORTH")){
             direction = "SOUTH";
         }else if(direction.equalsIgnoreCase("SOUTH")){
@@ -261,6 +301,8 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         ArrayList arrivals = retrieveDatabaseInfo();
         subwayScheduleViewAdapter = new SubwayScheduleViewAdapter(arrivals);
         recyclerScheduleView.swapAdapter(subwayScheduleViewAdapter, true);
+
+
     }
 
     private void launchTimePicker() {
@@ -285,7 +327,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
 
         switch (id) {
             case android.R.id.home:
-                endActivity();
+                onBackPressed();
                 return true;
             case R.id.change_direction:
                 changeDirection();
@@ -300,12 +342,6 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
                 return super.onOptionsItemSelected(item);
         }
 
-    }
-
-    private void endActivity() {
-        Intent resultIntent = new Intent();
-        setResult(Activity.RESULT_OK, resultIntent);
-        finish();
     }
 
     private void addLineToFavorites() {

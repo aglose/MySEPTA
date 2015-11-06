@@ -13,6 +13,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -82,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupWindowAnimations();
 
         Fabric.with(this, new Crashlytics());
 
@@ -205,6 +209,15 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
 
         favoritesManager = FavoritesManager.getInstance();
         favoritesManager.setContext(this);
+    }
+
+    private void setupWindowAnimations() {
+        // Re-enter transition is executed when returning to this activity
+        Slide slideTransition = new Slide();
+        slideTransition.setSlideEdge(Gravity.LEFT);
+        slideTransition.setDuration(getResources().getInteger(R.integer.anim_duration_long));
+        getWindow().setReenterTransition(slideTransition);
+        getWindow().setExitTransition(slideTransition);
     }
 
     //Copy the subway database to local if necessary

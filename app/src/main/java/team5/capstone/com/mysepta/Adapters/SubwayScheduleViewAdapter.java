@@ -65,15 +65,12 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
      */
     public class SubwayScheduleHolder extends RecyclerView.ViewHolder{
         TextView scheduleText;
-        CardView cardView;
-
         /**
          * Constructor
          * @param itemView current item view
          */
         public SubwayScheduleHolder(View itemView) {
             super(itemView);
-            cardView = (CardView) itemView.findViewById(R.id.subway_schedule_item_card);
             scheduleText = (TextView) itemView.findViewById(R.id.scheduleText);
         }
     }

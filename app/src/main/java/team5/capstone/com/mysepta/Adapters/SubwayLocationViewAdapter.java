@@ -1,9 +1,12 @@
 package team5.capstone.com.mysepta.Adapters;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +20,7 @@ import team5.capstone.com.mysepta.MainActivity;
 import team5.capstone.com.mysepta.Models.SubwayLocationData;
 import team5.capstone.com.mysepta.R;
 import team5.capstone.com.mysepta.SubwayActivity;
+import team5.capstone.com.mysepta.TransitionHelper;
 
 /**
  * Adapter for subway location view fragment.
@@ -94,34 +98,39 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
      * @param position current item position
      */
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
         if(getItemViewType(position) == TYPE_HEADER){
             ((SubwayLocationHeaderHolder)holder).header.setCardBackgroundColor(ContextCompat.getColor(context, R.color.headerBlue));
             ((SubwayLocationHeaderHolder)holder).headerText.setGravity(Gravity.CENTER);
         }else{
-            ((SubwayLocationItemHolder)holder).locationText.setText(listLocations[position-1]);
+
+            final String locationName = listLocations[position-1];
+            Log.d(TAG, String.valueOf(position)+" "+locationName);
+            ((SubwayLocationItemHolder)holder).locationText.setText(locationName);
             ((SubwayLocationItemHolder)holder).cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int stopID;
+                    int stopID = 0;
                     String direction = "";
                     if (line.equalsIgnoreCase("BSL")) {
-                        stopID = subwayLocationData.getStopId(listLocations[position], "North");
+//                        stopID = subwayLocationData.getStopId(locationName, "North");
                         direction = "NORTH";
                     } else {
-                        stopID = subwayLocationData.getStopId(listLocations[position], "East");
+//                        stopID = subwayLocationData.getStopId(locationName, "East");
                         direction = "EAST";
                     }
                     Intent startSubwayActivity = new Intent(context, SubwayActivity.class);
+                    ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(context, ((SubwayLocationItemHolder)holder).locationText, context.getString(R.string.locationName));
+
                     Bundle bundle = new Bundle();
                     bundle.putInt(STOP_ID_KEY, stopID);
                     bundle.putString(DIRECTION_KEY, direction);
                     bundle.putString(LINE_KEY, line);
-                    bundle.putString(LOCATION_KEY, listLocations[position]);
+                    bundle.putString(LOCATION_KEY, locationName);
                     startSubwayActivity.putExtras(bundle);
+                    context.startActivity(startSubwayActivity, transitionActivityOptions.toBundle());
 
-                    context.startActivityForResult(startSubwayActivity, 0);
                 }
             });
         }

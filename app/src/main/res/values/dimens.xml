@@ -5,4 +5,5 @@
     <dimen name="refresh_button_diameter">40dp</dimen>
     <dimen name="refresh_button_margin">44dp</dimen>
     <dimen name="scroller">5dp</dimen>
+    <integer name="anim_duration_long">500</integer>
 </resources>

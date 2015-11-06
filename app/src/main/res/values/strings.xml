@@ -492,4 +492,5 @@
     </string-array>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="locationName">locationName</string>
 </resources>
