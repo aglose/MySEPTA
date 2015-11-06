@@ -4,6 +4,19 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="refresh_button_diameter">40dp</dimen>
     <dimen name="refresh_button_margin">44dp</dimen>
+
+    <!--CardView Child Dimensions-->
+    <dimen name="cardChildMarginVertical">3dp</dimen>
+    <dimen name="cardChildMarginHorizontal">20dp</dimen>
+    <dimen name="cardChildElevation">1dp</dimen>
+    <dimen name="cardChildHeight">60dp</dimen>
+
+    <!--CardView Header Dimensions-->
+    <dimen name="cardHeaderMarginVertical">8dp</dimen>
+    <dimen name="cardHeaderMarginHorizontal">10dp</dimen>
+    <dimen name="cardHeaderElevation">5dp</dimen>
+    <dimen name="cardHeaderHeight">75dp</dimen>
+
     <dimen name="scroller">5dp</dimen>
     <integer name="anim_duration_long">500</integer>
 </resources>

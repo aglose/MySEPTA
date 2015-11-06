@@ -24,10 +24,6 @@ import team5.capstone.com.mysepta.SubwayActivity;
  */
 public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
     private static final String TAG = "SubwayLocationViewAdapter";
-    private static final String STOP_ID_KEY = "StopID";
-    private static final String LOCATION_KEY = "Location";
-    private static final String DIRECTION_KEY = "Direction";
-    private static final String LINE_KEY = "Line";
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_CELL = 1;
@@ -120,10 +116,10 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
                     ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(context, ((SubwayLocationItemHolder)holder).locationText, context.getString(R.string.locationName));
 
                     Bundle bundle = new Bundle();
-                    bundle.putInt(STOP_ID_KEY, stopID);
-                    bundle.putString(DIRECTION_KEY, direction);
-                    bundle.putString(LINE_KEY, line);
-                    bundle.putString(LOCATION_KEY, locationName);
+                    bundle.putInt(context.getString(R.string.STOP_ID_KEY), stopID);
+                    bundle.putString(context.getString(R.string.DIRECTION_KEY), direction);
+                    bundle.putString(context.getString(R.string.LINE_KEY), line);
+                    bundle.putString(context.getString(R.string.LOCATION_KEY), locationName);
                     startSubwayActivity.putExtras(bundle);
                     context.startActivity(startSubwayActivity, transitionActivityOptions.toBundle());
 

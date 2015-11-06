@@ -2,12 +2,18 @@ package team5.capstone.com.mysepta.Managers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.ArraySet;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import team5.capstone.com.mysepta.Adapters.HomeViewAdapter;
@@ -26,8 +32,8 @@ public class FavoritesManager{
     private static ArrayList<FavoriteRailModel> railFavoriteList;
     private static FavoritesManager fragmentManager = null;
     private SharedPreferences prefs;
-    private MainActivity context;
-    private static RecyclerView.Adapter adapter;
+    private static MainActivity context;
+    private static RecyclerView recyclerView;
 
     private FavoritesManager() {
         subwayFavoriteList = new ArrayList<>();
@@ -46,8 +52,8 @@ public class FavoritesManager{
         buildFromPreferences();
     }
 
-    public void setAdapter(RecyclerView.Adapter adapter){
-        this.adapter = adapter;
+    public void setRecyclerView(RecyclerView recyclerView){
+        this.recyclerView = recyclerView;
     }
 
     private void buildFromPreferences() {
@@ -58,10 +64,11 @@ public class FavoritesManager{
 
         Log.d("Favorite's Manager","Preferences Init");
 
-        Set<String> subway = prefs.getStringSet(context.getString(R.string.subway_favorites_key), new HashSet<String>());
+        Gson gson = new Gson();
+        String json = prefs.getString(context.getString(R.string.subway_favorites_key), "");
 
-        for(String time : subway){
-            subwayFavoriteList.add(new SubwayScheduleItemModel(time));
+        if(json.length() > 0){
+            subwayFavoriteList = gson.fromJson(json, new TypeToken<ArrayList<SubwayScheduleItemModel>>(){}.getType());
         }
 
         Set<String> rail = prefs.getStringSet(context.getString(R.string.rail_favorites_key),new HashSet<String>());
@@ -74,15 +81,9 @@ public class FavoritesManager{
 
 
         // Exists only to defeat instantiation, and testing purposes until mocking is unnecessary.
-        SubwayScheduleItemModel d = new SubwayScheduleItemModel();
-        d.setFormattedTimeStr("Subway Arrival #1");
-        subwayFavoriteList.add(d);
-        d = new SubwayScheduleItemModel();
-        d.setFormattedTimeStr("Subway Arrival #2");
-        subwayFavoriteList.add(d);
-        d = new SubwayScheduleItemModel();
-        d.setFormattedTimeStr("Subway Arrival #3");
-        subwayFavoriteList.add(d);
+//        SubwayScheduleItemModel d = new SubwayScheduleItemModel();
+//        d.setFormattedTimeStr("Subway Arrival #1");
+//        subwayFavoriteList.add(d);
 
 /*
         FavoriteRailModel f = new FavoriteRailModel("Philmont","Ambler");
@@ -109,8 +110,15 @@ public class FavoritesManager{
         return railFavoriteList;
     }
 
-    public static boolean addSubwayLineToFavorites(String location){
-        subwayFavoriteList.get(0).setFormattedTimeStr("Successful add for line: "+location);
+    public static boolean addSubwayLineToFavorites(SubwayScheduleItemModel item){
+        SubwayScheduleItemModel newSubway = new SubwayScheduleItemModel();
+        newSubway.setLine(item.getLine());
+        newSubway.setLocation(item.getLocation());
+        newSubway.setDirection(item.getDirection());
+        newSubway.setStopID(item.getStopID());
+
+        subwayFavoriteList.add(newSubway);
+        recyclerView.getAdapter().notifyItemInserted(subwayFavoriteList.size() + (HomeViewAdapter.HEADER_AMOUNT - 1));
         return false;
     }
 
@@ -119,7 +127,7 @@ public class FavoritesManager{
 
         if(checkForFavoriteRailModel(favoriteRailModel) == -1){
             railFavoriteList.add(favoriteRailModel);
-            adapter.notifyItemInserted(railFavoriteList.size() + HomeViewAdapter.HEADER_AMOUNT);
+            recyclerView.getAdapter().notifyItemInserted(railFavoriteList.size() + HomeViewAdapter.HEADER_AMOUNT);
             return true;
         }
 
@@ -133,7 +141,10 @@ public class FavoritesManager{
 
         if(loc != -1){
             railFavoriteList.remove(loc);
-            adapter.notifyItemRemoved(loc + subwayFavoriteList.size() + HomeViewAdapter.HEADER_AMOUNT);
+            recyclerView.getAdapter().notifyItemRemoved(loc + subwayFavoriteList.size() + HomeViewAdapter.HEADER_AMOUNT);
+            recyclerView.getAdapter().notifyItemRangeChanged(loc, subwayFavoriteList.size());
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            context.fragmentPagerAdapter.notifyDataSetChanged();
             return true;
         }
 
@@ -165,19 +176,17 @@ public class FavoritesManager{
         if(prefs == null)
             return;
 
-        Set<String> subway = new HashSet<>();
         Set<String> rail = new HashSet<>();
 
-        for(SubwayScheduleItemModel model : subwayFavoriteList){
-            subway.add(model.getFormattedTimeStr());
-        }
+        Gson gson = new Gson();
+        String json = gson.toJson(subwayFavoriteList, new TypeToken<ArrayList<SubwayScheduleItemModel>>(){}.getType());
 
         for(FavoriteRailModel model : railFavoriteList){
             rail.add(model.getStartingStation() + "-" + model.getEndingStation());
         }
 
 
-        //prefs.edit().putStringSet(context.getString(R.string.subway_favorites_key),subway).apply();
+        prefs.edit().putString(context.getString(R.string.subway_favorites_key), json).apply();
         prefs.edit().putStringSet(context.getString(R.string.rail_favorites_key), rail).apply();
     }
 

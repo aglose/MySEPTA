@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 import team5.capstone.com.mysepta.Models.RailLocationData;
 import team5.capstone.com.mysepta.R;
-import team5.capstone.com.mysepta.RailActivity;
 
 /**
  * Adapter to define functionality of rail schedule fragment.
@@ -69,7 +68,7 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
         switch(viewType) {
             case TYPE_HEADER:{
                 view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.header_card, parent, false);
+                        .inflate(R.layout.home_rail_item, parent, false);
                 return new RailScheduleHolder(view);
             }
             case TYPE_CELL:{
@@ -96,7 +95,6 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
             case TYPE_HEADER:{
                 holder.arrivalStation.setText(end);
                 holder.departureStation.setText(start);
-                holder.cardView2.setBackgroundColor(context.getResources().getColor(R.color.black));
                 break;
             }
             case TYPE_CELL:{
@@ -136,7 +134,6 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
         TextView trainText;
         TextView timeText;
         CardView cardView;
-        CardView cardView2;
         TextView arrivalStation;
         TextView departureStation;
 
@@ -154,8 +151,6 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
 
             arrivalStation = (TextView) itemView.findViewById(R.id.arrivalStation);
             departureStation = (TextView) itemView.findViewById(R.id.departureStation);
-            cardView2 = (CardView) itemView.findViewById(R.id.header_card);
-
         }
     }
 }

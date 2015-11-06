@@ -2,6 +2,7 @@ package team5.capstone.com.mysepta.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,16 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
-import team5.capstone.com.mysepta.Fragment.FavoritesFragment;
-import team5.capstone.com.mysepta.MainActivity;
 import team5.capstone.com.mysepta.Managers.FavoritesManager;
 import team5.capstone.com.mysepta.Models.FavoriteRailModel;
-import team5.capstone.com.mysepta.Models.RailLocationData;
 import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
 import team5.capstone.com.mysepta.R;
 import team5.capstone.com.mysepta.RailActivity;
+import team5.capstone.com.mysepta.SubwayActivity;
 
 /**
  * Created by Andrew on 10/28/2015.
@@ -91,7 +88,7 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
             return new HomeViewSubwayItemHolder(view){};
         }else if(viewType == TYPE_RAIL){
             view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.header_card, parent, false);
+                    .inflate(R.layout.home_rail_item, parent, false);
             return new HomeViewRailItemHolder(view){};
         }
         return null;
@@ -104,19 +101,29 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
             if(position == 0){
                 ((HomeViewHeaderHolder)holder).headerText.setText("Subway");
             }else if(position == favoritesManager.getSubwayList().size() + 1){
-                if(headerCount != 2){
-                    headerCount++;
-                }
                 ((HomeViewHeaderHolder)holder).headerText.setText("Regional Rail");
             }
         }else if(getItemViewType(position) == TYPE_SUBWAY){
-            int listPosition = position - headerCount;
+            int listPosition = position - 1;
             Log.d(TAG, "List position: "+listPosition);
             Log.d(TAG, "content type:  "+favoritesManager.getSubwayList().get(listPosition));
-            SubwayScheduleItemModel schedule = (SubwayScheduleItemModel) favoritesManager.getSubwayList().get(listPosition);
-            ((HomeViewSubwayItemHolder)holder).listItem.setText(schedule.getFormattedTimeStr());
+            final SubwayScheduleItemModel schedule = (SubwayScheduleItemModel) favoritesManager.getSubwayList().get(listPosition);
+            ((HomeViewSubwayItemHolder)holder).listItem.setText(schedule.getLocation());
+            ((HomeViewSubwayItemHolder)holder).cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent startSubwayActivity = new Intent(context, SubwayActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(context.getString(R.string.STOP_ID_KEY), 0);
+                    bundle.putString(context.getString(R.string.DIRECTION_KEY), schedule.getDirection());
+                    bundle.putString(context.getString(R.string.LINE_KEY), schedule.getLine());
+                    bundle.putString(context.getString(R.string.LOCATION_KEY), schedule.getLocation());
+                    startSubwayActivity.putExtras(bundle);
+                    context.startActivity(startSubwayActivity);
+                }
+            });
         }else if(getItemViewType(position) == TYPE_RAIL){
-            int listPosition = position - headerCount - favoritesManager.getSubwayList().size();
+            int listPosition = position - 2 - favoritesManager.getSubwayList().size();
             Log.d(TAG, "List position: "+listPosition);
             final FavoriteRailModel schedule = (FavoriteRailModel) favoritesManager.getRailList().get(listPosition);
             ((HomeViewRailItemHolder)holder).startingStation.setText(schedule.getStartingStation());
@@ -139,16 +146,18 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
         CardView headerCard;
         public HomeViewHeaderHolder(View itemView) {
             super(itemView);
-            headerText = (TextView) itemView.findViewById(R.id.header_title);
-            headerCard = (CardView) itemView.findViewById(R.id.favoriteFragmentHeader);
+            headerText = (TextView) itemView.findViewById(R.id.home_header_title);
+            headerCard = (CardView) itemView.findViewById(R.id.favoriteFragmentHeaderCard);
         }
     }
 
     public class HomeViewSubwayItemHolder extends RecyclerView.ViewHolder{
         TextView listItem;
+        CardView cardView;
         public HomeViewSubwayItemHolder(View itemView) {
             super(itemView);
             listItem = (TextView) itemView.findViewById(R.id.nextToArrive);
+            cardView = (CardView) itemView.findViewById(R.id.home_subway_item);
         }
     }
 
@@ -159,7 +168,7 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
 
         public HomeViewRailItemHolder(View itemView) {
             super(itemView);
-            cardView = (CardView) itemView.findViewById(R.id.header_card);
+            cardView = (CardView) itemView.findViewById(R.id.home_rail_item);
             startingStation = (TextView) itemView.findViewById(R.id.departureStation);
             endingStation = (TextView) itemView.findViewById(R.id.arrivalStation);
         }

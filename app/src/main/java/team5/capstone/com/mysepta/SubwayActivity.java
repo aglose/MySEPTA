@@ -40,10 +40,6 @@ import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
 public class SubwayActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
     private static final String TAG = "SubwayActivity";
 
-    private static final String STOP_ID_KEY = "StopID";
-    private static final String LOCATION_KEY = "Location";
-    private static final String DIRECTION_KEY = "Direction";
-    private static final String LINE_KEY = "Line";
     private static final String SQL_SELECT = "SELECT ";
     private static final String SQL_FROM = " FROM ";
     private static final String SQL_SEMI_COLON = ";";
@@ -77,10 +73,10 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
 
     private void initSetup(){
         Bundle bundle = this.getIntent().getExtras();
-        stopID = bundle.getInt(STOP_ID_KEY);
-        location = bundle.getString(LOCATION_KEY);
-        direction = bundle.getString(DIRECTION_KEY);
-        line = bundle.getString(LINE_KEY);
+        stopID = bundle.getInt(getString(R.string.STOP_ID_KEY));
+        location = bundle.getString(getString(R.string.LOCATION_KEY));
+        direction = bundle.getString(getString(R.string.DIRECTION_KEY));
+        line = bundle.getString(getString(R.string.LINE_KEY));
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
@@ -343,11 +339,22 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
     }
 
     private void addLineToFavorites() {
-        FavoritesManager.addSubwayLineToFavorites(location);
+        SubwayScheduleItemModel favSubModel = new SubwayScheduleItemModel();
+        favSubModel.setLocation(location);
+        favSubModel.setDirection(direction);
+        favSubModel.setStopID(String.valueOf(stopID));
+        favSubModel.setLine(line);
+        FavoritesManager.addSubwayLineToFavorites(favSubModel);
         mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(R.drawable.star_icon);
         Toast.makeText(SubwayActivity.this, "Added to Favorites", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FavoritesManager favoritesManager = FavoritesManager.getInstance();
+        favoritesManager.storeSharedPreferences();
+    }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {

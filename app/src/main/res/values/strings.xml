@@ -28,6 +28,12 @@
     <string name="rail_favorites_key">mysepta.com.capstone.team5.rail</string>
     <string name="favorites_key">mysepta.com.capstone.team5</string>
 
+
+    <string name="STOP_ID_KEY">StopID</string>
+    <string name="LOCATION_KEY">Location</string>
+    <string name="DIRECTION_KEY">Direction</string>
+    <string name="LINE_KEY">Line</string>
+
     <string-array name="broad_street_line">
         <item>8th St &amp; Market St</item>
         <item>Allegheny</item>

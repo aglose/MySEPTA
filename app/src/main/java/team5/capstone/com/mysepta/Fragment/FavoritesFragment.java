@@ -30,6 +30,7 @@ public class FavoritesFragment extends Fragment{
     /*DEBUG TAG*/
     private static final String TAG = "FavoritesFragment";
 
+    private static FavoritesFragment favoritesFragment;
     private RecyclerView recyclerHomeView;
     private RecyclerView.Adapter mAdapter;
     private static final int ITEM_COUNT = 5;
@@ -42,7 +43,10 @@ public class FavoritesFragment extends Fragment{
 
     /*Statically create a new instance of this Fragment*/
     public static FavoritesFragment newInstance() {
-        return new FavoritesFragment();
+        if(favoritesFragment == null){
+            return favoritesFragment = new FavoritesFragment();
+        }
+        return null;
     }
 
     @Override
@@ -65,9 +69,10 @@ public class FavoritesFragment extends Fragment{
         homeViewAdapter = new HomeViewAdapter();
 
         mAdapter = new RecyclerViewMaterialAdapter(homeViewAdapter);
-        favoritesManager.setAdapter(mAdapter);
+
 
         recyclerHomeView.setAdapter(mAdapter);
+        favoritesManager.setRecyclerView(recyclerHomeView);
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerHomeView, null);
     }
 

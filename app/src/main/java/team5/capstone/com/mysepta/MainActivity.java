@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Environment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
     int PROFILE = R.drawable.profile;
 
     /*Third party library for the Material looking view pager*/
-    private MaterialViewPager mViewPager;
+    public MaterialViewPager mViewPager;
     private Toolbar toolbar;
 
     /*The FavoritesManager SINGLETON*/
@@ -84,10 +85,11 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
     RecyclerView.LayoutManager mLayoutManager;
 
     /*This is the Adapter that controls the Fragment views in the tabs*/
-    private FragmentPagerAdapter fragmentPagerAdapter;
+    public FragmentStatePagerAdapter fragmentPagerAdapter;
 
     /*Subway Title that is changed according to the user itinerary choice*/
     private String subwayTabTitle = "Subway";
+    private boolean refreshHome = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         mDrawer.setDrawerListener(mDrawerToggle);
 
         /*Create the Tab Fragments*/
-        fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+        fragmentPagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
                 Log.d(TAG, String.valueOf(position));
