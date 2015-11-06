@@ -1,11 +1,13 @@
 package team5.capstone.com.mysepta.Adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import team5.capstone.com.mysepta.R;
 
@@ -20,12 +22,13 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
     private String name;
     private int profile;
     private String email;
+    Context context;
 
 
     /**
      *
      */
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         int Holderid;
 
         TextView textView;
@@ -33,9 +36,13 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
         ImageView profile;
         TextView Name;
         TextView email;
+        Context contxt;
 
-        public ViewHolder(View itemView,int ViewType) {                 // Creating ViewHolder Constructor with View and viewType As a parameter
+        public ViewHolder(View itemView,int ViewType, Context c) {                 // Creating ViewHolder Constructor with View and viewType As a parameter
             super(itemView);
+            contxt = c;
+            itemView.setClickable(true);
+            itemView.setOnClickListener(this);
 
             if(ViewType == TYPE_CELL) {
                 textView = (TextView) itemView.findViewById(R.id.rowText);
@@ -48,7 +55,15 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
                 Holderid = 0;
             }
         }
+
+        @Override
+        public void onClick(View v){
+            Toast.makeText(contxt, "The Item Clicked is: " +getPosition(), Toast.LENGTH_SHORT).show();
+            //openActivity(getPosition());
+        }
     }
+
+
 
     /**
      * Constructor
@@ -58,13 +73,14 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
      * @param Email
      * @param Profile
      */
-    public DrawerAdapter(String Titles[], int Icons[], String Name, String Email, int Profile){
+    public DrawerAdapter(String Titles[], int Icons[], String Name, String Email, int Profile, Context passedContext){
 
         mNavTitles = Titles;
         mIcons = Icons;
         name = Name;
         email = Email;
         profile = Profile;
+        this.context = passedContext;
     }
 
     /**
@@ -78,15 +94,17 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
         if (viewType == TYPE_CELL) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row,parent,false);
-            ViewHolder vhItem = new ViewHolder(v,viewType);
+            ViewHolder vhItem = new ViewHolder(v,viewType, context);
             return vhItem;
         } else if (viewType == TYPE_HEADER) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.header,parent,false);
-            ViewHolder vhHeader = new ViewHolder(v,viewType);
+            ViewHolder vhHeader = new ViewHolder(v,viewType, context);
             return vhHeader;
         }
         return null;
     }
+
+
 
 
     /**
@@ -128,7 +146,6 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
         return TYPE_CELL;
     }
 
-
     /**
      *
      * @param position
@@ -137,5 +154,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
     private boolean isPositionHeader(int position) {
         return position == 0;
     }
+
+
 
 }

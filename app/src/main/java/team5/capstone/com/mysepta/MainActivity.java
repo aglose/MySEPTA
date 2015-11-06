@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         drawerListView = (RecyclerView) findViewById(R.id.left_drawer); // Assigning the RecyclerView Object to the xml View
         drawerListView.setHasFixedSize(true);                            // Letting the system know that the list objects are of fixed size
 
-        DrawerAdapter mAdapter = new DrawerAdapter(TITLES,ICONS,NAME,EMAIL,PROFILE);
+        DrawerAdapter mAdapter = new DrawerAdapter(TITLES,ICONS,NAME,EMAIL,PROFILE,this);
 
         drawerListView.setAdapter(mAdapter);                              // Setting the adapter to RecyclerView
         drawerListView.setLayoutManager(mLayoutManager);

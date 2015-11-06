@@ -1,5 +1,6 @@
 package team5.capstone.com.mysepta.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -31,8 +32,7 @@ public class DrawerFragment extends Fragment {
     private String email = "username@gmail.com";
 
     private int profile = R.drawable.profile;
-
-
+    private Context context;
 
 
     /**
@@ -68,7 +68,7 @@ public class DrawerFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        mAdapter = new RecyclerViewMaterialAdapter(new DrawerAdapter(mNavTitles,mIcons,name, email, profile));
+        mAdapter = new RecyclerViewMaterialAdapter(new DrawerAdapter(mNavTitles,mIcons,name, email, profile, context));
         mRecyclerView.setAdapter(mAdapter);
 
 
