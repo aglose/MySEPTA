@@ -32,14 +32,6 @@ import team5.capstone.com.mysepta.Managers.FavoritesManager;
 
 public class RailActivity extends AppCompatActivity implements ToFromFragment.OnFragmentInteractionListener{
 
-    /*RecyclerView fromRail;
-    RecyclerView toRail;
-    RecyclerView scheduleView;
-    VerticalRecyclerViewFastScroller fromScroll;
-    VerticalRecyclerViewFastScroller toScroll;
-    RailToFromViewAdapter fromRailChoices;
-    RailToFromViewAdapter toRailChoices;*/
-
     private Toolbar toolbar;
     private ExpandableListView expandableListView;
     private ArrayList<String> groupList;
@@ -106,14 +98,12 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
                     if(!start.equalsIgnoreCase(stationName)) {
                         start = stationName;
                         changeFrag = true;
-                        //Log.d("Start",stationName);
                     }
                 }
                 else {
                     if (!end.equalsIgnoreCase(stationName)) {
                         end = stationName;
                         changeFrag = true;
-                        //Log.d("End",stationName);
                     }
                 }
 
