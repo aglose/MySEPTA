@@ -3,10 +3,13 @@
 <resources>
     <color name="ColorPrimary">#FF5722</color>
     <color name="ColorPrimaryDark">#E64A19</color>
-    <color name="white">#FFFFFF</color>
+    <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="headerBlue">#3F51B5</color>
     <color name="subwayHeader">#3F51B5</color>
     <color name="transparent">#BF000000</color>
+    <color name="background_material_light">#efefef</color>
+    <color name="windowBackground">#c0a8a8</color>
+    <color name="secondary_text_material_light">#9d4040</color>
 </resources>
 

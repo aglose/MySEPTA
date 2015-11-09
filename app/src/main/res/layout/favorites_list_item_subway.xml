@@ -10,6 +10,8 @@
     android:layout_marginLeft="@dimen/cardChildMarginHorizontal"
     android:layout_marginRight="@dimen/cardChildMarginHorizontal"
     app:cardPreventCornerOverlap="false"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 

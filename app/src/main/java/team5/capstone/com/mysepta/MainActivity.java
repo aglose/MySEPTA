@@ -182,19 +182,19 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
                 switch (page) {
                     case HOME_TAB:
                         return HeaderDesign.fromColorResAndUrl(
-                                R.color.green,
+                                R.color.headerBlue,
                                 "http://www.towerstream.com/wp-content/uploads/2014/03/Philadelphia.jpg");
                     case RAIL_TAB:
                         return HeaderDesign.fromColorResAndUrl(
-                                R.color.blue,
+                                R.color.headerBlue,
                                 "http://www.uwishunu.com/wp-content/uploads/2012/08/boathouse-row-philadelphia-sunset1-680uw.jpg");
                     case BUS_TAB:
                         return HeaderDesign.fromColorResAndUrl(
-                                R.color.cyan,
+                                R.color.headerBlue,
                                 "http://cdn.gobankingrates.com/wp-content/uploads/banks-in-philadelphia.jpg");
                     case SUBWAY_TAB:
                         return HeaderDesign.fromColorResAndUrl(
-                                R.color.red,
+                                R.color.headerBlue,
                                 "https://www.issueone.org/wp-content/uploads/2015/06/Philly-Skyline.jpg");
                 }
                 return null;

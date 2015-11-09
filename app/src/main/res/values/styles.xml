@@ -18,8 +18,8 @@
         <item name="selectableItemBackgroundBorderless">?android:selectableItemBackground</item>
     </style>
 
-    <style name="AppTheme" parent="AppBaseTheme">
-        <item name="android:textColorPrimary">@android:color/white</item>
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorPrimary">@color/white</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:windowTranslucentStatus" tools:targetApi="21">true</item>
         <item name="android:windowContentTransitions">true</item>
@@ -35,6 +35,7 @@
         <item name="colorPrimary">@color/headerBlue</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/accent_color</item>
+
     </style>
 
     <style name="AppTheme.ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">

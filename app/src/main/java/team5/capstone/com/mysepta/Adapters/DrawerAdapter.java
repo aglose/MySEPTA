@@ -1,6 +1,10 @@
 package team5.capstone.com.mysepta.Adapters;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.RippleDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,16 +40,29 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
         ImageView profile;
         TextView Name;
         TextView email;
-        Context contxt;
+        Context context;
 
-        public ViewHolder(View itemView,int ViewType, Context c) {                 // Creating ViewHolder Constructor with View and viewType As a parameter
+        public ViewHolder(View itemView, int ViewType, Context c) {                 // Creating ViewHolder Constructor with View and viewType As a parameter
             super(itemView);
-            contxt = c;
+            context = c;
             itemView.setClickable(true);
             itemView.setOnClickListener(this);
 
             if(ViewType == TYPE_CELL) {
                 textView = (TextView) itemView.findViewById(R.id.rowText);
+                RippleDrawable newImage = new RippleDrawable(
+                        new ColorStateList(
+                                new int[][]{
+                                        new int[]{android.R.attr.state_pressed},
+                                        new int[]{}
+                                },
+                                new int[] {
+                                        ContextCompat.getColor(context, R.color.headerBlue),
+                                        ContextCompat.getColor(context, R.color.headerBlue),
+                                }),
+                        null,
+                        null);
+                textView.setBackground(newImage);
                 imageView = (ImageView) itemView.findViewById(R.id.rowIcon);
                 Holderid = 1;
             }else{
@@ -58,7 +75,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
         @Override
         public void onClick(View v){
-            Toast.makeText(contxt, "The Item Clicked is: " +getPosition(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "The Item Clicked is: " +getPosition(), Toast.LENGTH_SHORT).show();
             //openActivity(getPosition());
         }
     }
