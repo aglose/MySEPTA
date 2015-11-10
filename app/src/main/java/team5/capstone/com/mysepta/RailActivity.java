@@ -4,6 +4,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +18,9 @@ import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +35,7 @@ import team5.capstone.com.mysepta.Fragment.RailScheduleFragment;
 import team5.capstone.com.mysepta.Fragment.ToFromFragment;
 import team5.capstone.com.mysepta.Managers.FavoritesManager;
 
-public class RailActivity extends AppCompatActivity implements ToFromFragment.OnFragmentInteractionListener{
+public class RailActivity extends AppCompatActivity implements ToFromFragment.OnFragmentInteractionListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private Toolbar toolbar;
     private ExpandableListView expandableListView;
@@ -41,6 +46,7 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
     private Fragment scheduleFrag;
     private Menu mOptionsMenu;
     private boolean favorite;
+    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +78,14 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
             start = tempStart;
             railExpandableAdapter.updateParent(0, start);
             railExpandableAdapter.notifyDataSetChanged();
+        }else{
+            buildGoogleApiClient();
+            Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                    mGoogleApiClient);
+            if (mLastLocation != null) {
+                double latitude = mLastLocation.getLatitude();
+                double longitude = mLastLocation.getLongitude();
+            }
         }
 
         if(tempEnd != null) {
@@ -131,6 +145,24 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
 
 
 
+
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
 
     }
 
@@ -248,5 +280,10 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
         super.onStop();
         FavoritesManager favoritesManager = FavoritesManager.getInstance();
         favoritesManager.storeSharedPreferences();
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
     }
 }
