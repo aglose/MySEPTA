@@ -102,6 +102,10 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
 
                 if(temp.isConnection()){
                     holder.cardView.setBackgroundColor(context.getResources().getColor(R.color.blue));
+                    holder.railText.setTextColor(context.getResources().getColor(R.color.white));
+                    holder.railAcr.setTextColor(context.getResources().getColor(R.color.white));
+                    holder.timeText.setTextColor(context.getResources().getColor(R.color.white));
+                    holder.trainText.setTextColor(context.getResources().getColor(R.color.white));
                 }
                 else{
                     holder.cardView.setBackgroundColor(context.getResources().getColor(R.color.white));

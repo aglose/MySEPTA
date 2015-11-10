@@ -2,6 +2,8 @@ package team5.capstone.com.mysepta.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,9 +24,13 @@ public class RailItineraryViewAdapter extends RecyclerView.Adapter<RailItinerary
     static final int TYPE_LIVE = 0;
     static final int TYPE_STATIC_HEADER = 1;
     static final int TYPE_RAIL = 2;
+    private double latitude;
+    private double longitude;
 
-    public RailItineraryViewAdapter(Context context){
+    public RailItineraryViewAdapter(double latitude, double longitude, Context context){
         this.context = context;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     /**
@@ -78,6 +84,10 @@ public class RailItineraryViewAdapter extends RecyclerView.Adapter<RailItinerary
                     @Override
                     public void onClick(View v) {
                         Intent launch = new Intent(context,RailActivity.class);
+                        Bundle extras = new Bundle();
+                        extras.putDouble(context.getResources().getString(R.string.LAST_KNOWN_LATITUDE_KEY), latitude);
+                        extras.putDouble(context.getResources().getString(R.string.LAST_KNOWN_LONGITUDE_KEY), longitude);
+                        launch.putExtras(extras);
                         context.startActivity(launch);
                     }
                 });

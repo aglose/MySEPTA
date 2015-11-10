@@ -20,10 +20,10 @@ public class NearestLocationProxy {
      * Retrieve nearest location data.
      * @param callBack callback to hold location data
      */
-    public void getNearestView(int latitude, int longitude, Callback<ArrayList<NearestLocationModel>> callBack) {
+    public void getNearestView(double latitude, double longitude, Callback<ArrayList<NearestLocationModel>> callBack) {
 
         NearestLocationInterface nearestLocationService = NearestLocationService.getNearestLocationInterface();
 
-        nearestLocationService.locations(callBack);
+        nearestLocationService.locations(String.valueOf(latitude), String.valueOf(longitude), callBack);
     }
 }

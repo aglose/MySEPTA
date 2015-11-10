@@ -1,7 +1,10 @@
 package team5.capstone.com.mysepta;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Environment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -30,6 +33,9 @@ import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,7 +55,7 @@ import team5.capstone.com.mysepta.Fragment.DrawerFragment;
 import team5.capstone.com.mysepta.Fragment.SubwayItineraryViewFragment;
 import team5.capstone.com.mysepta.Managers.FavoritesManager;
 
-public class MainActivity extends AppCompatActivity implements SubwayItineraryViewFragment.SubwayChangeFragmentListener{
+public class MainActivity extends AppCompatActivity implements SubwayItineraryViewFragment.SubwayChangeFragmentListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
     /*When you are debugging use this TAG as the first String (i.e. Log.d(TAG, String.valueOf(position));*/
     private static final String TAG = "MainActivity";
 
@@ -81,21 +87,25 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private RecyclerView drawerListView;
-    RecyclerView.Adapter mAdapter;
-    RecyclerView.LayoutManager mLayoutManager;
 
     /*This is the Adapter that controls the Fragment views in the tabs*/
     public FragmentStatePagerAdapter fragmentPagerAdapter;
 
     /*Subway Title that is changed according to the user itinerary choice*/
     private String subwayTabTitle = "Subway";
-    private boolean refreshHome = false;
+
+    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         setupWindowAnimations();
+
+        // Acquire a reference to the system Location Manager
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        final Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         Fabric.with(this, new Crashlytics());
 
@@ -143,7 +153,12 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
                     case HOME_TAB:
                         return favoritesFragment = FavoritesFragment.newInstance();
                     case RAIL_TAB:
-                        return railViewFragment = RailItineraryViewFragment.newInstance();
+                        RailItineraryViewFragment railViewFragment = new RailItineraryViewFragment();
+                        Bundle args = new Bundle();
+                        args.putDouble(getResources().getString(R.string.LAST_KNOWN_LATITUDE_KEY), lastKnownLocation.getLatitude());
+                        args.putDouble(getResources().getString(R.string.LAST_KNOWN_LONGITUDE_KEY), lastKnownLocation.getLongitude());
+                        railViewFragment.setArguments(args);
+                        return railViewFragment;
                     case BUS_TAB:
                         return RecyclerViewFragment.newInstance();
                     case SUBWAY_TAB:
@@ -297,6 +312,29 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         subwayViewFragment.changeAdapterToScheduleView(line);
         fragmentPagerAdapter.notifyDataSetChanged();
         mViewPager.notifyHeaderChanged();
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
     }
 
 }

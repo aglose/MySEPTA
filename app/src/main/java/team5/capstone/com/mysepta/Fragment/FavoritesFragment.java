@@ -1,6 +1,7 @@
 package team5.capstone.com.mysepta.Fragment;
 
 import android.content.Context;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -37,6 +38,7 @@ public class FavoritesFragment extends Fragment{
 
     private FavoritesManager favoritesManager;
     private HomeViewAdapter homeViewAdapter;
+
 
     /*Keep track of the rootView to pass to the adapters*/
     private View rootView;

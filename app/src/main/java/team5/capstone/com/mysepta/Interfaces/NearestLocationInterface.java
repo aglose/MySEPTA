@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import retrofit.Callback;
 import retrofit.http.GET;
+import retrofit.http.Path;
+import retrofit.http.Query;
 import team5.capstone.com.mysepta.Models.NearestLocationModel;
 import team5.capstone.com.mysepta.Models.RailModel;
 
@@ -16,8 +18,10 @@ public interface NearestLocationInterface {
      * Retrieve train location data.
      * @param callback callback to hold train data
      */
-    @GET("/hackathon/locations/get_locations.php?lon=-75.33299748&lat=40.11043326&radius=3&type=rail_stations")
+    @GET("/hackathon/locations/get_locations.php?radius=3&type=rail_stations")
     void locations (
+            @Query("lat") String latitude,
+            @Query("lon") String longitude,
             Callback<ArrayList<NearestLocationModel>> callback
     );
 }
