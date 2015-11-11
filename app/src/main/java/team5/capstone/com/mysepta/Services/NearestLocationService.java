@@ -38,7 +38,7 @@ public class NearestLocationService {
 }
 
 class ServiceErrorHandler implements ErrorHandler {
-    public static final String TAG = "Deubgddd";
+    public static final String TAG = "NearestLocationService";
 
     @Override
     public Throwable handleError(RetrofitError cause) {

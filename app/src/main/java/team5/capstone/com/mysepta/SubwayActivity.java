@@ -60,6 +60,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
     private boolean customTime = false;
     private Menu mOptionsMenu;
     private TextView directionText;
+    private boolean favorite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -309,6 +310,8 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         this.mOptionsMenu = menu;
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_subway, menu);
+
+        checkFavorite();
         return true;
     }
 
@@ -330,12 +333,23 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
                 launchTimePicker();
                 return true;
             case R.id.favoriteIcon:
-                addLineToFavorites();
+                if(favorite){
+                    removeLineFromFavorites();
+                }else{
+                    addLineToFavorites();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    private void removeLineFromFavorites() {
+        FavoritesManager.removeSubwayLineFromFavorites(line, location);
+        mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(android.R.drawable.star_big_off);
+        favorite = false;
+        Toast.makeText(SubwayActivity.this, "Removed from Favorites", Toast.LENGTH_SHORT).show();
     }
 
     private void addLineToFavorites() {
@@ -346,7 +360,18 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         favSubModel.setLine(line);
         FavoritesManager.addSubwayLineToFavorites(favSubModel);
         mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(R.drawable.star_icon);
+        favorite = true;
         Toast.makeText(SubwayActivity.this, "Added to Favorites", Toast.LENGTH_SHORT).show();
+    }
+
+    private void checkFavorite(){
+        if(FavoritesManager.checkForFavoriteSubwayLine(line, location)){
+            mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(R.drawable.star_icon);
+            favorite=true;
+        }else{
+            mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(android.R.drawable.star_big_off);
+            favorite=false;
+        }
     }
 
     @Override
