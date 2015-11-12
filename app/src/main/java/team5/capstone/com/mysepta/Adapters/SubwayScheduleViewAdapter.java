@@ -7,7 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
 import team5.capstone.com.mysepta.R;
@@ -48,7 +52,25 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
      */
     @Override
     public void onBindViewHolder(SubwayScheduleHolder holder, int position) {
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        Calendar c = Calendar.getInstance();
+        String currentTime = timeFormat.format(c.getTime());
+        Date d1 = null;
+        Date d2 = null;
+        try {
+            d1 = timeFormat.parse(arrivals.get(position).getFormattedTimeStr());
+            d2 = timeFormat.parse(currentTime);
+            long difference = d1.getTime() - d2.getTime();
+            Date diff = new Date(difference);
+            String diffTime = timeFormat.format(diff.getTime());
+            holder.timeTillText.setText(diffTime);
+        } catch (Exception e) {
+            e.printStackTrace();
+            holder.timeTillText.setText("error");
+        }
         holder.scheduleText.setText(arrivals.get(position).getFormattedTimeStr());
+        holder.arrivalID.setText(String.valueOf(position));
+
     }
 
     /**
@@ -65,6 +87,9 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
      */
     public class SubwayScheduleHolder extends RecyclerView.ViewHolder{
         TextView scheduleText;
+        TextView arrivalID;
+        TextView timeTillText;
+
         /**
          * Constructor
          * @param itemView current item view
@@ -72,6 +97,8 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
         public SubwayScheduleHolder(View itemView) {
             super(itemView);
             scheduleText = (TextView) itemView.findViewById(R.id.scheduleText);
+            arrivalID = (TextView) itemView.findViewById(R.id.arrivalNumber);
+            timeTillText = (TextView) itemView.findViewById(R.id.timeTillText);
         }
     }
 }

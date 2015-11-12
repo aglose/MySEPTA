@@ -14,13 +14,57 @@
         android:background="@color/white"
         android:layout_height="match_parent"/>
 
+    <RelativeLayout
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_margin="15dp">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/blue"
+            android:id="@+id/view">
+
+        </View>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/arrivalNumber"
+            android:text="9"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="99:99"
+        android:id="@+id/scheduleText"
+        android:layout_gravity="center"
+        android:paddingTop="8dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Arrives in "
+        android:id="@+id/textView4"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginBottom="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/scheduleText" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/scheduleText"
-        android:layout_gravity="center"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:text="9 mins"
+        android:layout_marginBottom="15dp"
+        android:id="@+id/timeTillText"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/textView4" />
 </RelativeLayout>
