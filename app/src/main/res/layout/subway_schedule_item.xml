@@ -17,7 +17,8 @@
     <RelativeLayout
         android:layout_width="60dp"
         android:layout_height="50dp"
-        android:layout_margin="15dp">
+        android:layout_margin="15dp"
+        android:id="@+id/relativeLayout2">
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -42,29 +43,36 @@
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:text="99:99"
+        android:textStyle="bold"
         android:id="@+id/scheduleText"
         android:layout_gravity="center"
         android:paddingTop="8dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <TextView
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Arrives in "
-        android:id="@+id/textView4"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_marginBottom="15dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/scheduleText" />
+        android:id="@+id/relativeLayout3"
+        android:layout_alignBottom="@+id/relativeLayout2"
+        android:layout_centerHorizontal="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Arrives in "
+            android:id="@+id/arriveByText"
+            android:textSize="15dp"
+             />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="9 mins"
-        android:layout_marginBottom="15dp"
-        android:id="@+id/timeTillText"
-        android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/textView4" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:text="9 mins"
+            android:id="@+id/timeTillText"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/arriveByText" />
+
+    </RelativeLayout>
+
 </RelativeLayout>

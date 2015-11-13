@@ -142,6 +142,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         Cursor c = database.rawQuery(completeSQL.toString(), null);
         ArrayList<SubwayScheduleItemModel> arrivals = new ArrayList<>();
         SimpleDateFormat oldFormat = new SimpleDateFormat("hh:mma");
+        SimpleDateFormat newFormat = new SimpleDateFormat("hh:mm a");
         int i = 0;
 
         try {
@@ -153,12 +154,11 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
                     String arrival = c.getString(c.getColumnIndex(location));
                     if(!arrival.equalsIgnoreCase("X")){
                         oldFormat = new SimpleDateFormat("hh:mma");
-                        Date time = oldFormat.parse(arrival.trim());
-                        oldFormat.applyPattern("hh:mm a");
-                        String arrivalNewFormat = oldFormat.format(time);
-                        if(arrivalNewFormat.startsWith("0")){
-                            arrivalNewFormat = arrivalNewFormat.substring(1, arrivalNewFormat.length());
-                        }
+                        Date oldTime = oldFormat.parse(arrival.trim());
+                        String arrivalNewFormat = newFormat.format(oldTime);
+//                        if(arrivalNewFormat.startsWith("0")){
+//                            arrivalNewFormat = arrivalNewFormat.substring(1, arrivalNewFormat.length());
+//                        }
 
                         SubwayScheduleItemModel newArrival = new SubwayScheduleItemModel();
                         newArrival.setFormattedTimeStr(arrivalNewFormat);
@@ -176,14 +176,14 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
             Calendar cal = Calendar.getInstance();
             ArrayList<SubwayScheduleItemModel> arrivalTemp = (ArrayList<SubwayScheduleItemModel>) arrivals.clone();
             for(SubwayScheduleItemModel item: arrivalTemp){
-                Date time = oldFormat.parse(item.getFormattedTimeStr());
-                String currentTimeString = oldFormat.format(cal.getTime());
+                Date time = newFormat.parse(item.getFormattedTimeStr());
+                String currentTimeString = newFormat.format(cal.getTime());
 
                 if(customTime){
-                    currentTimeString = oldFormat.format(pickedDate.getTime());
+                    currentTimeString = newFormat.format(pickedDate.getTime());
                 }
 
-                Date currentTime = oldFormat.parse(currentTimeString);
+                Date currentTime = newFormat.parse(currentTimeString);
                 if(time.before(currentTime)){
                     arrivals.remove(item);
                 }else{

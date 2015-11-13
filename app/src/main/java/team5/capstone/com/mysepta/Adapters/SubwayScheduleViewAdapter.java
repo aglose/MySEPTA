@@ -2,6 +2,7 @@ package team5.capstone.com.mysepta.Adapters;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import team5.capstone.com.mysepta.R;
  * Created by tiestodoe on 10/1/15.
  */
 public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwayScheduleViewAdapter.SubwayScheduleHolder> {
+    private static final String TAG = "SubwayScheduleViewAdapter";
     private ArrayList<SubwayScheduleItemModel> arrivals;
 
 
@@ -52,18 +54,44 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
      */
     @Override
     public void onBindViewHolder(SubwayScheduleHolder holder, int position) {
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat arrivalTimeFormat = new SimpleDateFormat("hh:mm a");
+        SimpleDateFormat differenceInTimeFormat = new SimpleDateFormat("hh:mm");
+
         Calendar c = Calendar.getInstance();
-        String currentTime = timeFormat.format(c.getTime());
-        Date d1 = null;
-        Date d2 = null;
+        String currentTime = arrivalTimeFormat.format(c.getTime());
+        Date arrivalDate = null;
+        Date currentDate = null;
         try {
-            d1 = timeFormat.parse(arrivals.get(position).getFormattedTimeStr());
-            d2 = timeFormat.parse(currentTime);
-            long difference = d1.getTime() - d2.getTime();
-            Date diff = new Date(difference);
-            String diffTime = timeFormat.format(diff.getTime());
-            holder.timeTillText.setText(diffTime);
+            arrivalDate = arrivalTimeFormat.parse(arrivals.get(position).getFormattedTimeStr());
+            currentDate = arrivalTimeFormat.parse(currentTime);
+            long difference = arrivalDate.getTime() - currentDate.getTime();
+
+            long diffMinutes = difference / (60 * 1000) % 60;
+            long diffHours = difference / (60 * 60 * 1000) % 24;
+            Log.d(TAG, "Current time: " + currentTime + "\nArrival time: " + arrivals.get(position).getFormattedTimeStr());
+
+            if(difference < 0){
+                Log.d(TAG, "negative");
+                holder.arriveByText.setText("Left "+String.valueOf( Math.abs(diffMinutes)+" min(s) ago"));
+                holder.timeTillText.setText("");
+            }else{
+                if(diffHours > 1 && diffMinutes > 1){
+                    holder.timeTillText.setText(" " + String.valueOf(diffHours) + " hrs " + String.valueOf(diffMinutes) + " mins");
+                }else if(diffHours > 1 && diffMinutes == 1){
+                    holder.timeTillText.setText(" " + String.valueOf(diffHours) + " hrs " + String.valueOf(diffMinutes) + " min");
+                }else if(diffHours == 1 && diffMinutes == 1){
+                    holder.timeTillText.setText(" " + String.valueOf(diffHours) + " hr " + String.valueOf(diffMinutes) + " min");
+                }else if(diffHours == 1 && diffMinutes > 1){
+                    holder.timeTillText.setText(" " + String.valueOf(diffHours) + " hr " + String.valueOf(diffMinutes) + " mins");
+                }else if(diffHours == 0 && diffMinutes == 1){
+                    holder.timeTillText.setText(" " + String.valueOf(diffMinutes) + " min");
+                }else if(diffHours == 0 && diffMinutes > 1){
+                    holder.timeTillText.setText(" " + String.valueOf(diffMinutes) + " mins");
+                }else{
+                    holder.timeTillText.setText(" 0 min");
+                }
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             holder.timeTillText.setText("error");
@@ -89,6 +117,7 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
         TextView scheduleText;
         TextView arrivalID;
         TextView timeTillText;
+        TextView arriveByText;
 
         /**
          * Constructor
@@ -99,6 +128,7 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
             scheduleText = (TextView) itemView.findViewById(R.id.scheduleText);
             arrivalID = (TextView) itemView.findViewById(R.id.arrivalNumber);
             timeTillText = (TextView) itemView.findViewById(R.id.timeTillText);
+            arriveByText = (TextView) itemView.findViewById(R.id.arriveByText);
         }
     }
 }
