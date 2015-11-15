@@ -204,9 +204,9 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
 
                 Date currentTime = newFormat.parse(currentTimeString);
 
-                Log.d(TAG, "Current time: " + currentTimeString);
-                Log.d(TAG, "Item time: " + item.getFormattedTimeStr());
-                Log.d(TAG, "Difference: " + time.before(currentTime));
+//                Log.d(TAG, "Current time: " + currentTimeString);
+//                Log.d(TAG, "Item time: " + item.getFormattedTimeStr());
+//                Log.d(TAG, "Difference: " + time.before(currentTime));
                 if(time.before(currentTime)){
                     arrivals.remove(item);
                 }else{
@@ -242,7 +242,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
 
     private String chooseTable() {
         directionText = (TextView) findViewById(R.id.direction);
-        directionText.setText(direction+"BOUND");
+        directionText.setText(direction + "BOUND");
         String tableName = "";
         Calendar c = Calendar.getInstance();
         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
@@ -316,11 +316,10 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
             direction = "EAST";
         }
 
+        subwayScheduleViewAdapter.clearData();
+
         ArrayList arrivals = retrieveDatabaseInfo();
-        subwayScheduleViewAdapter = new SubwayScheduleViewAdapter(arrivals, this);
-        recyclerScheduleView.swapAdapter(subwayScheduleViewAdapter, true);
-
-
+        subwayScheduleViewAdapter.setList(arrivals);
     }
 
     private void launchTimePicker() {

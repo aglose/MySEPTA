@@ -119,6 +119,22 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
 
     }
 
+    public void clearData() {
+        int size = this.arrivals.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                this.arrivals.remove(0);
+            }
+
+            this.notifyItemRangeRemoved(0, size);
+        }
+    }
+
+    public void setList(ArrayList arrivals){
+        this.arrivals = arrivals;
+        this.notifyItemRangeInserted(0, arrivals.size()-1);
+    }
+
     /**
      * Get item count.
      * @return size of arrivals array
