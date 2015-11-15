@@ -1,7 +1,7 @@
 package team5.capstone.com.mysepta.Adapters;
 
 import android.content.Context;
-import android.support.v7.widget.CardView;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,6 +18,7 @@ import java.util.Date;
 
 import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
 import team5.capstone.com.mysepta.R;
+import team5.capstone.com.mysepta.SubwayActivity;
 
 /**
  * Adapter for subway schedule view.
@@ -57,8 +58,7 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
      */
     @Override
     public void onBindViewHolder(SubwayScheduleHolder holder, int position) {
-        SimpleDateFormat arrivalTimeFormat = new SimpleDateFormat("hh:mm a");
-        SimpleDateFormat differenceInTimeFormat = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat arrivalTimeFormat = new SimpleDateFormat("hh:mm aa");
 
         Calendar c = Calendar.getInstance();
         String currentTime = arrivalTimeFormat.format(c.getTime());
@@ -71,13 +71,14 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
 
             long diffMinutes = difference / (60 * 1000) % 60;
             long diffHours = difference / (60 * 60 * 1000) % 24;
-            Log.d(TAG, "Current time: " + currentTime + "\nArrival time: " + arrivals.get(position).getFormattedTimeStr());
+            Log.d(TAG, "Position: "+position+"\nDifference min: "+diffMinutes+" hour: "+diffHours+"\nCurrent time: " + currentTime + "\nArrival time: " + arrivals.get(position).getFormattedTimeStr());
 
-            if(difference < 0){
+            if(diffMinutes < 0 && diffHours < 0){
                 Log.d(TAG, "negative");
                 holder.arriveByText.setText("Left "+String.valueOf( Math.abs(diffMinutes)+" min(s) ago"));
                 holder.timeTillText.setText("");
             }else{
+                holder.arriveByText.setText("Arrives in ");
                 if(diffHours > 1 && diffMinutes > 1){
                     holder.timeTillText.setText(" " + String.valueOf(diffHours) + " hrs " + String.valueOf(diffMinutes) + " mins");
                 }else if(diffHours > 1 && diffMinutes == 1){
@@ -106,17 +107,13 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
         holder.lineText.setText(line);
 
         if(line.equalsIgnoreCase("BSL")){
-            holder.circleView.setBackground(context.getDrawable(R.drawable.circleBSL));
+            holder.circleView.setBackground(context.getDrawable(R.drawable.circle_bsl));
         }
 
         holder.setAlarmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(v.getBackground().equals(context.getDrawable(R.drawable.ic_alarm_on))) {
-                    v.setBackground(context.getDrawable(R.drawable.ic_alarm_off));
-                }else {
-                    v.setBackground(context.getDrawable(R.drawable.ic_alarm_on));
-                }
+                Toast.makeText(context, "Set and alarm", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -131,6 +128,12 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
         return arrivals.size();
     }
 
+    public void removeItems(ArrayList arrivals){
+        int oldSize = this.arrivals.size();
+        this.arrivals = new ArrayList();
+        notifyItemRangeRemoved(0, oldSize-1);
+//        this.arrivals = arrivals;
+    }
     /**
      * Subway schedule view holder
      */

@@ -19,6 +19,7 @@ import android.util.Log;
 import android.util.Property;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
@@ -29,6 +30,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 import team5.capstone.com.mysepta.Adapters.SubwayScheduleViewAdapter;
@@ -118,7 +121,6 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         };
 
         final ObjectAnimator animator = ObjectAnimator.ofInt(headerText, property, Color.WHITE);
-        animator.setStartDelay(800L);
         animator.setDuration(333L);
         animator.setEvaluator(new ArgbEvaluator());
         animator.setInterpolator(new DecelerateInterpolator(2));
@@ -141,31 +143,46 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
 
         Cursor c = database.rawQuery(completeSQL.toString(), null);
         ArrayList<SubwayScheduleItemModel> arrivals = new ArrayList<>();
+        ArrayList<SubwayScheduleItemModel> arrivalsAfterMidnight = new ArrayList<>();
+
         SimpleDateFormat oldFormat = new SimpleDateFormat("hh:mma");
-        SimpleDateFormat newFormat = new SimpleDateFormat("hh:mm a");
-        int i = 0;
+        SimpleDateFormat newFormat = new SimpleDateFormat("hh:mm aa");
+        String midnight = "12:00 am";
+
+        Calendar cal = Calendar.getInstance();
+        Calendar calCompare = Calendar.getInstance();
+        boolean timePM = false;
 
         try {
             if (c.getCount() > 0)
             {
                 c.moveToFirst();
                 do {
+                    Date midnightTime = newFormat.parse(midnight);
 
                     String arrival = c.getString(c.getColumnIndex(location));
                     if(!arrival.equalsIgnoreCase("X")){
-                        oldFormat = new SimpleDateFormat("hh:mma");
                         Date oldTime = oldFormat.parse(arrival.trim());
                         String arrivalNewFormat = newFormat.format(oldTime);
-//                        if(arrivalNewFormat.startsWith("0")){
-//                            arrivalNewFormat = arrivalNewFormat.substring(1, arrivalNewFormat.length());
-//                        }
+                        Date arrivalDate = newFormat.parse(arrivalNewFormat);
+
+                        calCompare.setTime(arrivalDate);
 
                         SubwayScheduleItemModel newArrival = new SubwayScheduleItemModel();
                         newArrival.setFormattedTimeStr(arrivalNewFormat);
+                        newArrival.setLine(line);
+                        newArrival.setTimeObject(arrivalDate);
 
-                        arrivals.add(newArrival);
-
-                        i++;
+                        if(!timePM){
+                            if(calCompare.get(Calendar.AM_PM) == Calendar.PM){
+                                timePM = true;
+                            }
+                        }
+                        if(timePM && calCompare.get(Calendar.AM_PM) == Calendar.AM){
+                            arrivalsAfterMidnight.add(newArrival);
+                        }else{
+                            arrivals.add(newArrival);
+                        }
                     }
                 } while (c.moveToNext());
                 c.close();
@@ -173,9 +190,11 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
 
             close();
 
-            Calendar cal = Calendar.getInstance();
-            ArrayList<SubwayScheduleItemModel> arrivalTemp = (ArrayList<SubwayScheduleItemModel>) arrivals.clone();
+            Collections.sort(arrivals);
+            ArrayList<SubwayScheduleItemModel> arrivalTemp = new ArrayList<>(arrivals);
+
             for(SubwayScheduleItemModel item: arrivalTemp){
+
                 Date time = newFormat.parse(item.getFormattedTimeStr());
                 String currentTimeString = newFormat.format(cal.getTime());
 
@@ -184,15 +203,17 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
                 }
 
                 Date currentTime = newFormat.parse(currentTimeString);
+
+                Log.d(TAG, "Current time: " + currentTimeString);
+                Log.d(TAG, "Item time: " + item.getFormattedTimeStr());
+                Log.d(TAG, "Difference: " + time.before(currentTime));
                 if(time.before(currentTime)){
                     arrivals.remove(item);
                 }else{
                     break;
                 }
-                System.out.println("Current time: " + currentTimeString);
-                System.out.println("Item time: "+item.getFormattedTimeStr());
-                System.out.println("Difference: "+time.before(currentTime));
             }
+            arrivals.addAll(arrivalsAfterMidnight);
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -213,7 +234,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerScheduleView.setLayoutManager(layoutManager);
 
-        subwayScheduleViewAdapter = new SubwayScheduleViewAdapter(arrivals);
+        subwayScheduleViewAdapter = new SubwayScheduleViewAdapter(arrivals, this);
 
         recyclerScheduleView.setAdapter(subwayScheduleViewAdapter);
 
@@ -279,10 +300,12 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
     }
 
     private void changeDirection() {
-        ObjectAnimator animation = ObjectAnimator.ofFloat(directionText, "rotationX", 0.0f, 360f);
-        animation.setDuration(800);
-        animation.setInterpolator(new AccelerateDecelerateInterpolator());
-        animation.start();
+        ObjectAnimator animateDirection = ObjectAnimator.ofFloat(directionText, "rotationX", 0.0f, 360f);
+        animateDirection.setDuration(800);
+        animateDirection.setInterpolator(new AccelerateDecelerateInterpolator());
+        animateDirection.start();
+
+
         if(direction.equalsIgnoreCase("NORTH")){
             direction = "SOUTH";
         }else if(direction.equalsIgnoreCase("SOUTH")){
@@ -294,7 +317,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         }
 
         ArrayList arrivals = retrieveDatabaseInfo();
-        subwayScheduleViewAdapter = new SubwayScheduleViewAdapter(arrivals);
+        subwayScheduleViewAdapter = new SubwayScheduleViewAdapter(arrivals, this);
         recyclerScheduleView.swapAdapter(subwayScheduleViewAdapter, true);
 
 
@@ -410,7 +433,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
             e.printStackTrace();
         }
         ArrayList arrivals = retrieveDatabaseInfo();
-        subwayScheduleViewAdapter = new SubwayScheduleViewAdapter(arrivals);
+        subwayScheduleViewAdapter = new SubwayScheduleViewAdapter(arrivals, this);
         recyclerScheduleView.swapAdapter(subwayScheduleViewAdapter, true);
     }
 }
