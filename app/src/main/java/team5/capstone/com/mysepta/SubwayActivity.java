@@ -106,25 +106,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         cardView.setCardBackgroundColor(ContextCompat.getColor(this, R.color.headerBlue));
         TextView headerText = (TextView) findViewById(R.id.locationHeaderText);
         headerText.setText(location);
-        headerText.setTextColor(Color.GRAY);
-
-        final Property<TextView, Integer> property = new Property<TextView, Integer>(int.class, "textColor") {
-            @Override
-            public Integer get(TextView object) {
-                return object.getCurrentTextColor();
-            }
-
-            @Override
-            public void set(TextView object, Integer value) {
-                object.setTextColor(value);
-            }
-        };
-
-        final ObjectAnimator animator = ObjectAnimator.ofInt(headerText, property, Color.WHITE);
-        animator.setDuration(333L);
-        animator.setEvaluator(new ArgbEvaluator());
-        animator.setInterpolator(new DecelerateInterpolator(2));
-        animator.start();
+        headerText.setTextColor(Color.WHITE);
     }
 
     private ArrayList retrieveDatabaseInfo() {

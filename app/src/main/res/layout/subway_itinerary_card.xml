@@ -37,7 +37,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:text="BSL"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:id="@+id/bslButton"
                 android:layout_above="@+id/mflButton"
                 android:layout_alignStart="@+id/mflButton" />
@@ -47,7 +47,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:text="MFL"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:id="@+id/mflButton"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/mflTextView"

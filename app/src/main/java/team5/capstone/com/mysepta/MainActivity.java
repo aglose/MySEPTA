@@ -101,8 +101,6 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setupWindowAnimations();
-
         // Acquire a reference to the system Location Manager
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         final Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -234,15 +232,6 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
 
         favoritesManager = FavoritesManager.getInstance();
         favoritesManager.setContext(this);
-    }
-
-    private void setupWindowAnimations() {
-        // Re-enter transition is executed when returning to this activity
-        Slide slideTransition = new Slide();
-        slideTransition.setSlideEdge(Gravity.LEFT);
-        slideTransition.setDuration(getResources().getInteger(R.integer.anim_duration_long));
-        getWindow().setReenterTransition(slideTransition);
-        getWindow().setExitTransition(slideTransition);
     }
 
     //Copy the subway database to local if necessary
