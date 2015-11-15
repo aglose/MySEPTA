@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -113,7 +114,10 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
                         direction = "EAST";
                     }
                     Intent startSubwayActivity = new Intent(context, SubwayActivity.class);
-                    ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(context, ((SubwayLocationItemHolder)holder).locationText, context.getString(R.string.locationName));
+                    View locView = ((SubwayLocationItemHolder)holder).locationText;
+                    View cardView = ((SubwayLocationItemHolder)holder).cardView;
+                    ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(context,
+                                    Pair.create(locView, context.getString(R.string.locationTransitionName)), Pair.create(cardView, context.getString(R.string.cardTransitionName)));
 
                     Bundle bundle = new Bundle();
                     bundle.putInt(context.getString(R.string.STOP_ID_KEY), stopID);

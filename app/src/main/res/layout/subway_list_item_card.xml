@@ -13,6 +13,7 @@
     android:layout_marginRight="@dimen/cardChildMarginHorizontal"
     android:layout_marginTop="@dimen/cardChildMarginVertical"
     app:cardPreventCornerOverlap="false"
+    android:transitionName="@string/cardTransitionName"
     app:contentPadding="0dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -20,7 +21,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:transitionName="@string/locationName"
+            android:transitionName="@string/locationTransitionName"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
             android:id="@+id/locationText"

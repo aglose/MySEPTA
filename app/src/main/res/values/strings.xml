@@ -498,7 +498,8 @@
     </string-array>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="locationName">locationName</string>
+    <string name="locationTransitionName">locationName</string>
     <string name="LAST_KNOWN_LATITUDE_KEY">latitude_key</string>
     <string name="LAST_KNOWN_LONGITUDE_KEY">longtitude_key</string>
+    <string name="cardTransitionName">cardTransition</string>
 </resources>

@@ -1,11 +1,13 @@
 package team5.capstone.com.mysepta.Adapters;
 
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -24,14 +26,15 @@ import team5.capstone.com.mysepta.R;
 public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwayScheduleViewAdapter.SubwayScheduleHolder> {
     private static final String TAG = "SubwayScheduleViewAdapter";
     private ArrayList<SubwayScheduleItemModel> arrivals;
-
+    private Context context;
 
     /**
      * Constructor
      * @param arrivals list of arrival times for subway
      */
-    public SubwayScheduleViewAdapter(ArrayList<SubwayScheduleItemModel> arrivals){
+    public SubwayScheduleViewAdapter(ArrayList<SubwayScheduleItemModel> arrivals, Context context){
         this.arrivals = arrivals;
+        this.context = context;
     }
 
     /**
@@ -99,6 +102,24 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
         holder.scheduleText.setText(arrivals.get(position).getFormattedTimeStr());
         holder.arrivalID.setText(String.valueOf(position));
 
+        String line = arrivals.get(0).getLine();
+        holder.lineText.setText(line);
+
+        if(line.equalsIgnoreCase("BSL")){
+            holder.circleView.setBackground(context.getDrawable(R.drawable.circleBSL));
+        }
+
+        holder.setAlarmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v.getBackground().equals(context.getDrawable(R.drawable.ic_alarm_on))) {
+                    v.setBackground(context.getDrawable(R.drawable.ic_alarm_off));
+                }else {
+                    v.setBackground(context.getDrawable(R.drawable.ic_alarm_on));
+                }
+            }
+        });
+
     }
 
     /**
@@ -118,6 +139,9 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
         TextView arrivalID;
         TextView timeTillText;
         TextView arriveByText;
+        TextView lineText;
+        View circleView;
+        ImageButton setAlarmButton;
 
         /**
          * Constructor
@@ -129,6 +153,9 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
             arrivalID = (TextView) itemView.findViewById(R.id.arrivalNumber);
             timeTillText = (TextView) itemView.findViewById(R.id.timeTillText);
             arriveByText = (TextView) itemView.findViewById(R.id.arriveByText);
+            lineText = (TextView) itemView.findViewById(R.id.lineText);
+            circleView = itemView.findViewById(R.id.circleView);
+            setAlarmButton = (ImageButton) itemView.findViewById(R.id.setAlarmButton);
         }
     }
 }

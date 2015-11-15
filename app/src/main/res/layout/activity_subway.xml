@@ -17,6 +17,7 @@
         android:id="@+id/subwayHeader"
         android:layout_height="@dimen/cardHeaderHeight"
         app:cardElevation="@dimen/cardHeaderElevation"
+        android:transitionName="@string/cardTransitionName"
         android:layout_marginBottom="@dimen/cardHeaderMarginVertical"
         android:layout_marginLeft="@dimen/cardHeaderMarginHorizontal"
         android:layout_marginRight="@dimen/cardHeaderMarginHorizontal"
@@ -31,7 +32,7 @@
                 android:text="Location Header"
                 android:textSize="20dp"
                 android:id="@+id/locationHeaderText"
-                android:transitionName="@string/locationName"
+                android:transitionName="@string/locationTransitionName"
                 android:layout_gravity="center_horizontal"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />

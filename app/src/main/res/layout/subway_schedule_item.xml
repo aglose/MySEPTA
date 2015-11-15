@@ -14,26 +14,52 @@
         android:background="@color/white"
         android:layout_height="match_parent"/>
 
-    <RelativeLayout
-        android:layout_width="60dp"
-        android:layout_height="50dp"
-        android:layout_margin="15dp"
-        android:id="@+id/relativeLayout2">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/blue"
-            android:id="@+id/view">
+    <View
+        android:id="@+id/divider"
+        android:layout_width="3dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/grey"
+        android:layout_height="match_parent"
+        android:layout_marginStart="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/relativeLayout2" />
 
-        </View>
+    <RelativeLayout
+        android:layout_width="50dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="35dp"
+        android:id="@+id/relativeLayout2"
+        android:layout_centerVertical="true"
+        >
+
+        <View
+            android:id="@+id/circleView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+            android:background="@drawable/circleMFL"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/arrivalNumber"
             android:text="9"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8dp"
+            android:text="Line"
+            android:id="@+id/lineText"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
     </RelativeLayout>
 
 
@@ -45,34 +71,46 @@
         android:text="99:99"
         android:textStyle="bold"
         android:id="@+id/scheduleText"
-        android:layout_gravity="center"
-        android:paddingTop="8dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignTop="@+id/relativeLayout2"
+        android:layout_alignStart="@+id/linearLayout3" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/relativeLayout3"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout3"
+        android:layout_marginStart="17dp"
         android:layout_alignBottom="@+id/relativeLayout2"
-        android:layout_centerHorizontal="true">
+        android:layout_toEndOf="@+id/divider"
+        android:layout_marginBottom="13dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Arrives in "
             android:id="@+id/arriveByText"
-            android:textSize="15dp"
-             />
+            android:textSize="15sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:text="9 mins"
             android:id="@+id/timeTillText"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/arriveByText" />
 
-    </RelativeLayout>
+    </LinearLayout>
+
+    <ImageButton
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:id="@+id/setAlarmButton"
+        android:background="@drawable/ic_alarm_off"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="25dp" />
 
 </RelativeLayout>
