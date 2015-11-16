@@ -19,15 +19,18 @@
 
     <string name="from_rail_text">Starting Station</string>
     <string name="to_rail_text">Ending Station</string>
-    <string name="loc_tag">0</string>
-    <string name="name_tag">1</string>
     <string name="live_rail_label"><b>Live Schedule Planner</b></string>
     <string name="static_rail_header"><u><b>Schedules</b></u></string>
+    <string name="train_number"><u><b>Train</b></u></string>
+    <string name="departure_time"><u><b>Departure</b></u></string>
+    <string name="arrival_time"><u><b>Arrival</b></u></string>
+
+    <string name="loc_tag">location_tag</string>
+    <string name="name_tag">name_tag</string>
 
     <string name="subway_favorites_key">mysepta.com.capstone.team5.subway</string>
     <string name="rail_favorites_key">mysepta.com.capstone.team5.rail</string>
     <string name="favorites_key">mysepta.com.capstone.team5</string>
-
 
     <string name="STOP_ID_KEY">StopID</string>
     <string name="LOCATION_KEY">Location</string>
@@ -411,7 +414,7 @@
         <item>Highland Ave</item>
         <item>Holmesburg Jct</item>
         <item>Ivy Ridge</item>
-        <item>Market East</item>
+        <item>Jefferson Station</item>
         <item>Jenkintown-Wyncote</item>
         <item>Langhorne</item>
         <item>Lansdale</item>
