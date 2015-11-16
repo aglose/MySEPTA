@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import team5.capstone.com.mysepta.R;
 import team5.capstone.com.mysepta.RailActivity;
+import team5.capstone.com.mysepta.RailStaticActivity;
 
 /**
  * Creates adapter to handle RailItinerary view.
@@ -45,26 +46,6 @@ public class RailItineraryViewAdapter extends RecyclerView.Adapter<RailItinerary
                 .inflate(R.layout.rail_itinerary_card, parent, false);
 
 
-        /*
-        context = view.getContext();
-
-        Button lrsButton = (Button) view.findViewById(R.id.lrsButton);
-        lrsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent launch = new Intent(context,RailActivity.class);
-                context.startActivity(launch);
-            }
-        });
-
-        Button ssButton = (Button) view.findViewById(R.id.ssButton);
-        ssButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent launch = new Intent(context,RailActivity.class);
-                context.startActivity(launch);
-            }
-        });*/
         return new RailItineraryViewAdapter.RailItineraryHolder(view) {
         };
     }
@@ -75,7 +56,7 @@ public class RailItineraryViewAdapter extends RecyclerView.Adapter<RailItinerary
      * @param position
      */
     @Override
-    public void onBindViewHolder(RailItineraryViewAdapter.RailItineraryHolder holder, int position) {
+    public void onBindViewHolder(final RailItineraryViewAdapter.RailItineraryHolder holder, int position) {
 
         switch (getItemViewType(position)){
             case TYPE_LIVE:
@@ -101,7 +82,10 @@ public class RailItineraryViewAdapter extends RecyclerView.Adapter<RailItinerary
                 holder.cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Intent launch = new Intent(context, RailStaticActivity.class);
+                        launch.putExtra(context.getString(R.string.name_tag),holder.textView.getText());
 
+                        context.startActivity(launch);
                     }
                 });
                 break;
