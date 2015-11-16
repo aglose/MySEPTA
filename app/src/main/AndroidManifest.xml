@@ -52,6 +52,25 @@
             android:label="RailActivity"
             android:theme="@style/SubwayActivityTheme">
         </activity>
+
+        <activity
+            android:name="AlertsActivity"
+            android:label="AlertsActivity"
+            android:theme="@style/SubwayActivityTheme">
+        </activity>
+
+        <activity
+            android:name="SettingsActivity"
+            android:label="SettingsActivity"
+            android:theme="@style/SubwayActivityTheme">
+        </activity>
+
+        <activity
+            android:name="HelpActivity"
+            android:label="HelpActivity"
+            android:theme="@style/SubwayActivityTheme">
+        </activity>
+
     </application>
 
 </manifest>
