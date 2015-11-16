@@ -4,75 +4,51 @@
     tools:context="team5.capstone.com.mysepta.RailActivity"
     android:orientation="vertical">
 
-        <include
-            android:id="@+id/tool_bar"
-            layout="@layout/rail_toolbar"
-            ></include>
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/rail_toolbar"
+        />
 
-        <ExpandableListView
-            android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:id="@+id/tofromlistview">
-        </ExpandableListView>
-
-        <FrameLayout
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:layout_width="match_parent"
+            android:text="Closest rail location: "
+            android:layout_alignParentTop="true"
+            android:id="@+id/textView4" />
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tofromfrag">
-        </FrameLayout>
-
-        <FrameLayout
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/schedulefrag">
-
-        </FrameLayout>
-
-        <!--
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/fromRail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-
-                    <xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller
-                        android:id="@+id/fast_scroller_from"
-                        android:layout_width="@dimen/scroller"
-                        android:layout_height="match_parent"
-                        />
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/toRail"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            />
-
-                            <xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller
-                                android:id="@+id/fast_scroller_from"
-                                android:layout_width="@dimen/scroller"
-                                android:layout_height="wrap_content"
-                                />
+            android:layout_alignParentTop="true"
+            android:id="@+id/locationText"
+            android:layout_toEndOf="@+id/textView4" />
+    </RelativeLayout>
 
 
+    <ExpandableListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/cardHeaderMarginHorizontal"
+        android:layout_marginRight="@dimen/cardHeaderMarginHorizontal"
+        android:layout_marginTop="@dimen/cardHeaderMarginVertical"
+        android:layout_marginBottom="@dimen/cardHeaderMarginVertical"
+        android:id="@+id/tofromlistview">
+    </ExpandableListView>
 
-                            <xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller
-                                android:id="@+id/fast_scroller_to"
-                                android:layout_width="@dimen/scroller"
-                                android:layout_height="wrap_content"
-                                />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tofromfrag">
+    </FrameLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/schedulefrag">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/railSchedule"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
--->
+    </FrameLayout>
+
 </LinearLayout>

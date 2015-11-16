@@ -4,6 +4,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,9 +15,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,14 +29,22 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import team5.capstone.com.mysepta.Adapters.RailExpandableAdapter;
+import team5.capstone.com.mysepta.CallbackProxies.NearestLocationProxy;
+import team5.capstone.com.mysepta.CallbackProxies.RailLocationProxy;
 import team5.capstone.com.mysepta.DropDownView.RailChooser;
 import team5.capstone.com.mysepta.DropDownView.RailChooserChild;
 import team5.capstone.com.mysepta.Fragment.RailScheduleFragment;
 import team5.capstone.com.mysepta.Fragment.ToFromFragment;
 import team5.capstone.com.mysepta.Managers.FavoritesManager;
+import team5.capstone.com.mysepta.Models.NearestLocationModel;
+import team5.capstone.com.mysepta.Models.RailModel;
 
-public class RailActivity extends AppCompatActivity implements ToFromFragment.OnFragmentInteractionListener{
+public class RailActivity extends AppCompatActivity implements ToFromFragment.OnFragmentInteractionListener {
+    private static final String TAG = "RailActivity";
 
     private Toolbar toolbar;
     private ExpandableListView expandableListView;
@@ -64,14 +78,39 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
         end = "";
         favorite = false;
 
-        Intent args = getIntent();
-        String tempStart = args.getStringExtra(getResources().getString(R.string.name_tag));
-        String tempEnd = args.getStringExtra(getResources().getString(R.string.loc_tag));
+        Bundle args = getIntent().getExtras();
+        String tempStart = args.getString(getResources().getString(R.string.name_tag));
+        String tempEnd = args.getString(getResources().getString(R.string.loc_tag));
+        double lastKnownLatitude = args.getDouble(getResources().getString(R.string.LAST_KNOWN_LATITUDE_KEY));
+        double lastKnownLongitude = args.getDouble(getResources().getString(R.string.LAST_KNOWN_LONGITUDE_KEY));
 
         if(tempStart != null) {
             start = tempStart;
             railExpandableAdapter.updateParent(0, start);
             railExpandableAdapter.notifyDataSetChanged();
+        }else if(lastKnownLatitude != 0 && lastKnownLongitude != 0){
+            final TextView locationText = (TextView) findViewById(R.id.locationText);
+            Callback callback = new Callback() {
+                @Override
+                public void success(Object o, Response response) {
+                    ArrayList<NearestLocationModel> nearestLocationsList = (ArrayList<NearestLocationModel>) o;
+                    String loc = nearestLocationsList.get(0).getLocationName();
+                    if(loc != null){
+                        locationText.setText(loc);
+                    }else{
+                        locationText.setText("Error retrieving location");
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Log.d("Debug", String.valueOf(error.getResponse()));
+                    locationText.setText("Error retrieving location");
+                }
+            };
+
+            NearestLocationProxy locationViews = new NearestLocationProxy();
+            locationViews.getNearestView(lastKnownLatitude, lastKnownLongitude, callback);
         }
 
         if(tempEnd != null) {
@@ -187,7 +226,7 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
         railList = new LinkedHashMap<String,ArrayList<String>>();
 
         railList.put(start, stationNames);
-        railList.put(end,stationNames);
+        railList.put(end, stationNames);
     }
 
     public void loadFragment(int paneId,Fragment fragment,boolean placeOnBackStack){
@@ -249,4 +288,5 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
         FavoritesManager favoritesManager = FavoritesManager.getInstance();
         favoritesManager.storeSharedPreferences();
     }
+
 }

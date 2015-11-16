@@ -4,13 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rail_item_card"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="@dimen/railCardChildHeight"
     app:cardCornerRadius="2dp"
-    app:cardElevation="2dp"
-    android:layout_marginBottom="@dimen/cardMarginVertical"
-    android:layout_marginLeft="@dimen/cardMarginHorizontal"
-    android:layout_marginRight="@dimen/cardMarginHorizontal"
-    android:layout_marginTop="@dimen/cardMarginVertical"
+    app:cardElevation="@dimen/cardChildElevation"
+    android:layout_marginTop="@dimen/cardChildMarginVertical"
+    android:layout_marginBottom="@dimen/cardChildMarginVertical"
+    android:layout_marginLeft="@dimen/cardChildMarginHorizontal"
+    android:layout_marginRight="@dimen/cardChildMarginHorizontal"
     app:cardPreventCornerOverlap="false"
     app:contentPadding="0dp">
 
@@ -74,8 +74,5 @@
 
 
     </RelativeLayout>
-
-
-
 
 </android.support.v7.widget.CardView>

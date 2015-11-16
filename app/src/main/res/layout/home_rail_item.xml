@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:id="@+id/arrivalLabel"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:text="@string/to_rail_text"
             android:textSize="14sp"
@@ -39,13 +40,14 @@
             android:id="@+id/arrivalStation"
             android:textColor="@color/black"
             android:text="Philmont"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:padding="5dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:textStyle="bold"
             android:id="@+id/departureLabel"
             android:textColor="@color/black"
             android:text="@string/from_rail_text"
@@ -59,7 +61,7 @@
             android:id="@+id/departureStation"
             android:textColor="@color/black"
             android:text="@string/from_rail_text"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:padding="5dp"/>
 
     </RelativeLayout>

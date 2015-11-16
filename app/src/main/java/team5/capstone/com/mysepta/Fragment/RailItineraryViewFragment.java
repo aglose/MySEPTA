@@ -1,11 +1,13 @@
 package team5.capstone.com.mysepta.Fragment;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,20 +26,11 @@ import team5.capstone.com.mysepta.R;
  * Created by kevin on 9/28/15.
  */
 public class RailItineraryViewFragment extends Fragment {
+    private static final String TAG = "RailItineraryViewFragment";
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private static final int ITEM_COUNT = 100;
-
-    private List<Object> mContentItems = new ArrayList<>();
-
-    /**
-     * Create new instance of RailItineraryViewFragment
-     * @return new fragment
-     */
-    public static RailItineraryViewFragment newInstance() {
-        return new RailItineraryViewFragment();
-    }
 
     /**
      * Create fragment view
@@ -64,10 +57,12 @@ public class RailItineraryViewFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        mAdapter = new RecyclerViewMaterialAdapter(new RailItineraryViewAdapter(this.getContext()));
+        Bundle args = getArguments();
+        double latitude = args.getDouble(getResources().getString(R.string.LAST_KNOWN_LATITUDE_KEY));
+        double longitude = args.getDouble(getResources().getString(R.string.LAST_KNOWN_LONGITUDE_KEY));
+
+        mAdapter = new RecyclerViewMaterialAdapter(new RailItineraryViewAdapter(latitude, longitude, this.getContext()));
         mRecyclerView.setAdapter(mAdapter);
-
-
 
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
     }

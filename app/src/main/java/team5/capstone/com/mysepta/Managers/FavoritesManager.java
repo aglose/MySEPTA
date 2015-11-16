@@ -79,20 +79,6 @@ public class FavoritesManager{
             railFavoriteList.add(new FavoriteRailModel(station[0],station[1]));
         }
 
-
-        // Exists only to defeat instantiation, and testing purposes until mocking is unnecessary.
-//        SubwayScheduleItemModel d = new SubwayScheduleItemModel();
-//        d.setFormattedTimeStr("Subway Arrival #1");
-//        subwayFavoriteList.add(d);
-
-/*
-        FavoriteRailModel f = new FavoriteRailModel("Philmont","Ambler");
-        railFavoriteList.add(f);
-        f = new FavoriteRailModel("test","Rail Arrival #1");
-        railFavoriteList.add(f);
-        f = new FavoriteRailModel("test","Rail Arrival #1");
-        railFavoriteList.add(f);
-        */
     }
 
     public ArrayList getFavoriteList(){
@@ -111,14 +97,47 @@ public class FavoritesManager{
     }
 
     public static boolean addSubwayLineToFavorites(SubwayScheduleItemModel item){
-        SubwayScheduleItemModel newSubway = new SubwayScheduleItemModel();
-        newSubway.setLine(item.getLine());
-        newSubway.setLocation(item.getLocation());
-        newSubway.setDirection(item.getDirection());
-        newSubway.setStopID(item.getStopID());
+        boolean fav = checkForFavoriteSubwayLine(item.getLine(), item.getLocation());
+        if(!fav){
+            SubwayScheduleItemModel newSubway = new SubwayScheduleItemModel();
+            newSubway.setLine(item.getLine());
+            newSubway.setLocation(item.getLocation());
+            newSubway.setDirection(item.getDirection());
+            newSubway.setStopID(item.getStopID());
 
-        subwayFavoriteList.add(newSubway);
-        recyclerView.getAdapter().notifyItemInserted(subwayFavoriteList.size() + (HomeViewAdapter.HEADER_AMOUNT - 1));
+            subwayFavoriteList.add(newSubway);
+            recyclerView.getAdapter().notifyItemInserted(subwayFavoriteList.size() + (HomeViewAdapter.HEADER_AMOUNT - 1));
+            context.fragmentPagerAdapter.notifyDataSetChanged();
+            return true;
+        }
+
+        return false;
+    }
+
+    public static void removeSubwayLineFromFavorites(String line, String location) {
+        boolean fav = checkForFavoriteSubwayLine(line, location);
+        if(fav){
+            for(SubwayScheduleItemModel item: subwayFavoriteList){
+                if(item.getLine().equalsIgnoreCase(line) && item.getLocation().equalsIgnoreCase(location)){
+                    int index = subwayFavoriteList.indexOf(item);
+                    subwayFavoriteList.remove(item);
+                    recyclerView.getAdapter().notifyItemRemoved(index + 1); // +1 for the first header in this fragment
+                    recyclerView.getAdapter().notifyItemRangeChanged(index, subwayFavoriteList.size());
+                    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                    recyclerView.refreshDrawableState();
+                    context.fragmentPagerAdapter.notifyDataSetChanged();
+                    break;
+                }
+            }
+        }
+    }
+
+    public static boolean checkForFavoriteSubwayLine(String line, String location) {
+        for(SubwayScheduleItemModel item: subwayFavoriteList){
+            if(item.getLine().equalsIgnoreCase(line) && item.getLocation().equalsIgnoreCase(location)){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -144,6 +163,7 @@ public class FavoritesManager{
             recyclerView.getAdapter().notifyItemRemoved(loc + subwayFavoriteList.size() + HomeViewAdapter.HEADER_AMOUNT);
             recyclerView.getAdapter().notifyItemRangeChanged(loc, subwayFavoriteList.size());
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            recyclerView.refreshDrawableState();
             context.fragmentPagerAdapter.notifyDataSetChanged();
             return true;
         }
