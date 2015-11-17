@@ -19,6 +19,7 @@
     </style>
 
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorButtonNormal">@color/marketFrankfordBlue</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:windowTranslucentStatus" tools:targetApi="21">true</item>
@@ -36,6 +37,11 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/accent_color</item>
 
+    </style>
+
+    <style name="BroadStreetButton" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="colorButtonNormal">@color/broadStreetOrange</item>
+        <item name="android:textColorPrimary">#fff</item>
     </style>
 
     <style name="AppTheme.ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">

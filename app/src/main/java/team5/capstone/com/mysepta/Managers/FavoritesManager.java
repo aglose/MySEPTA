@@ -28,6 +28,7 @@ import team5.capstone.com.mysepta.R;
  * Created by Andrew on 10/24/2015.
  */
 public class FavoritesManager{
+    private static final String TAG = "FavoritesManager";
     private static ArrayList<SubwayScheduleItemModel> subwayFavoriteList;
     private static ArrayList<FavoriteRailModel> railFavoriteList;
     private static FavoritesManager fragmentManager = null;
@@ -62,13 +63,15 @@ public class FavoritesManager{
 
         prefs = context.getSharedPreferences(context.getString(R.string.favorites_key), Context.MODE_PRIVATE);
 
-        Log.d("Favorite's Manager","Preferences Init");
+        Log.d(TAG,"Preferences Init");
 
         Gson gson = new Gson();
         String json = prefs.getString(context.getString(R.string.subway_favorites_key), "");
 
-        if(json.length() > 0){
+        if(json.length() > 2){
             subwayFavoriteList = gson.fromJson(json, new TypeToken<ArrayList<SubwayScheduleItemModel>>(){}.getType());
+        }else{
+            addSubwayWelcomeCard();
         }
 
         Set<String> rail = prefs.getStringSet(context.getString(R.string.rail_favorites_key),new HashSet<String>());
@@ -79,6 +82,16 @@ public class FavoritesManager{
             railFavoriteList.add(new FavoriteRailModel(station[0],station[1]));
         }
 
+    }
+
+    private static void addSubwayWelcomeCard() {
+        SubwayScheduleItemModel newSubway = new SubwayScheduleItemModel();
+        newSubway.setLine("Test");
+        newSubway.setLocation("Add favorites to this screen by clicking the star icon!");
+        subwayFavoriteList.add(newSubway);
+        if(recyclerView != null){
+            recyclerView.getAdapter().notifyItemInserted(1);
+        }
     }
 
     public ArrayList getFavoriteList(){
@@ -97,6 +110,12 @@ public class FavoritesManager{
     }
 
     public static boolean addSubwayLineToFavorites(SubwayScheduleItemModel item){
+        if(subwayFavoriteList.size() == 1){
+            if(subwayFavoriteList.get(0).getLine().equalsIgnoreCase("Test")){
+                subwayFavoriteList.remove(0);
+                recyclerView.getAdapter().notifyItemRemoved(1);
+            }
+        }
         boolean fav = checkForFavoriteSubwayLine(item.getLine(), item.getLocation());
         if(!fav){
             SubwayScheduleItemModel newSubway = new SubwayScheduleItemModel();
@@ -129,6 +148,9 @@ public class FavoritesManager{
                     break;
                 }
             }
+        }
+        if(subwayFavoriteList.size() == 0){
+            addSubwayWelcomeCard();
         }
     }
 

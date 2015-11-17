@@ -33,7 +33,6 @@
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:id="@+id/locationHeaderText"
-                android:transitionName="@string/locationTransitionName"
                 android:layout_gravity="center_horizontal"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />

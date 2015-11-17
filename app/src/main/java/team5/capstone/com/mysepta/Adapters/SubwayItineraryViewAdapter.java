@@ -13,6 +13,7 @@ import android.widget.Button;
 import java.util.List;
 
 import team5.capstone.com.mysepta.Fragment.SubwayItineraryViewFragment;
+import team5.capstone.com.mysepta.MainActivity;
 import team5.capstone.com.mysepta.MapsActivity;
 import team5.capstone.com.mysepta.R;
 
@@ -87,6 +88,7 @@ public class SubwayItineraryViewAdapter extends RecyclerView.Adapter<RecyclerVie
                 mflButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        MainActivity.PREVENT_CLOSE = true;
                         mSubwayFragmentListener.onItinerarySelection("MFL");
                     }
                 });
@@ -96,6 +98,7 @@ public class SubwayItineraryViewAdapter extends RecyclerView.Adapter<RecyclerVie
                     @Override
                     public void onClick(View v) {
 //                SubwayScheduleManager.createJOUSPObject(); THIS IS USED FOR TESTING
+                        MainActivity.PREVENT_CLOSE = true;
                         mSubwayFragmentListener.onItinerarySelection("BSL");
                     }
                 });

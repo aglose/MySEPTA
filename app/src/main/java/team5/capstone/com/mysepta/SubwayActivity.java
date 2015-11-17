@@ -1,6 +1,5 @@
 package team5.capstone.com.mysepta;
 
-import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
@@ -16,12 +15,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.Property;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -31,7 +27,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 
 import team5.capstone.com.mysepta.Adapters.SubwayScheduleViewAdapter;
@@ -87,7 +82,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //ENABLE BACK BUTTON
         getSupportActionBar().setTitle("");
 
-        animateHeaderText();
+        setupHeaderText();
 
         /**
          * This is a temporary bug fix for a crash, column name in database is incorrect
@@ -101,9 +96,14 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         dbHelper = new SubwayScheduleCreatorDbHelper(this);
     }
 
-    private void animateHeaderText() {
+    private void setupHeaderText() {
         CardView cardView = (CardView) findViewById(R.id.subwayHeader);
-        cardView.setCardBackgroundColor(ContextCompat.getColor(this, R.color.headerBlue));
+        if(line.equalsIgnoreCase("MFL")){
+            cardView.setCardBackgroundColor(ContextCompat.getColor(this, R.color.marketFrankfordBlue));
+        }else{
+            cardView.setCardBackgroundColor(ContextCompat.getColor(this, R.color.broadStreetOrange));
+        }
+
         TextView headerText = (TextView) findViewById(R.id.locationHeaderText);
         headerText.setText(location);
         headerText.setTextColor(Color.WHITE);

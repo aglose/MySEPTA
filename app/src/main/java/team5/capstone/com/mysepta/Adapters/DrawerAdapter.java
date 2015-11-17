@@ -14,10 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import team5.capstone.com.mysepta.AlertsActivity;
-import team5.capstone.com.mysepta.HelpActivity;
 import team5.capstone.com.mysepta.R;
-import team5.capstone.com.mysepta.SettingsActivity;
 
 public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder> {
 
@@ -79,23 +76,23 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
         @Override
         public void onClick(View v) {
-            if (getPosition()==1){
-                Toast.makeText(context, "The Item Clicked is: " + getPosition(), Toast.LENGTH_SHORT).show();
-
-                Intent a = new Intent(context, AlertsActivity.class);
-                context.startActivity(a);
-            }else if (getPosition()==2){
-                Toast.makeText(context, "The Item Clicked is: " + getPosition(), Toast.LENGTH_SHORT).show();
-
-                Intent s = new Intent(context, SettingsActivity.class);
-                context.startActivity(s);
-            }else if (getPosition()==3){
-                Toast.makeText(context, "The Item Clicked is: " + getPosition(), Toast.LENGTH_SHORT).show();
-
-                Intent h = new Intent(context, HelpActivity.class);
-                context.startActivity(h);
-            }
-            Toast.makeText(context, "The Item Clicked is: " + getPosition(), Toast.LENGTH_SHORT).show();
+//            if (getPosition()==1){
+//                Toast.makeText(context, "The Item Clicked is: " + getPosition(), Toast.LENGTH_SHORT).show();
+//
+//                Intent a = new Intent(context, AlertsActivity.class);
+//                context.startActivity(a);
+//            }else if (getPosition()==2){
+//                Toast.makeText(context, "The Item Clicked is: " + getPosition(), Toast.LENGTH_SHORT).show();
+//
+//                Intent s = new Intent(context, SettingsActivity.class);
+//                context.startActivity(s);
+//            }else if (getPosition()==3){
+//                Toast.makeText(context, "The Item Clicked is: " + getPosition(), Toast.LENGTH_SHORT).show();
+//
+//                Intent h = new Intent(context, HelpActivity.class);
+//                context.startActivity(h);
+//            }
+//            Toast.makeText(context, "The Item Clicked is: " + getPosition(), Toast.LENGTH_SHORT).show();
         }
     }
 

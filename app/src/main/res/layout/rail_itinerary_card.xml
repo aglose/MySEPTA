@@ -25,29 +25,6 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/black"
             android:gravity="center"/>
-<!--
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Live Rail Screen"
-            android:textSize="10dp"
-            android:id="@+id/lrsButton"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:padding="5dp"/>
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Static Schedule"
-            android:textSize="10dp"
-            android:id="@+id/ssButton"
-            android:layout_centerVertical="true"
-            android:layout_below="@+id/lrsButton"
-            android:padding="5dp"/>
-            -->
 
     </RelativeLayout>
 

@@ -10,58 +10,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardCornerRadius="2dp"
-        app:cardElevation="1dp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="@dimen/cardMarginHorizontal"
-        android:layout_marginRight="@dimen/cardMarginHorizontal"
-        android:layout_marginTop="4dp">
+        app:cardElevation="1dp">
 
         <RelativeLayout
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/relativeLayout">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Broad Street Line"
-                android:id="@+id/bslTextView"
-                android:textColor="@android:color/black"
-                android:layout_alignBaseline="@+id/bslButton"
-                android:layout_alignBottom="@+id/bslButton"
-                android:layout_alignStart="@+id/mflTextView" />
 
             <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:text="BSL"
+                android:theme="@style/BroadStreetButton"
+                android:layout_width="@dimen/subwayButtonWidth"
+                android:layout_height="@dimen/subwayButtonHeight"
+                android:text="Broad Street Line"
                 android:textSize="15sp"
                 android:id="@+id/bslButton"
-                android:layout_above="@+id/mflButton"
+                android:layout_alignParentTop="true"
                 android:layout_alignStart="@+id/mflButton" />
 
             <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:text="MFL"
+                android:layout_width="@dimen/subwayButtonWidth"
+                android:layout_height="@dimen/subwayButtonHeight"
+                android:text="Market Frankford Line"
                 android:textSize="15sp"
                 android:id="@+id/mflButton"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/mflTextView"
-                android:layout_marginStart="42dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Market Frankford Line"
-                android:textColor="@android:color/black"
-                android:id="@+id/mflTextView"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="40dp" />
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
 
 

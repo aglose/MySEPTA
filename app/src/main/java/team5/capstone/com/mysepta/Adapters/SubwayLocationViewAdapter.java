@@ -114,8 +114,7 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
                         direction = "EAST";
                     }
                     Intent startSubwayActivity = new Intent(context, SubwayActivity.class);
-                    ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(context,
-                                    Pair.create((View)((SubwayLocationItemHolder)holder).locationText, context.getString(R.string.locationTransitionName)), Pair.create((View)((SubwayLocationItemHolder)holder).cardView, context.getString(R.string.cardTransitionName)));
+                    ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(context, Pair.create((View)((SubwayLocationItemHolder)holder).cardView, context.getString(R.string.cardTransitionName)));
 
                     Bundle bundle = new Bundle();
                     bundle.putInt(context.getString(R.string.STOP_ID_KEY), stopID);

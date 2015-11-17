@@ -12,6 +12,8 @@
     <color name="windowBackground">#c0a8a8</color>
     <color name="secondary_text_material_light">#9d4040</color>
     <color name="grey">#AFAFAF</color>
-    <color name="customBlue">#3F37B2</color>
+    <color name="marketFrankfordBlue">#3F37B2</color>
+    <color name="broadStreetOrange">#FF9800</color>
+
 </resources>
 

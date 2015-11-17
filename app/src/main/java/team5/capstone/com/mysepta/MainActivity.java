@@ -8,6 +8,7 @@ import android.location.LocationManager;
 import android.os.Environment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -93,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
 
     /*Subway Title that is changed according to the user itinerary choice*/
     private String subwayTabTitle = "Subway";
+
+    public static boolean PREVENT_CLOSE = false;
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -189,26 +192,28 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
 
         mViewPager.getViewPager().setAdapter(fragmentPagerAdapter);
 
+        final Context c = this;
+        //TODO: We need to change pictures because of copyright issues
         mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
             @Override
             public HeaderDesign getHeaderDesign(int page) {
                 switch (page) {
                     case HOME_TAB:
-                        return HeaderDesign.fromColorResAndUrl(
+                        return HeaderDesign.fromColorResAndDrawable(
                                 R.color.headerBlue,
-                                "http://www.towerstream.com/wp-content/uploads/2014/03/Philadelphia.jpg");
+                                ContextCompat.getDrawable(c, R.drawable.phillyHeader0));
                     case RAIL_TAB:
-                        return HeaderDesign.fromColorResAndUrl(
+                        return HeaderDesign.fromColorResAndDrawable(
                                 R.color.headerBlue,
-                                "http://www.uwishunu.com/wp-content/uploads/2012/08/boathouse-row-philadelphia-sunset1-680uw.jpg");
+                                ContextCompat.getDrawable(c, R.drawable.phillyHeader1));
                     case BUS_TAB:
-                        return HeaderDesign.fromColorResAndUrl(
+                        return HeaderDesign.fromColorResAndDrawable(
                                 R.color.headerBlue,
-                                "http://cdn.gobankingrates.com/wp-content/uploads/banks-in-philadelphia.jpg");
+                                ContextCompat.getDrawable(c, R.drawable.phillyHeader2));
                     case SUBWAY_TAB:
-                        return HeaderDesign.fromColorResAndUrl(
+                        return HeaderDesign.fromColorResAndDrawable(
                                 R.color.headerBlue,
-                                "https://www.issueone.org/wp-content/uploads/2015/06/Philly-Skyline.jpg");
+                                ContextCompat.getDrawable(c, R.drawable.phillyHeader3));
                 }
                 return null;
             }
@@ -280,6 +285,25 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
 
         super.onDestroy();
         Log.d(TAG, "ON DESTROY CALLED");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        subwayTabTitle = "Subway";
+        subwayViewFragment.changeAdapterToItineraryView();
+        fragmentPagerAdapter.notifyDataSetChanged();
+        mViewPager.notifyHeaderChanged();
+        PREVENT_CLOSE = false;
+    }
+
+    @Override
+    public void finish() {
+        if(PREVENT_CLOSE){
+           return;
+        }else{
+            super.finish(); //This will finish the activity and take you back
+        }
     }
 
     @Override

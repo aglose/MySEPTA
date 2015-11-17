@@ -20,6 +20,10 @@
     <!--Rail CardView Child Dimensions-->
     <dimen name="railCardChildHeight">75dp</dimen>
 
+    <!--Subway Button Dimensions-->
+    <dimen name="subwayButtonHeight">80dp</dimen>
+    <dimen name="subwayButtonWidth">220dp</dimen>
+
     <dimen name="scroller">5dp</dimen>
     <integer name="anim_duration_long">500</integer>
 </resources>

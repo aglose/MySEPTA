@@ -144,12 +144,6 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
         return arrivals.size();
     }
 
-    public void removeItems(ArrayList arrivals){
-        int oldSize = this.arrivals.size();
-        this.arrivals = new ArrayList();
-        notifyItemRangeRemoved(0, oldSize-1);
-//        this.arrivals = arrivals;
-    }
     /**
      * Subway schedule view holder
      */
