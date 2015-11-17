@@ -201,19 +201,19 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
                     case HOME_TAB:
                         return HeaderDesign.fromColorResAndDrawable(
                                 R.color.headerBlue,
-                                ContextCompat.getDrawable(c, R.drawable.phillyHeader0));
+                                ContextCompat.getDrawable(c, R.drawable.philly_header0));
                     case RAIL_TAB:
                         return HeaderDesign.fromColorResAndDrawable(
                                 R.color.headerBlue,
-                                ContextCompat.getDrawable(c, R.drawable.phillyHeader1));
+                                ContextCompat.getDrawable(c, R.drawable.philly_header1));
                     case BUS_TAB:
                         return HeaderDesign.fromColorResAndDrawable(
                                 R.color.headerBlue,
-                                ContextCompat.getDrawable(c, R.drawable.phillyHeader2));
+                                ContextCompat.getDrawable(c, R.drawable.philly_header2));
                     case SUBWAY_TAB:
                         return HeaderDesign.fromColorResAndDrawable(
                                 R.color.headerBlue,
-                                ContextCompat.getDrawable(c, R.drawable.phillyHeader3));
+                                ContextCompat.getDrawable(c, R.drawable.philly_header3));
                 }
                 return null;
             }
