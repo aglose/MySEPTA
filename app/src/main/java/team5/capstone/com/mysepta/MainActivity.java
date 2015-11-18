@@ -222,18 +222,18 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
         mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
         mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
 
-        View logo = findViewById(R.id.logo_background);
-        if (logo != null) {
-            logo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    subwayTabTitle = "Subway";
-                    subwayViewFragment.changeAdapterToItineraryView();
-                    fragmentPagerAdapter.notifyDataSetChanged();
-                    mViewPager.notifyHeaderChanged();
-                }
-            });
-        }
+//        View logo = findViewById(R.id.logo_background);
+//        if (logo != null) {
+//            logo.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    subwayTabTitle = "Subway";
+//                    subwayViewFragment.changeAdapterToItineraryView();
+//                    fragmentPagerAdapter.notifyDataSetChanged();
+//                    mViewPager.notifyHeaderChanged();
+//                }
+//            });
+//        }
 
         favoritesManager = FavoritesManager.getInstance();
         favoritesManager.setContext(this);
