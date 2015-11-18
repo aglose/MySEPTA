@@ -1,7 +1,13 @@
 package team5.capstone.com.mysepta.Adapters;
 
+import android.app.AlarmManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.os.SystemClock;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import team5.capstone.com.mysepta.Helpers.AlarmReceiver;
 import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
 import team5.capstone.com.mysepta.R;
 import team5.capstone.com.mysepta.SubwayActivity;
@@ -103,7 +110,7 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
         holder.scheduleText.setText(arrivals.get(position).getFormattedTimeStr());
         holder.arrivalID.setText(String.valueOf(position));
 
-        String line = arrivals.get(0).getLine();
+        final String line = arrivals.get(0).getLine();
         holder.lineText.setText(line);
 
         if(line.equalsIgnoreCase("BSL")){
@@ -113,6 +120,14 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
         holder.setAlarmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent alarmIntent = new Intent(context, AlarmReceiver.class);
+                alarmIntent.putExtra ("line", line);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                AlarmManager alarmManager = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);
+
+
+                alarmManager.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 5 * 1000, pendingIntent);
+
                 Toast.makeText(context, "Set and alarm", Toast.LENGTH_SHORT).show();
             }
         });
