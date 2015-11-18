@@ -23,22 +23,17 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsHold
     private ArrayList<AlertsModel> alerts;
     static final int TYPE_HEADER = 0;
     static final int TYPE_CELL = 1;
-    private String mode;
-    private String routeName;
 
     /**
      *
      * @param alerts
      * @param context
-     * @param mode
-     * @param routeName
      */
-    public AlertsAdapter(ArrayList<AlertsModel> alerts, Context context, String mode, String routeName){
+    public AlertsAdapter(ArrayList<AlertsModel> alerts, Context context){
 
         this.alerts = alerts;
         this.context = context;
-        this.mode = mode;
-        this.routeName = routeName;
+
     }
 
     /**
@@ -49,8 +44,8 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsHold
     @Override
     public int getItemViewType(int position) {
         switch (position) {
-            case 0:
-                return TYPE_HEADER;
+            //case 0:
+            //    return TYPE_HEADER;
             default:
                 return TYPE_CELL;
         }
@@ -100,8 +95,8 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsHold
             case TYPE_CELL:{
                 AlertsModel temp = alerts.get(position);
 
-                holder.modeText.setText(mode);
-                holder.routeNameText.setText(routeName);
+                //holder.modeText.setText(temp.getMode());
+                holder.routeNameText.setText(temp.getRouteName());
                 holder.updateText.setText((CharSequence) temp.getLastUpdate());
                 holder.descText.setText(temp.getDescription());
                 break;
@@ -123,7 +118,7 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsHold
      *
      */
     public class AlertsHolder extends RecyclerView.ViewHolder{
-        TextView modeText;
+        //TextView modeText;
         TextView routeNameText;
         TextView updateText;
         TextView descText;
@@ -137,7 +132,7 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsHold
         public AlertsHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.alerts_item_card);
-            modeText = (TextView) itemView.findViewById(R.id.mode);
+            //modeText = (TextView) itemView.findViewById(R.id.mode);
             routeNameText = (TextView) itemView.findViewById(R.id.route_name);
             updateText = (TextView) itemView.findViewById(R.id.lastUpdate);
             descText = (TextView) itemView.findViewById(R.id.desc);

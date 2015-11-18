@@ -34,11 +34,7 @@ public class AlertsFragment extends Fragment {
 
     private RecyclerView alertsView;
     private View view;
-    private ArrayList<AlertsModel> alertList;
-
-
-    private String mode;
-    private String routeName;
+    private ArrayList<AlertsModel> aList;
 
     public AlertsFragment() {
         // Required empty public constructor
@@ -59,16 +55,10 @@ public class AlertsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_alerts, container, false);
-        alertsView = (RecyclerView) view.findViewById(R.id.alerts);
+        alertsView = (RecyclerView) view.findViewById(R.id.alerts_item_card);
         alertsView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        Resources res = getResources();
-
-        Bundle args = getArguments();
-        mode = args.getString("mode", "Regional Rail");
-        routeName = args.getString("routeName", "Trenton");
-
-        getAlertsData(routeName, mode);
+        getAlertsData();
 
         return view;
     }
@@ -76,15 +66,13 @@ public class AlertsFragment extends Fragment {
 
     /**
      *
-     * @param route_Name
-     * @param travel_Mode
      */
-    private void getAlertsData(final String route_Name, final String travel_Mode){
+    public void getAlertsData(){
         Callback callback = new Callback() {
             @Override
             public void success(Object o, Response response) {
                 ArrayList<AlertsModel> aList = (ArrayList<AlertsModel>) o;
-                setUpAlertsAdapter(aList, route_Name, travel_Mode);
+                setUpAlertsAdapter(aList);
             }
 
             @Override
@@ -94,53 +82,33 @@ public class AlertsFragment extends Fragment {
         };
 
         AlertsProxy alertsViews = new AlertsProxy();
-        alertsViews.getAlertsView(route_Name, travel_Mode, callback);
+        alertsViews.getAlertsView(callback);
     }
 
     /**
      *
      * @param alertsList
-     * @param route_Name
-     * @param travel_Mode
      */
-    private void setUpAlertsAdapter(ArrayList<AlertsModel> alertsList,String route_Name, String travel_Mode){
+    public void setUpAlertsAdapter(ArrayList<AlertsModel> alertsList){
         if(alertsList.isEmpty()){
             Log.d("Debug", "No alert data");
         }
 
-        alertList = new ArrayList<>();
+        aList = new ArrayList<>();
 
         for(AlertsModel alert : alertsList) {
-            if(alert.getMode().equalsIgnoreCase("generic")){
-                alertList.add(new AlertsModel(
-                        alert.getMode(),
-                        alert.getRouteName(),
-                        alert.getLastUpdate(),
-                        alert.getDescription()));
-            }else if(alert.getMode().equalsIgnoreCase("Regional Rail")){
-                alertList.add(new AlertsModel(
-                        alert.getMode(),
-                        alert.getRouteName(),
-                        alert.getLastUpdate(),
-                        alert.getDescription()));
-            }else if (alert.getMode().equalsIgnoreCase("Broad Street Line")){
-                alertList.add(new AlertsModel(
-                        alert.getMode(),
-                        alert.getRouteName(),
-                        alert.getLastUpdate(),
-                        alert.getDescription()));
-            }else if (alert.getMode().equalsIgnoreCase("Market Frankford Line")){
-                alertList.add(new AlertsModel(
+
+                aList.add(new AlertsModel(
                         alert.getMode(),
                         alert.getRouteName(),
                         alert.getLastUpdate(),
                         alert.getDescription()));
             }
         //if list is fully updated condition
-        alertsView.setAdapter(new AlertsAdapter(alertList, view.getContext(), route_Name, travel_Mode));
+        alertsView.setAdapter(new AlertsAdapter(aList, view.getContext()));
     }
 
 }
-}
+
 
 

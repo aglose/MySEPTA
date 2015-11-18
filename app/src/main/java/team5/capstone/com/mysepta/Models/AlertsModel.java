@@ -2,7 +2,9 @@ package team5.capstone.com.mysepta.Models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -25,8 +27,6 @@ public class AlertsModel {
         this.lastUpdate = new Date();
         this.description = "Empty";
     }
-
-
 
     public String getRouteId() {
         return routeId;

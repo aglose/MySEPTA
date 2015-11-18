@@ -14,14 +14,11 @@ public interface AlertsInterface {
 
     /**
      *
-     * @param route_Name
-     * @param travel_Mode
      * @param callback
      */
     @GET("/hackathon/Alerts/")
     void alerts (
-            @Path("routeName") String route_Name,
-            @Path("mode") String travel_Mode,
+
             Callback<ArrayList<AlertsModel>> callback
     );
 }

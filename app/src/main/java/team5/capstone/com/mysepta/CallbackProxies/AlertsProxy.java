@@ -14,13 +14,11 @@ public class AlertsProxy {
 
     /**
      *
-     * @param route_Name
-     * @param travel_Mode
      * @param callBack
      */
-    public void getAlertsView(String route_Name, String travel_Mode, Callback<ArrayList<AlertsModel>> callBack) {
+    public void getAlertsView(Callback<ArrayList<AlertsModel>> callBack) {
        AlertsInterface alertsService = AlertsService.getAlertsInterface();
 
-        alertsService.alerts(route_Name, travel_Mode, callBack);
+        alertsService.alerts(callBack);
     }
 }
