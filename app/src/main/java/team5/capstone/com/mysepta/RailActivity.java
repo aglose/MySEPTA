@@ -81,8 +81,8 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
         Bundle args = getIntent().getExtras();
         String tempStart = args.getString(getResources().getString(R.string.name_tag));
         String tempEnd = args.getString(getResources().getString(R.string.loc_tag));
-        double lastKnownLatitude = args.getDouble(getResources().getString(R.string.LAST_KNOWN_LATITUDE_KEY));
-        double lastKnownLongitude = args.getDouble(getResources().getString(R.string.LAST_KNOWN_LONGITUDE_KEY));
+        double lastKnownLatitude = args.getDouble(getResources().getString(R.string.LAST_KNOWN_LATITUDE_KEY),0);
+        double lastKnownLongitude = args.getDouble(getResources().getString(R.string.LAST_KNOWN_LONGITUDE_KEY),0);
 
         if(tempStart != null) {
             start = tempStart;

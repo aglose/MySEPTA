@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import info.hoang8f.android.segmented.SegmentedGroup;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -40,6 +43,8 @@ public class RailStaticActivity extends AppCompatActivity {
 
     private ExpandableListView expandableListView;
     private RailExpandableAdapter railExpandableAdapter;
+
+    private SegmentedGroup dayChoice;
 
     private HashMap<String,ArrayList<TrainScheduleModel>> fullSchedule;
     private HashMap<String,ArrayList<TrainScheduleModel>> fullReverseSchedule;
@@ -73,6 +78,35 @@ public class RailStaticActivity extends AppCompatActivity {
         //getSupportActionBar().setTitle("Daily Schedule");
 
         expandableListView = (ExpandableListView) findViewById(R.id.railstaticlistview);
+        dayChoice = (SegmentedGroup) findViewById(R.id.segmentedDays);
+
+        dayChoice.setTintColor(R.color.blue,R.color.black);
+
+        dayChoice.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton rb=(RadioButton)findViewById(checkedId);
+                Thread thread = new Thread(){
+                    @Override
+                    public void run(){
+                        getData();
+                    }
+                };
+                String text = (String) rb.getText();
+                if(text.equalsIgnoreCase(getString(R.string.weekday)) && day != 0){
+                    day = 0;
+                    thread.start();
+                }
+                else if(text.equalsIgnoreCase(getString(R.string.saturday)) && day != 1){
+                    day = 1;
+                    thread.start();
+                }
+                else if(text.equalsIgnoreCase(getString(R.string.sunday)) && day != 2){
+                    day = 2;
+                    thread.start();
+                }
+            }
+        });
 
         List<String> railNames = Arrays.asList(getResources().getStringArray(R.array.rail_names));
         List<String> railAcro = Arrays.asList(getResources().getStringArray(R.array.rail_acro));
@@ -86,7 +120,7 @@ public class RailStaticActivity extends AppCompatActivity {
         railLine = args.getStringExtra(this.getString(R.string.name_tag)).trim();
         railLineAcro = railAcro.get(railNames.indexOf(railLine));
 
-        getSupportActionBar().setTitle("Daily Schedule for " + railLine);
+        getSupportActionBar().setTitle("Schedule for " + railLine);
 
         Thread thread = new Thread(){
             @Override
@@ -112,10 +146,7 @@ public class RailStaticActivity extends AppCompatActivity {
                 res = res+"_sun";
                 break;
         }
-        //if from center city
-        if(direction == 1){
-            res = res+"_rev";
-        }
+
 
         //Get train resource
         Integer id = getResources().getIdentifier(res, "array", getPackageName());
@@ -218,6 +249,11 @@ public class RailStaticActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        if (!startStation.isEmpty() && !endStation.isEmpty() && !startStation.equalsIgnoreCase(endStation)) {
+            scheduleFrag = new RailStaticFragment();
+            loadFragment(R.id.staticschedulefrag, scheduleFrag, false);
+        }
     }
 
     private void getRails(){
@@ -270,8 +306,19 @@ public class RailStaticActivity extends AppCompatActivity {
         });
 
         ArrayList<String> groupList = new ArrayList<String>();
-        groupList.add(start);
-        groupList.add(end);
+        if(!startStation.isEmpty() && stationNames.contains(startStation))
+            groupList.add(startStation);
+        else {
+            groupList.add(start);
+            startStation="";
+        }
+        if(!endStation.isEmpty() && stationNames.contains(endStation))
+            groupList.add(endStation);
+        else {
+            groupList.add(end);
+            endStation = "";
+
+        }
 
 
         Map<String,ArrayList<String>> railList = new LinkedHashMap<String,ArrayList<String>>();

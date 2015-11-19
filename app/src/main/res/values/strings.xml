@@ -48,6 +48,9 @@
     <string name="train_number"><u><b>Train</b></u></string>
     <string name="departure_time"><u><b>Departure</b></u></string>
     <string name="arrival_time"><u><b>Arrival</b></u></string>
+    <string name="weekday">Weekday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
 
     <string name="loc_tag">location_tag</string>
     <string name="name_tag">name_tag</string>
@@ -516,7 +519,7 @@
         <item>Wallingford</item>
         <item>Warminster</item>
         <item>Washington Lane</item>
-        <item>Wayne</item>
+        <item>Wayne-A</item>
         <item>Wayne Jct</item>
         <item>West Trenton</item>
         <item>Whitford</item>

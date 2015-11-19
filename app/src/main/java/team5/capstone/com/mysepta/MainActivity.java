@@ -147,7 +147,12 @@ public class MainActivity extends AppCompatActivity{
                     case HOME_TAB:
                         return FavoritesFragment.newInstance();
                     case RAIL_TAB:
-                        return RailItineraryViewFragment.newInstance(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+                        RailItineraryViewFragment railViewFragment = new RailItineraryViewFragment();
+                        Bundle args = new Bundle();
+                        args.putDouble(getResources().getString(R.string.LAST_KNOWN_LATITUDE_KEY), lastKnownLocation.getLatitude());
+                        args.putDouble(getResources().getString(R.string.LAST_KNOWN_LONGITUDE_KEY), lastKnownLocation.getLongitude());
+                        railViewFragment.setArguments(args);
+                        return railViewFragment;
                     case BUS_TAB:
                         return RecyclerViewFragment.newInstance();
                     case SUBWAY_TAB:
