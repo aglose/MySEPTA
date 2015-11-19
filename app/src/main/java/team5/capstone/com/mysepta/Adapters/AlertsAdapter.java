@@ -11,7 +11,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import team5.capstone.com.mysepta.Models.AlertsModel;
-import team5.capstone.com.mysepta.Models.RailLocationData;
 import team5.capstone.com.mysepta.R;
 
 /**
@@ -20,7 +19,7 @@ import team5.capstone.com.mysepta.R;
 public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsHolder>{
 
     private Context context;
-    private ArrayList<AlertsModel> alerts;
+    private ArrayList<AlertsModel> alertsList;
     static final int TYPE_HEADER = 0;
     static final int TYPE_CELL = 1;
 
@@ -30,10 +29,8 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsHold
      * @param context
      */
     public AlertsAdapter(ArrayList<AlertsModel> alerts, Context context){
-
-        this.alerts = alerts;
+        this.alertsList = alerts;
         this.context = context;
-
     }
 
     /**
@@ -93,7 +90,7 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsHold
                 break;
             }
             case TYPE_CELL:{
-                AlertsModel temp = alerts.get(position);
+                AlertsModel temp = alertsList.get(position);
 
                 //holder.modeText.setText(temp.getMode());
                 holder.routeNameText.setText(temp.getRouteName());
@@ -111,9 +108,13 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsHold
      */
     @Override
     public int getItemCount() {
-        return alerts.size();
+        return alertsList.size();
     }
 
+    public void addItem(AlertsModel model){
+        alertsList.add(model);
+        notifyItemInserted(alertsList.size());
+    }
     /**
      *
      */

@@ -18,13 +18,13 @@ public class AlertsModel {
     @SerializedName("is_alert") private String isAlert;
     @SerializedName("is_suspend") private String isSuspended;
     @SerializedName("is_snow") private String isSnow;
-    @SerializedName("last_updated") private Date lastUpdate;
+    @SerializedName("last_updated") private String lastUpdate;
     @SerializedName("description") private String description;
 
-    public AlertsModel(String mode, String routeName, Date lastUpdate, String description){
+    public AlertsModel(String mode, String routeName, String lastUpdate, String description){
         this.mode = "Empty";
         this.routeName = "Empty";
-        this.lastUpdate = new Date();
+        this.lastUpdate = "";
         this.description = "Empty";
     }
 
@@ -40,7 +40,7 @@ public class AlertsModel {
         return mode;
     }
 
-    public Date getLastUpdate() {
+    public String getLastUpdate() {
         return lastUpdate;
     }
 
