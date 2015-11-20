@@ -2,6 +2,7 @@ package team5.capstone.com.mysepta.Adapters;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
@@ -12,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import team5.capstone.com.mysepta.MainActivity;
@@ -75,11 +77,11 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
 
         if(viewType == TYPE_HEADER){
             view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.subway_list_item_header, parent, false);
+                    .inflate(R.layout.subway_location_header, parent, false);
             return new SubwayLocationHeaderHolder(view){};
         }else{
             view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.subway_list_item_card, parent, false);
+                    .inflate(R.layout.subway_location_card, parent, false);
 
             return new SubwayLocationItemHolder(view);
         }
@@ -99,6 +101,18 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
         }else{
 
             final String locationName = listLocations[position-1];
+
+            ((SubwayLocationItemHolder)holder).lineConnectingRoutes.bringToFront();
+            ((SubwayLocationItemHolder)holder).roundedImage.bringToFront();
+            if(locationName.equalsIgnoreCase("Fern Rock Transportation Center") || locationName.equalsIgnoreCase("AT&T")){
+                ((SubwayLocationItemHolder)holder).lineConnectingRoutes.bringToFront();
+                ((SubwayLocationItemHolder)holder).roundedImage.bringToFront();
+                ((SubwayLocationItemHolder)holder).roundedImage.setVisibility(View.VISIBLE);
+                ((SubwayLocationItemHolder)holder).roundedImage.setImageResource(R.drawable.fern_rock_bsl_map);
+            }else{
+                ((SubwayLocationItemHolder)holder).roundedImage.setVisibility(View.INVISIBLE);
+
+            }
             Log.d(TAG, String.valueOf(position)+" "+locationName);
             ((SubwayLocationItemHolder)holder).locationText.setText(locationName);
             ((SubwayLocationItemHolder)holder).cardView.setOnClickListener(new View.OnClickListener() {
@@ -144,6 +158,9 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
      */
     public class SubwayLocationItemHolder extends RecyclerView.ViewHolder{
         TextView locationText;
+        View lineConnectingRoutes;
+        View lineConnectingRoutes2;
+        ImageView roundedImage;
         CardView cardView;
 
         /**
@@ -154,6 +171,9 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.subway_location_item_card);
             locationText = (TextView) itemView.findViewById(R.id.locationText);
+            roundedImage = (ImageView) itemView.findViewById(R.id.roundedImage);
+            lineConnectingRoutes = itemView.findViewById(R.id.lineConnectingRoutes);
+            lineConnectingRoutes2 = itemView.findViewById(R.id.lineConnectingRoutes2);
         }
     }
 
