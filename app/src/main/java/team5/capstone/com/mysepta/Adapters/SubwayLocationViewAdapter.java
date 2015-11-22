@@ -14,7 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.github.siyamed.shapeimageview.RoundedImageView;
 
 import team5.capstone.com.mysepta.MainActivity;
 import team5.capstone.com.mysepta.Models.SubwayLocationData;
@@ -94,28 +98,71 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
      */
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-
         if(getItemViewType(position) == TYPE_HEADER){
             ((SubwayLocationHeaderHolder)holder).header.setCardBackgroundColor(ContextCompat.getColor(context, R.color.headerBlue));
             ((SubwayLocationHeaderHolder)holder).headerText.setGravity(Gravity.CENTER);
         }else{
-
             final String locationName = listLocations[position-1];
 
             ((SubwayLocationItemHolder)holder).lineConnectingRoutes.bringToFront();
             ((SubwayLocationItemHolder)holder).roundedImage.bringToFront();
-            if(locationName.equalsIgnoreCase("Fern Rock Transportation Center") || locationName.equalsIgnoreCase("AT&T")){
+            if(locationName.equalsIgnoreCase("Fern Rock Transportation Center") || locationName.equalsIgnoreCase("AT&T") ||
+                    locationName.equalsIgnoreCase("City Hall") || locationName.equalsIgnoreCase("69th Street Transportation Center") ||
+                    locationName.equalsIgnoreCase("15th St") || locationName.equalsIgnoreCase("Frankford Transportation Center")){
+                if(locationName.equalsIgnoreCase("Fern Rock Transportation Center") || locationName.equalsIgnoreCase("69th Street Transportation Center")){
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)((SubwayLocationItemHolder)holder).lineConnectingRoutes.getLayoutParams();
+                    params.setMargins(params.leftMargin, 8, 0, 0); //substitute parameters for left, top, right, bottom
+                    ((SubwayLocationItemHolder)holder).lineConnectingRoutes.setLayoutParams(params);
+                }else if(locationName.equalsIgnoreCase("AT&T") || locationName.equalsIgnoreCase("Frankford Transportation Center")){
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)((SubwayLocationItemHolder)holder).lineConnectingRoutes.getLayoutParams();
+                    params.setMargins(params.leftMargin, 0, 0, 8); //substitute parameters for left, top, right, bottom
+                    ((SubwayLocationItemHolder)holder).lineConnectingRoutes.setLayoutParams(params);
+                }
+                ((SubwayLocationItemHolder)holder).lineConnectingRoutes2.setVisibility(View.INVISIBLE);
                 ((SubwayLocationItemHolder)holder).lineConnectingRoutes.bringToFront();
                 ((SubwayLocationItemHolder)holder).roundedImage.bringToFront();
                 ((SubwayLocationItemHolder)holder).roundedImage.setVisibility(View.VISIBLE);
                 ((SubwayLocationItemHolder)holder).roundedImage.setImageResource(R.drawable.fern_rock_bsl_map);
             }else{
+                ((SubwayLocationItemHolder)holder).lineConnectingRoutes2.setVisibility(View.VISIBLE);
                 ((SubwayLocationItemHolder)holder).roundedImage.setVisibility(View.INVISIBLE);
-
             }
+
+            if(line.equalsIgnoreCase("BSL")){
+                ((SubwayLocationItemHolder)holder).lineConnectingRoutes.setBackgroundColor(ContextCompat.getColor(context, R.color.broadStreetOrange));
+                ((SubwayLocationItemHolder)holder).lineConnectingRoutes2.setBackgroundColor(ContextCompat.getColor(context, R.color.broadStreetOrange));
+                ((SubwayLocationItemHolder)holder).roundedImage.setBorderColor(ContextCompat.getColor(context, R.color.broadStreetOrange));
+                String trainTypes = SubwayLocationData.getTypesTrains(locationName);
+                //Express
+                if(trainTypes.charAt(0) == '1'){
+                    ((SubwayLocationItemHolder)holder).circleViewExpress.setVisibility(View.VISIBLE);
+                }else{
+                    ((SubwayLocationItemHolder)holder).circleViewExpress.setVisibility(View.INVISIBLE);
+                }
+                //Spur
+                if(trainTypes.charAt(1) == '1'){
+                    ((SubwayLocationItemHolder)holder).circleViewSpur.setVisibility(View.VISIBLE);
+                }else{
+                    ((SubwayLocationItemHolder)holder).circleViewSpur.setVisibility(View.INVISIBLE);
+                }
+                //Special
+                if(trainTypes.charAt(2) == '1'){
+                    ((SubwayLocationItemHolder)holder).circleViewSpecial.setVisibility(View.VISIBLE);
+                }else{
+                    ((SubwayLocationItemHolder)holder).circleViewSpecial.setVisibility(View.INVISIBLE);
+                }
+            }else{
+                ((SubwayLocationItemHolder)holder).circleViewExpress.setVisibility(View.INVISIBLE);
+                ((SubwayLocationItemHolder)holder).circleViewSpur.setVisibility(View.INVISIBLE);
+                ((SubwayLocationItemHolder)holder).circleViewSpecial.setVisibility(View.INVISIBLE);
+                ((SubwayLocationItemHolder)holder).roundedImage.setBorderColor(ContextCompat.getColor(context, R.color.marketFrankfordBlue));
+                ((SubwayLocationItemHolder)holder).lineConnectingRoutes.setBackgroundColor(ContextCompat.getColor(context, R.color.marketFrankfordBlue));
+                ((SubwayLocationItemHolder)holder).lineConnectingRoutes2.setBackgroundColor(ContextCompat.getColor(context, R.color.marketFrankfordBlue));
+            }
+
             Log.d(TAG, String.valueOf(position)+" "+locationName);
             ((SubwayLocationItemHolder)holder).locationText.setText(locationName);
-            ((SubwayLocationItemHolder)holder).cardView.setOnClickListener(new View.OnClickListener() {
+            ((SubwayLocationItemHolder) holder).cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int stopID = 0;
@@ -128,7 +175,7 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
                         direction = "EAST";
                     }
                     Intent startSubwayActivity = new Intent(context, SubwayActivity.class);
-                    ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(context, Pair.create((View)((SubwayLocationItemHolder)holder).cardView, context.getString(R.string.cardTransitionName)));
+                    ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(context, Pair.create((View) ((SubwayLocationItemHolder) holder).cardView, context.getString(R.string.cardTransitionName)));
 
                     Bundle bundle = new Bundle();
                     bundle.putInt(context.getString(R.string.STOP_ID_KEY), stopID);
@@ -157,10 +204,14 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
      * Holder for subway locations
      */
     public class SubwayLocationItemHolder extends RecyclerView.ViewHolder{
+        LinearLayout circleViews;
         TextView locationText;
         View lineConnectingRoutes;
         View lineConnectingRoutes2;
-        ImageView roundedImage;
+        View circleViewExpress;
+        View circleViewSpur;
+        View circleViewSpecial;
+        RoundedImageView roundedImage;
         CardView cardView;
 
         /**
@@ -169,11 +220,15 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
          */
         public SubwayLocationItemHolder(View itemView) {
             super(itemView);
+            circleViews = (LinearLayout) itemView.findViewById(R.id.circleViews);
             cardView = (CardView) itemView.findViewById(R.id.subway_location_item_card);
             locationText = (TextView) itemView.findViewById(R.id.locationText);
-            roundedImage = (ImageView) itemView.findViewById(R.id.roundedImage);
+            roundedImage = (RoundedImageView) itemView.findViewById(R.id.roundedImage);
             lineConnectingRoutes = itemView.findViewById(R.id.lineConnectingRoutes);
             lineConnectingRoutes2 = itemView.findViewById(R.id.lineConnectingRoutes2);
+            circleViewExpress = itemView.findViewById(R.id.circleViewExpress);
+            circleViewSpur = itemView.findViewById(R.id.circleViewSpur);
+            circleViewSpecial = itemView.findViewById(R.id.circleViewSpecial);
         }
     }
 

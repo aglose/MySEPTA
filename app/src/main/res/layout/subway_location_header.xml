@@ -19,7 +19,7 @@
             android:id="@+id/header_title"
             android:textColor="@android:color/white"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="What Location We You Be Leaving From?"
+            android:text="What Location Will You Be Leaving From?"
             android:layout_width="wrap_content"
             android:padding="8dp"
             android:layout_height="wrap_content"

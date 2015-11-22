@@ -14,6 +14,9 @@
     <color name="grey">#AFAFAF</color>
     <color name="marketFrankfordBlue">#3F37B2</color>
     <color name="broadStreetOrange">#FF9800</color>
+    <color name="specialSubwayBlue">#0277BD</color>
+    <color name="expressSubwayGreen">#4CAF50</color>
+    <color name="spurSubwayYellow">#FFEB3B</color>
 
 </resources>
 

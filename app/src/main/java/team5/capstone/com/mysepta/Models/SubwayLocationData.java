@@ -16,11 +16,15 @@ public class SubwayLocationData {
     private HashMap<String, Integer> subwayStopIdLocationMap_EAST_MFL;
     private HashMap<String, Integer> subwayStopIdLocationMap_WEST_MFL;
 
-    private String[] bslStrings;
-    private String[] mflStrings;
+    private static String[] bslStrings;
+    private static String[] bslStringsSorted;
+    private static String[] mflStrings;
+    private static Context context;
 
     public SubwayLocationData(Context context) {
+        this.context = context;
         bslStrings = context.getResources().getStringArray(R.array.broad_street_line);
+        bslStringsSorted = context.getResources().getStringArray(R.array.broad_street_line_sorted);
         mflStrings = context.getResources().getStringArray(R.array.market_frankford_line);
         buildList();
     }
@@ -44,6 +48,15 @@ public class SubwayLocationData {
         return 0;
     }
 
+    public static String getTypesTrains(String location){
+        String[] bslTypes = context.getResources().getStringArray(R.array.bsl_types);
+        for(int i=0; i<bslStringsSorted.length; i++){
+            if(bslStringsSorted[i].equalsIgnoreCase(location)){
+                return bslTypes[i];
+            }
+        }
+        return null;
+    }
     /**
      * populate stop ids
      */

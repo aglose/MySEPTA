@@ -104,6 +104,8 @@
         <item>Cecil B Moore</item>
         <item>Girard</item>
         <item>Fairmount</item>
+        <item>8th St &amp; Market St</item>
+        <item>Chinatown</item>
         <item>Spring Garden</item>
         <item>Race-Vine</item>
         <item>City Hall</item>
@@ -114,8 +116,6 @@
         <item>Snyder</item>
         <item>Oregon</item>
         <item>AT&amp;T</item>
-        <item>8th St &amp; Market St</item>
-        <item>Chinatown</item>
     </string-array>
 
     <string-array name="market_frankford_line">
