@@ -30,7 +30,30 @@ public class RailItineraryViewFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private static final int ITEM_COUNT = 100;
+    private double latitude;
+    private double longitude;
+
+    public static RailItineraryViewFragment newInstance(double latitude, double longitude){
+        RailItineraryViewFragment f = new RailItineraryViewFragment();
+
+        // Supply num input as an argument.
+        Bundle args = new Bundle();
+        args.putDouble("lat", latitude);
+        args.putDouble("long", longitude);
+        f.setArguments(args);
+
+        return f;
+    }
+
+    /**
+     * When creating, retrieve this instance's number from its arguments.
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        latitude = getArguments() != null ? getArguments().getDouble("lat") : 1;
+        longitude = getArguments() != null ? getArguments().getDouble("long") : 1;
+    }
 
     /**
      * Create fragment view
@@ -56,10 +79,6 @@ public class RailItineraryViewFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
-
-        Bundle args = getArguments();
-        double latitude = args.getDouble(getResources().getString(R.string.LAST_KNOWN_LATITUDE_KEY));
-        double longitude = args.getDouble(getResources().getString(R.string.LAST_KNOWN_LONGITUDE_KEY));
 
         mAdapter = new RecyclerViewMaterialAdapter(new RailItineraryViewAdapter(latitude, longitude, this.getContext()));
         mRecyclerView.setAdapter(mAdapter);
