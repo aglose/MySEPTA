@@ -39,6 +39,7 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
     private String[] listLocations;
     private SubwayLocationData subwayLocationData;
     private String line;
+    private SubwayItineraryViewAdapter.ChangeItineraryListener mChangeItineraryListener;
 
     /**
      * Constructor
@@ -46,7 +47,7 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
      * @param context activity
      * @param subwayLocationData stop data
      */
-    public SubwayLocationViewAdapter(String line, MainActivity context, SubwayLocationData subwayLocationData){
+    public SubwayLocationViewAdapter(String line, MainActivity context, SubwayLocationData subwayLocationData, SubwayItineraryViewAdapter.ChangeItineraryListener mChangeItineraryListener){
         if(line.equalsIgnoreCase("MFL")){
             listLocations = context.getResources().getStringArray(R.array.market_frankford_line_sorted);
         }else if(line.equalsIgnoreCase("BSL")){
@@ -57,6 +58,7 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
         this.line = line;
         this.subwayLocationData = subwayLocationData;
         this.context = context;
+        this.mChangeItineraryListener = mChangeItineraryListener;
     }
 
     @Override
@@ -101,6 +103,13 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
         if(getItemViewType(position) == TYPE_HEADER){
             ((SubwayLocationHeaderHolder)holder).header.setCardBackgroundColor(ContextCompat.getColor(context, R.color.headerBlue));
             ((SubwayLocationHeaderHolder)holder).headerText.setGravity(Gravity.CENTER);
+            ((SubwayLocationHeaderHolder)holder).backButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "Pressed");
+                    mChangeItineraryListener.itineraryBack();
+                }
+            });
         }else{
             final String locationName = listLocations[position-1];
 
@@ -235,6 +244,8 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
     public class SubwayLocationHeaderHolder extends RecyclerView.ViewHolder{
         CardView header;
         TextView headerText;
+        View backButton;
+
         /**
          * Constructor
          * @param itemView item view
@@ -243,6 +254,7 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
             super(itemView);
             header = (CardView) itemView.findViewById(R.id.subwayLocationHeader);
             headerText = (TextView) itemView.findViewById(R.id.header_title);
+            backButton = itemView.findViewById(R.id.backButton);
         }
     }
 }

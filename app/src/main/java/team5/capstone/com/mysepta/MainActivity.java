@@ -56,7 +56,7 @@ import team5.capstone.com.mysepta.Fragment.DrawerFragment;
 import team5.capstone.com.mysepta.Fragment.SubwayItineraryViewFragment;
 import team5.capstone.com.mysepta.Managers.FavoritesManager;
 
-public class MainActivity extends AppCompatActivity implements SubwayItineraryViewFragment.SubwayChangeFragmentListener{
+public class MainActivity extends AppCompatActivity{
     /*When you are debugging use this TAG as the first String (i.e. Log.d(TAG, String.valueOf(position));*/
     private static final String TAG = "MainActivity";
 
@@ -166,13 +166,13 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
             public CharSequence getPageTitle(int position) {
                 switch (position % 4) {
                     case HOME_TAB:
-                        return "Home";
+                        return getResources().getString(R.string.tab_home_title);
                     case RAIL_TAB:
-                        return "Rail";
+                        return getResources().getString(R.string.tab_rail_title);
                     case BUS_TAB:
-                        return "Bus";
+                        return getResources().getString(R.string.tab_bus_title);
                     case SUBWAY_TAB:
-                        return subwayTabTitle;
+                        return getResources().getString(R.string.tab_subway_title);
                 }
                 return "";
             }
@@ -278,7 +278,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        subwayTabTitle = "Subway";
+        subwayTabTitle = getResources().getString(R.string.tab_subway_title);
 
 //        subwayViewFragment.changeAdapterToItineraryView();
         fragmentPagerAdapter.notifyDataSetChanged();
@@ -307,14 +307,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
                 super.onOptionsItemSelected(item);
     }
 
-    /*Implementation for BSL and MFL Button clicks in Subway Tab */
-    @Override
-    public void onItinerarySelection(String line) {
-        subwayTabTitle = line;
-//        subwayViewFragment.changeAdapterToScheduleView(line);
-        fragmentPagerAdapter.notifyDataSetChanged();
-        mViewPager.notifyHeaderChanged();
-    }
+
 
 
 

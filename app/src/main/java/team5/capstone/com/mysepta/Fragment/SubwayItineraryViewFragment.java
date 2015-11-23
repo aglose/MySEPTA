@@ -1,6 +1,7 @@
 package team5.capstone.com.mysepta.Fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,18 +29,9 @@ import team5.capstone.com.mysepta.SubwayActivity;
  * Fragment for subway section of home screen.
  * Created by Andrew on 9/20/2015.
  */
-public class SubwayItineraryViewFragment extends Fragment {
+public class SubwayItineraryViewFragment extends Fragment implements SubwayItineraryViewAdapter.ChangeItineraryListener {
     /*DEBUG TAG*/
     private static final String TAG = "SubwayItineraryViewFragment";
-
-    /*Subway Button click listener*/
-    private SubwayChangeFragmentListener mSubwayFragmentListener;
-    /**
-     * interface for fragment change
-     */
-    public interface SubwayChangeFragmentListener {
-        void onItinerarySelection(String line);
-    }
 
     /*Keep track of the rootView to pass to the adapters*/
     private View rootView;
@@ -90,7 +83,7 @@ public class SubwayItineraryViewFragment extends Fragment {
         recyclerSubwayView.setLayoutManager(layoutManager);
         recyclerSubwayView.setHasFixedSize(false);
 
-        subwayItineraryViewAdapter = new SubwayItineraryViewAdapter(getActivity(), mSubwayFragmentListener);
+        subwayItineraryViewAdapter = new SubwayItineraryViewAdapter(getActivity(), this);
         materialWrapperAdapter = new RecyclerViewMaterialAdapter(subwayItineraryViewAdapter);
 
         recyclerSubwayView.setAdapter(materialWrapperAdapter);
@@ -98,10 +91,19 @@ public class SubwayItineraryViewFragment extends Fragment {
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerSubwayView, null);
     }
 
+    /*Implementation for BSL and MFL Button clicks in Subway Tab */
+    @Override
+    public void itineraryChosen(String line) {
+        subwayLocationViewAdapter = new SubwayLocationViewAdapter(line, (MainActivity) getActivity(), subLocData, this);
+        materialWrapperAdapter = new RecyclerViewMaterialAdapter(subwayLocationViewAdapter);
+        recyclerSubwayView.setAdapter(materialWrapperAdapter);
+    }
+
     /**
      * Initial and default Subway Tab View
      */
-    public void changeAdapterToItineraryView(){
+    @Override
+    public void itineraryBack() {
         if(subwayLocationViewAdapter != null){
 
             recyclerSubwayView = (RecyclerView) rootView.findViewById(R.id.subwayItineraryView);
@@ -114,29 +116,4 @@ public class SubwayItineraryViewFragment extends Fragment {
         }
     }
 
-    /**
-     * After user chooses Subway Line the locations will be displayed via SubwayLocationViewAdapter
-     *@param line name of line
-     */
-    public void changeAdapterToScheduleView(String line){
-        subwayLocationViewAdapter = new SubwayLocationViewAdapter(line, (MainActivity) getActivity(), subLocData);
-        materialWrapperAdapter = new RecyclerViewMaterialAdapter(subwayLocationViewAdapter);
-        recyclerSubwayView.setAdapter(materialWrapperAdapter);
-    }
-
-    /**
-     * attach new fragment
-     * @param activity activity being attached to
-     */
-    @Override
-    public void onAttach(Activity activity){
-        super.onAttach(activity);
-
-        try {
-            mSubwayFragmentListener = (SubwayChangeFragmentListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement SubwayChangeFragmentListener");
-        }
-    }
 }

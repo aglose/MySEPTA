@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,20 +23,28 @@ import team5.capstone.com.mysepta.R;
  * Created by Andrew on 9/19/2015.
  */
 public class SubwayItineraryViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final String TAG = "SubwayItineraryViewAdapter";
 
     List<Object> contents;
 
     static final int TYPE_HEADER = 0;
     static final int TYPE_CELL = 1;
     Context context;
-    SubwayItineraryViewFragment.SubwayChangeFragmentListener mSubwayFragmentListener;
+    private ChangeItineraryListener mChangeItineraryListener;
+
+    public interface ChangeItineraryListener {
+        void itineraryChosen(String line);
+        void itineraryBack();
+    }
+
     /**
      * Constructor
      * @param context activity
+     * @param mChangeItineraryListener
      */
-    public SubwayItineraryViewAdapter(Context context, SubwayItineraryViewFragment.SubwayChangeFragmentListener mSubwayFragmentListener) {
+    public SubwayItineraryViewAdapter(Context context, ChangeItineraryListener mChangeItineraryListener) {
         this.context = context;
-        this.mSubwayFragmentListener = mSubwayFragmentListener;
+        this.mChangeItineraryListener = mChangeItineraryListener;
     }
 
     /**
@@ -78,6 +87,7 @@ public class SubwayItineraryViewAdapter extends RecyclerView.Adapter<RecyclerVie
                         .inflate(R.layout.subway_itinerary_header, parent, false);
                 CardView header = (CardView) view.findViewById(R.id.subwayItineraryHeaderCard);
                 header.setCardBackgroundColor(ContextCompat.getColor(context, R.color.headerBlue));
+
                 return new RecyclerView.ViewHolder(view) {
                 };
             }
@@ -89,7 +99,7 @@ public class SubwayItineraryViewAdapter extends RecyclerView.Adapter<RecyclerVie
                     @Override
                     public void onClick(View v) {
                         MainActivity.PREVENT_CLOSE = true;
-                        mSubwayFragmentListener.onItinerarySelection("MFL");
+                        mChangeItineraryListener.itineraryChosen("MFL");
                     }
                 });
 
@@ -99,7 +109,7 @@ public class SubwayItineraryViewAdapter extends RecyclerView.Adapter<RecyclerVie
                     public void onClick(View v) {
 //                SubwayScheduleManager.createJOUSPObject(); THIS IS USED FOR TESTING
                         MainActivity.PREVENT_CLOSE = true;
-                        mSubwayFragmentListener.onItinerarySelection("BSL");
+                        mChangeItineraryListener.itineraryChosen("BSL");
                     }
                 });
                 return new RecyclerView.ViewHolder(view) {
