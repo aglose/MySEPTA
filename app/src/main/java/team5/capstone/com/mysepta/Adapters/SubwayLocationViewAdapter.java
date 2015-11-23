@@ -137,34 +137,82 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
                 ((SubwayLocationItemHolder)holder).roundedImage.setVisibility(View.INVISIBLE);
             }
 
+            int circleCount = 0;
             if(line.equalsIgnoreCase("BSL")){
                 ((SubwayLocationItemHolder)holder).lineConnectingRoutes.setBackgroundColor(ContextCompat.getColor(context, R.color.broadStreetOrange));
                 ((SubwayLocationItemHolder)holder).lineConnectingRoutes2.setBackgroundColor(ContextCompat.getColor(context, R.color.broadStreetOrange));
                 ((SubwayLocationItemHolder)holder).roundedImage.setBorderColor(ContextCompat.getColor(context, R.color.broadStreetOrange));
                 String trainTypes = SubwayLocationData.getTypesTrains(locationName);
-                //Express
-                if(trainTypes.charAt(0) == '1'){
-                    ((SubwayLocationItemHolder)holder).circleViewExpress.setVisibility(View.VISIBLE);
-                }else{
-                    ((SubwayLocationItemHolder)holder).circleViewExpress.setVisibility(View.INVISIBLE);
+
+                for(int i=0; i<3; i++){
+                    if(trainTypes.charAt(i) == '1'){
+                        circleCount++;
+                        switch(circleCount){
+                            case 1:
+                                ((SubwayLocationItemHolder)holder).circleView1.setVisibility(View.VISIBLE);
+                                switch(i){
+                                    case 0:
+                                        ((SubwayLocationItemHolder)holder).circleView1.setBackground(context.getDrawable(R.drawable.circle_express_sub));
+                                        break;
+                                    case 1:
+                                        ((SubwayLocationItemHolder)holder).circleView1.setBackground(context.getDrawable(R.drawable.circle_spur_sub));
+                                        break;
+                                    case 2:
+                                        ((SubwayLocationItemHolder)holder).circleView1.setBackground(context.getDrawable(R.drawable.circle_special_sub));
+                                        break;
+                                }
+                                break;
+                            case 2:
+                                ((SubwayLocationItemHolder)holder).circleView2.setVisibility(View.VISIBLE);
+                                switch(i){
+                                    case 0:
+                                        ((SubwayLocationItemHolder)holder).circleView2.setBackground(context.getDrawable(R.drawable.circle_express_sub));
+                                        break;
+                                    case 1:
+                                        ((SubwayLocationItemHolder)holder).circleView2.setBackground(context.getDrawable(R.drawable.circle_spur_sub));
+                                        break;
+                                    case 2:
+                                        ((SubwayLocationItemHolder)holder).circleView2.setBackground(context.getDrawable(R.drawable.circle_special_sub));
+                                        break;
+                                }
+                                break;
+                            case 3:
+                                ((SubwayLocationItemHolder)holder).circleView3.setVisibility(View.VISIBLE);
+                                switch(i){
+                                    case 0:
+                                        ((SubwayLocationItemHolder)holder).circleView3.setBackground(context.getDrawable(R.drawable.circle_express_sub));
+                                        break;
+                                    case 1:
+                                        ((SubwayLocationItemHolder)holder).circleView3.setBackground(context.getDrawable(R.drawable.circle_spur_sub));
+                                        break;
+                                    case 2:
+                                        ((SubwayLocationItemHolder)holder).circleView3.setBackground(context.getDrawable(R.drawable.circle_special_sub));
+                                        break;
+                                }
+                                break;
+                        }
+                    }
                 }
-                //Spur
-                if(trainTypes.charAt(1) == '1'){
-                    ((SubwayLocationItemHolder)holder).circleViewSpur.setVisibility(View.VISIBLE);
-                }else{
-                    ((SubwayLocationItemHolder)holder).circleViewSpur.setVisibility(View.INVISIBLE);
+                switch(circleCount){
+                    case 0:
+                        ((SubwayLocationItemHolder)holder).circleView1.setVisibility(View.INVISIBLE);
+                        ((SubwayLocationItemHolder)holder).circleView2.setVisibility(View.INVISIBLE);
+                        ((SubwayLocationItemHolder)holder).circleView3.setVisibility(View.INVISIBLE);
+                        break;
+                    case 1:
+                        ((SubwayLocationItemHolder)holder).circleView2.setVisibility(View.INVISIBLE);
+                        ((SubwayLocationItemHolder)holder).circleView3.setVisibility(View.INVISIBLE);
+                        break;
+                    case 2:
+                        ((SubwayLocationItemHolder)holder).circleView3.setVisibility(View.INVISIBLE);
+                        break;
                 }
-                //Special
-                if(trainTypes.charAt(2) == '1'){
-                    ((SubwayLocationItemHolder)holder).circleViewSpecial.setVisibility(View.VISIBLE);
-                }else{
-                    ((SubwayLocationItemHolder)holder).circleViewSpecial.setVisibility(View.INVISIBLE);
-                }
+
             }else{
-                ((SubwayLocationItemHolder)holder).circleViewExpress.setVisibility(View.INVISIBLE);
-                ((SubwayLocationItemHolder)holder).circleViewSpur.setVisibility(View.INVISIBLE);
-                ((SubwayLocationItemHolder)holder).circleViewSpecial.setVisibility(View.INVISIBLE);
-                ((SubwayLocationItemHolder)holder).roundedImage.setBorderColor(ContextCompat.getColor(context, R.color.marketFrankfordBlue));
+                ((SubwayLocationItemHolder) holder).circleView1.setVisibility(View.INVISIBLE);
+                ((SubwayLocationItemHolder) holder).circleView2.setVisibility(View.INVISIBLE);
+                ((SubwayLocationItemHolder) holder).circleView3.setVisibility(View.INVISIBLE);
+                ((SubwayLocationItemHolder) holder).roundedImage.setBorderColor(ContextCompat.getColor(context, R.color.marketFrankfordBlue));
                 ((SubwayLocationItemHolder)holder).lineConnectingRoutes.setBackgroundColor(ContextCompat.getColor(context, R.color.marketFrankfordBlue));
                 ((SubwayLocationItemHolder)holder).lineConnectingRoutes2.setBackgroundColor(ContextCompat.getColor(context, R.color.marketFrankfordBlue));
             }
@@ -217,9 +265,9 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
         TextView locationText;
         View lineConnectingRoutes;
         View lineConnectingRoutes2;
-        View circleViewExpress;
-        View circleViewSpur;
-        View circleViewSpecial;
+        View circleView1;
+        View circleView2;
+        View circleView3;
         RoundedImageView roundedImage;
         CardView cardView;
 
@@ -235,9 +283,9 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
             roundedImage = (RoundedImageView) itemView.findViewById(R.id.roundedImage);
             lineConnectingRoutes = itemView.findViewById(R.id.lineConnectingRoutes);
             lineConnectingRoutes2 = itemView.findViewById(R.id.lineConnectingRoutes2);
-            circleViewExpress = itemView.findViewById(R.id.circleViewExpress);
-            circleViewSpur = itemView.findViewById(R.id.circleViewSpur);
-            circleViewSpecial = itemView.findViewById(R.id.circleViewSpecial);
+            circleView1 = itemView.findViewById(R.id.circleView1);
+            circleView2 = itemView.findViewById(R.id.circleView2);
+            circleView3 = itemView.findViewById(R.id.circleView3);
         }
     }
 

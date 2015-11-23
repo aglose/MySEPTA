@@ -24,7 +24,7 @@
             android:background="@color/broadStreetOrange"
             android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/roundedImage"
-            android:layout_marginStart="26dp"
+            android:layout_marginStart="24dp"
             android:id="@+id/lineConnectingRoutes"></View>
 
         <View
@@ -33,7 +33,7 @@
             android:background="@color/broadStreetOrange"
             android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/roundedImage"
-            android:layout_marginStart="26dp"
+            android:layout_marginStart="24dp"
             android:id="@+id/lineConnectingRoutes2"></View>
 
         <View
@@ -51,7 +51,7 @@
             android:layout_height="56dp"
             app:siBorderColor="@color/broadStreetOrange"
             app:siRadius="6dp"
-            app:siBorderWidth="3dp"
+            app:siBorderWidth="4dp"
             app:siSquare="true"
             android:layout_margin="2dp"
             android:visibility="invisible"
@@ -67,7 +67,7 @@
             android:layout_alignTop="@+id/roundedImage"
             android:layout_alignStart="@+id/dividerBottom">
             <View
-                android:id="@+id/circleViewExpress"
+                android:id="@+id/circleView1"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_marginRight="3dp"
@@ -75,7 +75,7 @@
                 />
 
             <View
-                android:id="@+id/circleViewSpur"
+                android:id="@+id/circleView2"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_marginRight="4dp"
@@ -83,7 +83,7 @@
                 />
 
             <View
-                android:id="@+id/circleViewSpecial"
+                android:id="@+id/circleView3"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_marginRight="4dp"
