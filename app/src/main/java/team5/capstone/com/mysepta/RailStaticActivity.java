@@ -56,7 +56,6 @@ public class RailStaticActivity extends AppCompatActivity {
     private String endStation;
 
     private int day;
-    private int direction;
 
     private String railLine;
     private String railLineAcro;
@@ -68,7 +67,6 @@ public class RailStaticActivity extends AppCompatActivity {
 
         fullSchedule = new HashMap<>();
         day=0;
-        direction=0;
         startStation="";
         endStation="";
 
@@ -120,7 +118,7 @@ public class RailStaticActivity extends AppCompatActivity {
         railLine = args.getStringExtra(this.getString(R.string.name_tag)).trim();
         railLineAcro = railAcro.get(railNames.indexOf(railLine));
 
-        getSupportActionBar().setTitle("Schedule for " + railLine);
+        getSupportActionBar().setTitle(railLine);
 
         Thread thread = new Thread(){
             @Override
