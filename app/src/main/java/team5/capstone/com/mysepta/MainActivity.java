@@ -56,7 +56,7 @@ import team5.capstone.com.mysepta.Fragment.DrawerFragment;
 import team5.capstone.com.mysepta.Fragment.SubwayItineraryViewFragment;
 import team5.capstone.com.mysepta.Managers.FavoritesManager;
 
-public class MainActivity extends AppCompatActivity implements SubwayItineraryViewFragment.SubwayChangeFragmentListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+public class MainActivity extends AppCompatActivity{
     /*When you are debugging use this TAG as the first String (i.e. Log.d(TAG, String.valueOf(position));*/
     private static final String TAG = "MainActivity";
 
@@ -321,37 +321,7 @@ public class MainActivity extends AppCompatActivity implements SubwayItineraryVi
                 super.onOptionsItemSelected(item);
     }
 
-    /*Implementation for BSL and MFL Button clicks in Subway Tab */
-    @Override
-    public void onItinerarySelection(String line) {
-        subwayTabTitle = line;
-        subwayViewFragment.changeAdapterToScheduleView(line);
-        fragmentPagerAdapter.notifyDataSetChanged();
-        mViewPager.notifyHeaderChanged();
-    }
 
-    protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-    }
-
-    @Override
-    public void onConnected(Bundle connectionHint) {
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
-    }
 
 }
 
