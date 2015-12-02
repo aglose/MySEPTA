@@ -90,11 +90,13 @@ public class AlertsActivity extends AppCompatActivity {
                     loadFragment(R.id.Alertspage, genfrag, false);
 
                 } else if (text.equalsIgnoreCase(getString(R.string.regionalrail))) {
-                    RRAlertsFragment rrfrag = new RRAlertsFragment();
+                    Log.d("tag","isclickedrr: "+rrList.get(0).getLastUpdate());
+                    Fragment rrfrag = new RRAlertsFragment(rrList);
                     loadFragment(R.id.Alertspage, rrfrag, false);
 
                 } else if (text.equalsIgnoreCase(getString(R.string.subway))) {
-                    SubAlertsFragment subfrag = new SubAlertsFragment();
+                    Log.d("tag","isclickedsub: "+subList.get(0).getLastUpdate());
+                    Fragment subfrag = new SubAlertsFragment(subList);
                     loadFragment(R.id.Alertspage, subfrag, false);
 
                 }
@@ -102,8 +104,6 @@ public class AlertsActivity extends AppCompatActivity {
         });
 
         getAlertsData();
-
-
 
     }
 
@@ -131,6 +131,9 @@ public class AlertsActivity extends AppCompatActivity {
         fragmentManager.executePendingTransactions();
     }
 
+    /**
+     *
+     */
     public void getAlertsData(){
         Callback callback = new Callback() {
             @Override

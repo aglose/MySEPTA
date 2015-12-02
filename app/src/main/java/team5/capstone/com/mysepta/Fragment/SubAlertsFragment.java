@@ -1,5 +1,6 @@
 package team5.capstone.com.mysepta.Fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,12 +25,17 @@ public class SubAlertsFragment extends Fragment {
 
     public SubAlertsFragment() {}
 
+    @SuppressLint("ValidFragment")
+    public SubAlertsFragment(ArrayList<AlertsModel> generalList){
+        this.subList = generalList;
+    }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_alerts, container, false);
 
         alertsRecyclerView = (RecyclerView) view.findViewById(R.id.alertsRecyclerView);
         alertsRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        subList = new ArrayList<>();
+        //subList = new ArrayList<>();
         alertsAdapter = new AlertsAdapter(subList, view.getContext());
         alertsRecyclerView.setAdapter(alertsAdapter);
 
