@@ -72,9 +72,9 @@ public class AlertsActivity extends AppCompatActivity {
         transaction.add(R.id.Alertspage, afrag);
         transaction.commit();
 */
-        final GenAlertsFragment genfrag = new GenAlertsFragment();
-        final RRAlertsFragment rrfrag = new RRAlertsFragment();
-        final SubAlertsFragment subfrag = new SubAlertsFragment();
+       // GenAlertsFragment genfrag = new GenAlertsFragment();
+        RRAlertsFragment rrfrag = new RRAlertsFragment();
+        SubAlertsFragment subfrag = new SubAlertsFragment();
 
         SegmentedGroup dayChoice = (SegmentedGroup) findViewById(R.id.segmentedAlert);
         dayChoice.setTintColor(R.color.blue, R.color.black);
@@ -85,13 +85,17 @@ public class AlertsActivity extends AppCompatActivity {
 
                 String text = (String) rb.getText();
                 if (text.equalsIgnoreCase(getString(R.string.general))) {
-                    loadFragment(R.id.fragAlerts, genfrag, false);
+                    Log.d("tag","isclickedgeneral: "+generalList.get(0).getLastUpdate());
+                    Fragment genfrag = new GenAlertsFragment(generalList);
+                    loadFragment(R.id.Alertspage, genfrag, false);
 
                 } else if (text.equalsIgnoreCase(getString(R.string.regionalrail))) {
-                    loadFragment(R.id.fragAlerts, rrfrag, false);
+                    RRAlertsFragment rrfrag = new RRAlertsFragment();
+                    loadFragment(R.id.Alertspage, rrfrag, false);
 
                 } else if (text.equalsIgnoreCase(getString(R.string.subway))) {
-                    loadFragment(R.id.fragAlerts, subfrag, false);
+                    SubAlertsFragment subfrag = new SubAlertsFragment();
+                    loadFragment(R.id.Alertspage, subfrag, false);
 
                 }
             }
