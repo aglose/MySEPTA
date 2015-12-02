@@ -63,6 +63,10 @@ public class AlertsActivity extends AppCompatActivity {
 
          /* Alert Fragments*/
         AlertsFragment afrag = new AlertsFragment();
+        final FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.add(R.id.Alertspage, afrag);
+        transaction.commit();
+
         final GenAlertsFragment genfrag = new GenAlertsFragment();
         final RRAlertsFragment rrfrag = new RRAlertsFragment();
         final SubAlertsFragment subfrag = new SubAlertsFragment();
