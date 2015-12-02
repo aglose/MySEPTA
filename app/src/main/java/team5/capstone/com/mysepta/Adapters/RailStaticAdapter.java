@@ -83,7 +83,7 @@ public class RailStaticAdapter extends RecyclerView.Adapter<RailStaticAdapter.Ra
         }
     }
 
-    private ArrayList<StaticRailModel> sortArray(ArrayList<StaticRailModel> srmArray){
+    public ArrayList<StaticRailModel> sortArray(ArrayList<StaticRailModel> srmArray){
         Collections.sort(srmArray, new Comparator<StaticRailModel>() {
             @Override
             public int compare(StaticRailModel lhs, StaticRailModel rhs) {

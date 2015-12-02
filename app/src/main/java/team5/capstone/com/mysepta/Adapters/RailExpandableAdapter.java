@@ -22,7 +22,7 @@ import team5.capstone.com.mysepta.R;
  */
 public class RailExpandableAdapter extends BaseExpandableListAdapter {
 
-    private Activity context;
+    private Context context;
     private Map<String,ArrayList<String>> railChoices;
     private ArrayList<String> rails;
     private ArrayList<String> tags;
@@ -34,7 +34,7 @@ public class RailExpandableAdapter extends BaseExpandableListAdapter {
      * @param rails List of parent values
      * @param railChoices Map with parent value keys to List of children
      */
-    public RailExpandableAdapter(Activity context, ArrayList<String> rails, Map<String,ArrayList<String>> railChoices){
+    public RailExpandableAdapter(Context context, ArrayList<String> rails, Map<String,ArrayList<String>> railChoices){
         this.context = context;
         this.rails = rails;
         this.railChoices = railChoices;
