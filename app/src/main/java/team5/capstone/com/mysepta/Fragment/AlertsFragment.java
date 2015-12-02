@@ -51,7 +51,7 @@ public class AlertsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_alerts, container, false);
 
-        getAlertsData();
+        //getAlertsData();
 
         alertsRecyclerView = (RecyclerView) view.findViewById(R.id.alertsRecyclerView);
         alertsRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
@@ -66,41 +66,7 @@ public class AlertsFragment extends Fragment {
     /**
      *
      */
-    public void getAlertsData(){
-        Callback callback = new Callback() {
-            @Override
-            public void success(Object o, Response response) {
-                ArrayList<AlertsModel> aList = (ArrayList<AlertsModel>) o;
-                setUpAlertsAdapter(aList);
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d("Debug", "fail");
-            }
-        };
-
-        AlertsProxy alertsViews = new AlertsProxy();
-        alertsViews.getAlertsView(callback);
-    }
-
-    /**
-     *
-     * @param alertsList
-     */
-    public void setUpAlertsAdapter(ArrayList<AlertsModel> alertsList){
-        if(alertsList.isEmpty()){
-            Log.d("Debug", "No alert data");
-        }
-
-        for(AlertsModel alert : alertsList) {
-
-                alertsAdapter.addItem(alert);
-
-    }
-
-}}
+ }
 
 
 

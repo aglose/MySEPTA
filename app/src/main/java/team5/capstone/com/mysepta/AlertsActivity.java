@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,7 +27,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import info.hoang8f.android.segmented.SegmentedGroup;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import team5.capstone.com.mysepta.Adapters.AlertsAdapter;
+import team5.capstone.com.mysepta.CallbackProxies.AlertsProxy;
 import team5.capstone.com.mysepta.Fragment.AlertsFragment;
 import team5.capstone.com.mysepta.Fragment.GenAlertsFragment;
 import team5.capstone.com.mysepta.Fragment.RRAlertsFragment;
@@ -61,12 +66,12 @@ public class AlertsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Alerts");
 
-         /* Alert Fragments*/
+         /* Alert Fragments
         AlertsFragment afrag = new AlertsFragment();
         final FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.Alertspage, afrag);
         transaction.commit();
-
+*/
         final GenAlertsFragment genfrag = new GenAlertsFragment();
         final RRAlertsFragment rrfrag = new RRAlertsFragment();
         final SubAlertsFragment subfrag = new SubAlertsFragment();
@@ -92,19 +97,8 @@ public class AlertsActivity extends AppCompatActivity {
             }
         });
 
+        getAlertsData();
 
-        /*Sort Alerts JSON into General, Regional Rail, and Subway lists*/
-        for  (int i=0; i < aList.size(); i++){
-            if (aList.get(i).isGeneral()){
-                generalList.add(aList.get(i));
-
-            }else if(aList.get(i).isRegionalRail()){
-                rrList.add(aList.get(i));
-
-            }else if(aList.get(i).isSubway()){
-                subList.add(aList.get(i));
-            }
-        }
 
 
     }
@@ -132,4 +126,35 @@ public class AlertsActivity extends AppCompatActivity {
         fragmentTransaction.commit();
         fragmentManager.executePendingTransactions();
     }
+
+    public void getAlertsData(){
+        Callback callback = new Callback() {
+            @Override
+            public void success(Object o, Response response) {
+                aList = (ArrayList<AlertsModel>) o;
+                 /*Sort Alerts JSON into General, Regional Rail, and Subway lists*/
+                for  (int i=0; i < aList.size(); i++){
+                    if (aList.get(i).isGeneral()){
+                        generalList.add(aList.get(i));
+
+                    }else if(aList.get(i).isRegionalRail()){
+                        rrList.add(aList.get(i));
+
+                    }else if(aList.get(i).isSubway()){
+                        subList.add(aList.get(i));
+                    }
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Debug", "fail");
+            }
+        };
+
+        AlertsProxy alertsViews = new AlertsProxy();
+        alertsViews.getAlertsView(callback);
+    }
+
+
 }
