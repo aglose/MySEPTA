@@ -18,18 +18,19 @@ public class SubAlertsFragment extends Fragment {
 
     private RecyclerView alertsRecyclerView;
     private View view;
-    public static ArrayList<AlertsModel> subList;
+    public ArrayList<AlertsModel> subList;
 
     private AlertsAdapter alertsAdapter;
 
-    public SubAlertsFragment() {}
+    public SubAlertsFragment(ArrayList<AlertsModel> subList) {
+        this.subList = subList;
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_alerts, container, false);
 
         alertsRecyclerView = (RecyclerView) view.findViewById(R.id.alertsRecyclerView);
         alertsRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        subList = new ArrayList<>();
         alertsAdapter = new AlertsAdapter(subList, view.getContext());
         alertsRecyclerView.setAdapter(alertsAdapter);
 

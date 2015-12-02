@@ -1,5 +1,7 @@
 package team5.capstone.com.mysepta;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -17,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ListAdapter;
 
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TabHost;
@@ -50,6 +53,9 @@ public class AlertsActivity extends AppCompatActivity {
     public static ArrayList<AlertsModel> generalList;
     public static ArrayList<AlertsModel> rrList;
     public static ArrayList<AlertsModel> subList;
+    private SegmentedGroup dayChoice;
+    private ProgressBar mLoadingView;
+    private int loadingAnimationDuration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,17 +72,8 @@ public class AlertsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Alerts");
 
-         /* Alert Fragments
-        AlertsFragment afrag = new AlertsFragment();
-        final FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.add(R.id.Alertspage, afrag);
-        transaction.commit();
-*/
-       // GenAlertsFragment genfrag = new GenAlertsFragment();
-        RRAlertsFragment rrfrag = new RRAlertsFragment();
-        SubAlertsFragment subfrag = new SubAlertsFragment();
 
-        SegmentedGroup dayChoice = (SegmentedGroup) findViewById(R.id.segmentedAlert);
+        dayChoice = (SegmentedGroup) findViewById(R.id.segmentedAlert);
         dayChoice.setTintColor(R.color.blue, R.color.black);
         dayChoice.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -85,17 +82,17 @@ public class AlertsActivity extends AppCompatActivity {
 
                 String text = (String) rb.getText();
                 if (text.equalsIgnoreCase(getString(R.string.general))) {
-                    Log.d("tag","isclickedgeneral: "+generalList.get(0).getLastUpdate());
+                    Log.d("tag", "isclickedgeneral: " + generalList.get(0).getLastUpdate());
                     Fragment genfrag = new GenAlertsFragment(generalList);
-                    loadFragment(R.id.Alertspage, genfrag, false);
+                    loadFragment(R.id.alertsPageFragment, genfrag, false);
 
                 } else if (text.equalsIgnoreCase(getString(R.string.regionalrail))) {
-                    RRAlertsFragment rrfrag = new RRAlertsFragment();
-                    loadFragment(R.id.Alertspage, rrfrag, false);
+                    RRAlertsFragment rrfrag = new RRAlertsFragment(rrList);
+                    loadFragment(R.id.alertsPageFragment, rrfrag, false);
 
                 } else if (text.equalsIgnoreCase(getString(R.string.subway))) {
-                    SubAlertsFragment subfrag = new SubAlertsFragment();
-                    loadFragment(R.id.Alertspage, subfrag, false);
+                    SubAlertsFragment subfrag = new SubAlertsFragment(subList);
+                    loadFragment(R.id.alertsPageFragment, subfrag, false);
 
                 }
             }
@@ -113,7 +110,7 @@ public class AlertsActivity extends AppCompatActivity {
      * @param fragment
      * @param placeOnBackStack
      */
-    public void loadFragment(int paneId,Fragment fragment,boolean placeOnBackStack){
+    public void loadFragment(int paneId, Fragment fragment, boolean placeOnBackStack){
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -140,14 +137,20 @@ public class AlertsActivity extends AppCompatActivity {
                 for  (int i=0; i < aList.size(); i++){
                     if (aList.get(i).isGeneral()){
                         generalList.add(aList.get(i));
+                        Log.d(TAG, "General size:"+generalList.size());
 
                     }else if(aList.get(i).isRegionalRail()){
                         rrList.add(aList.get(i));
+                        Log.d(TAG, "REgional rail size:" + rrList.size());
 
                     }else if(aList.get(i).isSubway()){
                         subList.add(aList.get(i));
+                        Log.d(TAG, "Subway size:" + subList.size());
+
                     }
                 }
+                RadioButton b = (RadioButton) findViewById(R.id.generalAlertButton);
+                b.setChecked(true);
             }
 
             @Override
