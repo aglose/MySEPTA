@@ -26,7 +26,7 @@ public class AlertsService {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint("http://www3.septa.org")
                 .setConverter(new GsonConverter(gson))
-//                .setErrorHandler(new ServiceErrorHandler())
+                .setErrorHandler(new ServiceErrorHandler())
                 .build();
 
         return restAdapter.create(AlertsInterface.class);

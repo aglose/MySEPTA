@@ -539,4 +539,10 @@
     <string name="LAST_KNOWN_LATITUDE_KEY">latitude_key</string>
     <string name="LAST_KNOWN_LONGITUDE_KEY">longtitude_key</string>
     <string name="cardTransitionName">cardTransition</string>
+
+    <string-array name="Alerts_Menu">
+        <item>General</item>
+        <item>Regional Rail</item>
+        <item>Subway</item>
+    </string-array>
 </resources>

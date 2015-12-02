@@ -9,6 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -28,7 +31,11 @@ public class AlertsFragment extends Fragment {
 
     private RecyclerView alertsRecyclerView;
     private View view;
-    private ArrayList<AlertsModel> aList;
+    public static ArrayList<AlertsModel> aList;
+    public static ArrayList<AlertsModel> generalList;
+    public static ArrayList<AlertsModel> rrList;
+    public static ArrayList<AlertsModel> subList;
+
     private AlertsAdapter alertsAdapter;
 
     public AlertsFragment() {}
@@ -65,6 +72,7 @@ public class AlertsFragment extends Fragment {
             public void success(Object o, Response response) {
                 ArrayList<AlertsModel> aList = (ArrayList<AlertsModel>) o;
                 setUpAlertsAdapter(aList);
+
             }
 
             @Override
@@ -87,11 +95,12 @@ public class AlertsFragment extends Fragment {
         }
 
         for(AlertsModel alert : alertsList) {
-            alertsAdapter.addItem(alert);
-        }
+
+                alertsAdapter.addItem(alert);
+
     }
 
-}
+}}
 
 
 

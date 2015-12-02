@@ -1,14 +1,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_vertical_margin"
-    android:background="#df5353">
+    >
+
+    <include
+        android:id="@+id/alerts_tool_bar"
+        layout="@layout/alerts_toolbar"
+        ></include>
 
     <FrameLayout
-        android:id="@+id/fragmentAlerts"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"></FrameLayout>
+        android:layout_height="wrap_content"
+        android:id="@+id/Alertspage"
+        android:layout_below="@+id/alerts_tool_bar">
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/alert_list_item"
+        />
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/alertsMenu"
+        android:layout_alignParentStart="true"
+        android:visibility="visible"/>
+
+
 
 </RelativeLayout>

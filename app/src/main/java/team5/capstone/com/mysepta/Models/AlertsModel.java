@@ -10,29 +10,44 @@ import java.util.List;
  *
  */
 public class AlertsModel {
-    @SerializedName("route_id") private String routeId;
-    @SerializedName("route_name") private String routeName;
-    @SerializedName("mode") private String mode;
-    @SerializedName("is_advisory") private String isAdvisory;
-    @SerializedName("is_detour") private String isDetour;
-    @SerializedName("is_alert") private String isAlert;
-    @SerializedName("is_suspend") private String isSuspended;
-    @SerializedName("is_snow") private String isSnow;
-    @SerializedName("last_updated") private String lastUpdate;
-    @SerializedName("description") private String description;
+    @SerializedName("route_id")
+    private String routeId;
+    @SerializedName("route_name")
+    private String routeName;
+    @SerializedName("mode")
+    private String mode;
+    @SerializedName("is_advisory")
+    private String isAdvisory;
+    @SerializedName("is_detour")
+    private String isDetour;
+    @SerializedName("is_alert")
+    private String isAlert;
+    @SerializedName("is_suspend")
+    private String isSuspended;
+    @SerializedName("is_snow")
+    private String isSnow;
+    @SerializedName("last_updated")
+    private String lastUpdate;
+    @SerializedName("description")
+    private String description;
 
-    public AlertsModel(String mode, String routeName, String lastUpdate, String description){
+    public AlertsModel(String mode, String routeName, String lastUpdate, String description, String isAdvisory, String isDetour, String isAlert, String isSuspended) {
         this.mode = "Empty";
         this.routeName = "Empty";
         this.lastUpdate = "";
         this.description = "Empty";
+        this.isAdvisory = "No";
+        this.isDetour = "N";
+        this.isAlert = "N";
+        this.isSuspended = "N";
+
     }
 
     public String getRouteId() {
         return routeId;
     }
 
-    public String getRouteName(){
+    public String getRouteName() {
         return routeName;
     }
 
@@ -64,16 +79,16 @@ public class AlertsModel {
         return false;
     }
 
-    public boolean hasAlertFlag() {
-        if (isAlert.toUpperCase().equals("Y")) {
+    public boolean hasDetourFlag() {
+        if (isDetour.toUpperCase().equals("Y")) {
             return true;
         }
 
         return false;
     }
 
-    public boolean hasDetourFlag() {
-        if (isDetour.toUpperCase().equals("Y")) {
+    public boolean hasAlertFlag() {
+        if (isAlert.toUpperCase().equals("Y")) {
             return true;
         }
 
@@ -88,19 +103,47 @@ public class AlertsModel {
         return false;
     }
 
-    public boolean isSuspended() {
+    public int hasFlag() {
+        int flagNum = 0;
+        if (hasAdvisoryFlag()) {
+            flagNum = 1;
+        } else if (hasDetourFlag()) {
+            flagNum = 2;
+        } else if (hasAlertFlag()) {
+            flagNum =3;
+        } else if (hasSuspendedFlag()) {
+            flagNum=4;
+        }else {
 
-        return hasSuspendedFlag();
+        }
+        return flagNum;
+
     }
 
-    public boolean hasFlag() {
-        if (hasSuspendedFlag() || hasAlertFlag() || hasAdvisoryFlag() || hasDetourFlag()) {
+    public boolean isGeneral() {
+        if (mode.equals("generic")) {
+
             return true;
         }
 
         return false;
     }
 
+    public boolean isSubway() {
+        if (mode.equals("Broad Street Line") || mode.equals("Market/ Frankford")) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean isRegionalRail() {
+        if (mode.equals("Regional Rail")) {
+            return true;
+        }
+
+        return false;
+    }
 
 
 }

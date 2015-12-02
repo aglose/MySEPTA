@@ -1,11 +1,13 @@
 package team5.capstone.com.mysepta.Adapters;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -96,6 +98,23 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsHold
                 holder.routeNameText.setText(temp.getRouteName());
                 holder.updateText.setText((CharSequence) temp.getLastUpdate());
                 holder.descText.setText(temp.getDescription());
+
+/*
+                if (temp.hasFlag() == 1){
+                    holder.typeADV.setImageResource(R.drawable.ic_alertr);
+
+                }else if(temp.hasFlag() == 2){
+                    holder.typeDET.setImageResource(R.drawable.ic_alerto);
+
+                }else if(temp.hasFlag() == 3){
+                    holder.typeALRT.setImageResource(R.drawable.ic_alerty);
+
+                }else if(temp.hasFlag() == 4){
+                    holder.typeSUS.setImageResource(R.drawable.ic_alertg);
+
+                }
+
+*/
                 break;
             }
 
@@ -112,17 +131,19 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsHold
     }
 
     public void addItem(AlertsModel model){
-        alertsList.add(model);
-        notifyItemInserted(alertsList.size());
+            alertsList.add(model);
+            notifyItemInserted(alertsList.size());
+
     }
     /**
      *
      */
     public class AlertsHolder extends RecyclerView.ViewHolder{
-        //TextView modeText;
+        TextView modeText;
         TextView routeNameText;
         TextView updateText;
         TextView descText;
+
         CardView cardView;
 
 
@@ -137,6 +158,8 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsHold
             routeNameText = (TextView) itemView.findViewById(R.id.route_name);
             updateText = (TextView) itemView.findViewById(R.id.lastUpdate);
             descText = (TextView) itemView.findViewById(R.id.desc);
+
+
         }
     }
 }
