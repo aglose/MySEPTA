@@ -3,9 +3,6 @@ package team5.capstone.com.mysepta;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
-import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,7 +23,6 @@ import com.google.android.gms.location.LocationServices;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import retrofit.Callback;
@@ -34,14 +30,10 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import team5.capstone.com.mysepta.Adapters.RailExpandableAdapter;
 import team5.capstone.com.mysepta.CallbackProxies.NearestLocationProxy;
-import team5.capstone.com.mysepta.CallbackProxies.RailLocationProxy;
-import team5.capstone.com.mysepta.DropDownView.RailChooser;
-import team5.capstone.com.mysepta.DropDownView.RailChooserChild;
 import team5.capstone.com.mysepta.Fragment.RailScheduleFragment;
 import team5.capstone.com.mysepta.Fragment.ToFromFragment;
 import team5.capstone.com.mysepta.Managers.FavoritesManager;
 import team5.capstone.com.mysepta.Models.NearestLocationModel;
-import team5.capstone.com.mysepta.Models.RailModel;
 
 public class RailActivity extends AppCompatActivity implements ToFromFragment.OnFragmentInteractionListener {
     private static final String TAG = "RailActivity";

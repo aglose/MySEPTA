@@ -44,6 +44,7 @@
     <string name="from_rail_text">Starting Station</string>
     <string name="to_rail_text">Ending Station</string>
     <string name="live_rail_label"><b>Live Schedule Planner</b></string>
+    <string name="map_rail_label"><b>Train View</b></string>
     <string name="static_rail_header"><u><b>Schedules</b></u></string>
     <string name="train_number"><u><b>Train</b></u></string>
     <string name="departure_time"><u><b>Departure</b></u></string>
