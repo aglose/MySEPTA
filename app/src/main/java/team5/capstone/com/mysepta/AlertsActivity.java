@@ -16,6 +16,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ListAdapter;
 
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import info.hoang8f.android.segmented.SegmentedGroup;
 import team5.capstone.com.mysepta.Adapters.AlertsAdapter;
 import team5.capstone.com.mysepta.Fragment.AlertsFragment;
 import team5.capstone.com.mysepta.Fragment.GenAlertsFragment;
@@ -58,46 +61,30 @@ public class AlertsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Alerts");
 
-        String[] alrtMenu = getResources().getStringArray(R.array.Alerts_Menu);
-        ListView lv = (ListView)findViewById(R.id.alertsMenu);
-        ListAdapter adapter = new ArrayAdapter<>(this, R.layout.alert_list_item, alrtMenu);
-        lv.setAdapter(adapter);
-
-
-        /* Alert Fragments*/
+         /* Alert Fragments*/
         AlertsFragment afrag = new AlertsFragment();
         final GenAlertsFragment genfrag = new GenAlertsFragment();
         final RRAlertsFragment rrfrag = new RRAlertsFragment();
         final SubAlertsFragment subfrag = new SubAlertsFragment();
 
-
-        /* Fragment Manager*/
-        final FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        //transaction.add(R.id.fragmentAlerts, afrag);
-        //transaction.commit();
-
-
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+        SegmentedGroup dayChoice = (SegmentedGroup) findViewById(R.id.segmentedDays);
+        dayChoice.setTintColor(R.color.blue, R.color.black);
+        dayChoice.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onItemClick(AdapterView parent, View view, int position, long id) {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton rb = (RadioButton) findViewById(checkedId);
 
-                /* Loads respective fragments*/
-                if (position == 0) {
+                String text = (String) rb.getText();
+                if (text.equalsIgnoreCase(getString(R.string.general))) {
                     loadFragment(R.id.fragAlerts, genfrag, false);
-                    getSupportActionBar().setTitle("General Alerts");
 
-                } else if (position == 1) {
+                } else if (text.equalsIgnoreCase(getString(R.string.regionalrail))) {
                     loadFragment(R.id.fragAlerts, rrfrag, false);
-                    getSupportActionBar().setTitle("Regional Rail Alerts");
 
-                } else if (position == 2) {
+                } else if (text.equalsIgnoreCase(getString(R.string.subway))) {
                     loadFragment(R.id.fragAlerts, subfrag, false);
-                    getSupportActionBar().setTitle("Subway Alerts");
 
                 }
-                //Toast.makeText(getApplicationContext(), ((TextView) view).getText(), Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -118,6 +105,12 @@ public class AlertsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     * @param paneId
+     * @param fragment
+     * @param placeOnBackStack
+     */
     public void loadFragment(int paneId,Fragment fragment,boolean placeOnBackStack){
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
