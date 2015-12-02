@@ -71,7 +71,7 @@ public class AlertsActivity extends AppCompatActivity {
         final RRAlertsFragment rrfrag = new RRAlertsFragment();
         final SubAlertsFragment subfrag = new SubAlertsFragment();
 
-        SegmentedGroup dayChoice = (SegmentedGroup) findViewById(R.id.segmentedDays);
+        SegmentedGroup dayChoice = (SegmentedGroup) findViewById(R.id.segmentedAlert);
         dayChoice.setTintColor(R.color.blue, R.color.black);
         dayChoice.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

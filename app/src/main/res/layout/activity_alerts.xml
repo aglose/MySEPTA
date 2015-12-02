@@ -11,37 +11,36 @@
 
     <info.hoang8f.android.segmented.SegmentedGroup
         xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/segmentedDays"
+        android:id="@+id/segmentedAlert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="horizontal"
         segmentedgroup:sc_border_width="2dp"
-        segmentedgroup:sc_corner_radius="10dp"
-        android:checkedButton="@+id/weekdayButton">
+        segmentedgroup:sc_corner_radius="10dp">
 
         <RadioButton
-            android:id="@+id/weekdayButton"
+            android:id="@+id/generalAlertButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/weekday"
+            android:text="@string/general"
             style="@style/RadioButton" />
 
         <RadioButton
-            android:id="@+id/saturdayButton"
+            android:id="@+id/trainAlertButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/saturday"
+            android:text="@string/regionalrail"
             style="@style/RadioButton" />
 
         <RadioButton
-            android:id="@+id/sundayButton"
+            android:id="@+id/subwayAlertButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/sunday"
+            android:text="@string/subway"
             style="@style/RadioButton" />
     </info.hoang8f.android.segmented.SegmentedGroup>
 
