@@ -1,5 +1,7 @@
 package team5.capstone.com.mysepta;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -12,6 +14,7 @@ import android.util.Log;
 
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -54,6 +57,7 @@ public class AlertsActivity extends AppCompatActivity {
 
     private SegmentedGroup dayChoice;
     private RotateLoading mLoadingView;
+    private FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,8 @@ public class AlertsActivity extends AppCompatActivity {
 
         mLoadingView = (RotateLoading) findViewById(R.id.rotateloading);
         mLoadingView.start();
+        frameLayout = (FrameLayout) findViewById(R.id.alertsPageFragment);
+        frameLayout.setVisibility(View.INVISIBLE);
 
         dayChoice = (SegmentedGroup) findViewById(R.id.segmentedAlert);
         dayChoice.setTintColor(R.color.blue, R.color.black);
@@ -225,9 +231,8 @@ public class AlertsActivity extends AppCompatActivity {
 
                     }
                 }
-
                 mLoadingView.stop();
-                mLoadingView.setVisibility(View.GONE);
+                crossFadeViews();
             }
 
             @Override
@@ -238,6 +243,21 @@ public class AlertsActivity extends AppCompatActivity {
 
         AlertsDescriptionProxy alertsViews = new AlertsDescriptionProxy();
         alertsViews.getAlertsDescriptionView("all", callback);
+    }
+
+    private void crossFadeViews() {
+        mLoadingView.animate()
+                .alpha(0f)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mLoadingView.setVisibility(View.GONE);
+                        frameLayout.setVisibility(View.VISIBLE);
+                    }
+                });
+
+
+
     }
 
     @Override

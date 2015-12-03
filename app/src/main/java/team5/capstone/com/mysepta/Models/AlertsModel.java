@@ -166,7 +166,7 @@ public class AlertsModel {
     
     public boolean isAlertDeleteable(){
         if (getIsAlert().equalsIgnoreCase("N") && getIsDetour().equalsIgnoreCase("N") && getIsAdvisory().equalsIgnoreCase("no")
-                && getIsSnow().equalsIgnoreCase("n") && getIsSuspended().equalsIgnoreCase("null")){
+                && getIsSnow().equalsIgnoreCase("n") && (getIsSuspended().equalsIgnoreCase("n") || getIsSuspended().equalsIgnoreCase("") || getIsSuspended().equalsIgnoreCase("null"))){
             return true;
         }
         
