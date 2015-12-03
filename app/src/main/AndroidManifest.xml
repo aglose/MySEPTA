@@ -77,6 +77,12 @@
             android:theme="@style/SubwayActivityTheme">
         </activity>
 
+        <activity
+            android:name=".TwitterActivity"
+            android:label="TwitterActivity"
+            android:theme="@style/SubwayActivityTheme">
+        </activity>
+
     </application>
 
 </manifest>

@@ -25,8 +25,8 @@ public class DrawerFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     //private static final int ITEM_COUNT = 100;
 
-    private String mNavTitles[] = {"Alerts","Settings","Help & Feedback"};
-    private int mIcons[] = {R.drawable.ic_alerts,R.drawable.ic_settings,R.drawable.ic_help};
+    private String mNavTitles[] = {"Alerts","Settings","Help & Feedback","Twitter"};
+    private int mIcons[] = {R.drawable.ic_alerts,R.drawable.ic_settings,R.drawable.ic_help, R.drawable.ic_twitter};
 
     private String name = "Username";
     private String email = "username@gmail.com";

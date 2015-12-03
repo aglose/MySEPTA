@@ -18,6 +18,7 @@ import team5.capstone.com.mysepta.AlertsActivity;
 import team5.capstone.com.mysepta.HelpActivity;
 import team5.capstone.com.mysepta.R;
 import team5.capstone.com.mysepta.SettingsActivity;
+import team5.capstone.com.mysepta.TwitterActivity;
 
 public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder> {
 
@@ -91,6 +92,10 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
                Intent h = new Intent(context, HelpActivity.class);
                context.startActivity(h);
+           }else if (getPosition()==4) {
+
+               Intent t = new Intent(context, TwitterActivity.class);
+               context.startActivity(t);
            }
         }
     }

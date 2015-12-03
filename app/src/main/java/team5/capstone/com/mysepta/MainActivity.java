@@ -66,8 +66,8 @@ public class MainActivity extends AppCompatActivity{
     private static final int BUS_TAB = 2;
     private static final int SUBWAY_TAB = 3;
 
-    String TITLES[] = {"Alerts","Settings","Help & Feedback"};
-    int ICONS[] = {R.drawable.ic_alerts,R.drawable.ic_settings,R.drawable.ic_help};
+    String TITLES[] = {"Alerts","Settings","Help & Feedback", "Twitter"};
+    int ICONS[] = {R.drawable.ic_alerts,R.drawable.ic_settings,R.drawable.ic_help, R.drawable.ic_twitter};
     String NAME = "Username";
     String EMAIL = "username@gmail.com";
     int PROFILE = R.drawable.profile;
