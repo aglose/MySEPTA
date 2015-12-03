@@ -1,5 +1,9 @@
 package team5.capstone.com.mysepta.Models;
 
+import android.text.Html;
+import android.text.Spanned;
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -16,108 +20,115 @@ public class AlertsModel {
     private String routeName;
     @SerializedName("mode")
     private String mode;
-    @SerializedName("is_advisory")
+    @SerializedName("isadvisory")
     private String isAdvisory;
-    @SerializedName("is_detour")
+    @SerializedName("isdetour")
     private String isDetour;
-    @SerializedName("is_alert")
+    @SerializedName("isalert")
     private String isAlert;
-    @SerializedName("is_suspend")
+    @SerializedName("issuspend")
     private String isSuspended;
-    @SerializedName("is_snow")
+    @SerializedName("isSnow")
     private String isSnow;
     @SerializedName("last_updated")
     private String lastUpdate;
-    @SerializedName("description")
-    private String description;
 
-    public AlertsModel(String mode, String routeName, String lastUpdate, String description, String isAdvisory, String isDetour, String isAlert, String isSuspended) {
-        this.mode = "Empty";
-        this.routeName = "Empty";
-        this.lastUpdate = "";
-        this.description = "Empty";
-        this.isAdvisory = "No";
-        this.isDetour = "N";
-        this.isAlert = "N";
-        this.isSuspended = "N";
-
-    }
+    /*Description coming from AlertsDescriptionModel*/
+    private Spanned description;
 
     public String getRouteId() {
         return routeId;
+    }
+
+    public void setRouteId(String routeId) {
+        this.routeId = routeId;
     }
 
     public String getRouteName() {
         return routeName;
     }
 
+    public void setRouteName(String routeName) {
+        this.routeName = routeName;
+    }
+
     public String getMode() {
         return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    public String getIsAdvisory() {
+        if(isAdvisory==null){
+            isAdvisory = "";
+        }
+        return isAdvisory;
+    }
+
+    public void setIsAdvisory(String isAdvisory) {
+        this.isAdvisory = isAdvisory;
+    }
+
+    public String getIsDetour() {
+        if(isDetour==null){
+            isDetour = "";
+        }
+        return isDetour;
+    }
+
+    public void setIsDetour(String isDetour) {
+        this.isDetour = isDetour;
+    }
+
+    public String getIsAlert() {
+        if(isAlert==null){
+            isAlert = "";
+        }
+        return isAlert;
+    }
+
+    public void setIsAlert(String isAlert) {
+        this.isAlert = isAlert;
+    }
+
+    public String getIsSuspended() {
+        if(isSuspended==null){
+            isSuspended = "";
+        }
+        return isSuspended;
+    }
+
+    public void setIsSuspended(String isSuspended) {
+        this.isSuspended = isSuspended;
+    }
+
+    public String getIsSnow() {
+        if(isSnow==null){
+            isSnow = "";
+        }
+        return isSnow;
+    }
+
+    public void setIsSnow(String isSnow) {
+        this.isSnow = isSnow;
     }
 
     public String getLastUpdate() {
         return lastUpdate;
     }
 
-    public String getDescription() {
+    public void setLastUpdate(String lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public Spanned getDescription() {
         return description;
     }
 
-    public boolean hasSnowFlag() {
-        if (isSnow.toUpperCase().equals("Y")) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public boolean hasAdvisoryFlag() {
-        if (isAdvisory.toUpperCase().equals("YES")) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public boolean hasDetourFlag() {
-        if (isDetour.toUpperCase().equals("Y")) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public boolean hasAlertFlag() {
-        if (isAlert.toUpperCase().equals("Y")) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public boolean hasSuspendedFlag() {
-        if (isSuspended.toUpperCase().equals("Y")) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public int hasFlag() {
-        int flagNum = 0;
-        if (hasAdvisoryFlag()) {
-            flagNum = 1;
-        } else if (hasDetourFlag()) {
-            flagNum = 2;
-        } else if (hasAlertFlag()) {
-            flagNum =3;
-        } else if (hasSuspendedFlag()) {
-            flagNum=4;
-        }else {
-
-        }
-        return flagNum;
-
+    public void setDescription(Spanned description) {
+        this.description = description;
     }
 
     public boolean isGeneral() {
@@ -145,5 +156,36 @@ public class AlertsModel {
         return false;
     }
 
+    public boolean isBus() {
+        if (mode.equals("Bus")) {
+            return true;
+        }
 
+        return false;
+    }
+    
+    public boolean isAlertDeleteable(){
+        if (getIsAlert().equalsIgnoreCase("N") && getIsDetour().equalsIgnoreCase("N") && getIsAdvisory().equalsIgnoreCase("no")
+                && getIsSnow().equalsIgnoreCase("n") && getIsSuspended().equalsIgnoreCase("null")){
+            return true;
+        }
+        
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "AlertsModel{" +
+                "routeId='" + routeId + '\'' +
+                ", routeName='" + routeName + '\'' +
+                ", mode='" + mode + '\'' +
+                ", isAdvisory='" + isAdvisory + '\'' +
+                ", isDetour='" + isDetour + '\'' +
+                ", isAlert='" + isAlert + '\'' +
+                ", isSuspended='" + isSuspended + '\'' +
+                ", isSnow='" + isSnow + '\'' +
+                ", lastUpdate='" + lastUpdate + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

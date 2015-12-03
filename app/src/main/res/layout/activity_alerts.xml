@@ -1,20 +1,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <include
         android:id="@+id/alerts_tool_bar"
         layout="@layout/alerts_toolbar"
         ></include>
 
+
     <info.hoang8f.android.segmented.SegmentedGroup
         xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
         android:id="@+id/segmentedAlert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:paddingTop="5dp"
+        android:layout_margin="5dp"
         android:orientation="horizontal"
         segmentedgroup:sc_border_width="2dp"
         segmentedgroup:sc_corner_radius="10dp">
@@ -23,6 +25,7 @@
             android:id="@+id/generalAlertButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="13sp"
             android:layout_weight="1"
             android:text="@string/general"
             style="@style/RadioButton" />
@@ -32,7 +35,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="13sp"
             android:text="@string/regionalrail"
+            style="@style/RadioButton" />
+
+        <RadioButton
+            android:id="@+id/busAlertButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="13sp"
+            android:text="@string/bus"
             style="@style/RadioButton" />
 
         <RadioButton
@@ -40,10 +53,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="13sp"
             android:text="@string/subway"
             style="@style/RadioButton" />
+
     </info.hoang8f.android.segmented.SegmentedGroup>
 
+
+    <com.victor.loading.rotate.RotateLoading
+        android:id="@+id/rotateloading"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:loading_width="5dp"
+        app:loading_color="@color/colorPrimary"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal" />
 
     <FrameLayout
         android:paddingLeft="@dimen/activity_horizontal_margin"

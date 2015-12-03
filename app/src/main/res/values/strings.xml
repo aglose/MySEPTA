@@ -543,8 +543,9 @@
 
 
     <string name ="general">General</string>
-    <string name ="regionalrail">Regional Rail</string>
+    <string name ="regionalrail">Rail</string>
     <string name ="subway">Subway</string>
+    <string name="bus">Bus</string>
 
 
 </resources>

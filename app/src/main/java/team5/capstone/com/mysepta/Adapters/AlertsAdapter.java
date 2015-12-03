@@ -94,27 +94,36 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsHold
             case TYPE_CELL:{
                 AlertsModel temp = alertsList.get(position);
 
-                //holder.modeText.setText(temp.getMode());
+
+
                 holder.routeNameText.setText(temp.getRouteName());
                 holder.updateText.setText((CharSequence) temp.getLastUpdate());
                 holder.descText.setText(temp.getDescription());
 
-/*
-                if (temp.hasFlag() == 1){
-                    holder.typeADV.setImageResource(R.drawable.ic_alertr);
 
-                }else if(temp.hasFlag() == 2){
-                    holder.typeDET.setImageResource(R.drawable.ic_alerto);
+                if (temp.getIsAlert().equalsIgnoreCase("Y")){
+                    holder.alertImage.setImageResource(R.drawable.ic_alertr);
+                    holder.typeOfAlert.setText("Alert");
 
-                }else if(temp.hasFlag() == 3){
-                    holder.typeALRT.setImageResource(R.drawable.ic_alerty);
+                }else if(temp.getIsDetour().equalsIgnoreCase("Y")){
+                    holder.alertImage.setImageResource(R.drawable.ic_alerto);
+                    holder.typeOfAlert.setText("Detour");
 
-                }else if(temp.hasFlag() == 4){
-                    holder.typeSUS.setImageResource(R.drawable.ic_alertg);
+                }else if(temp.getIsAdvisory().equalsIgnoreCase("yes")){
+                    holder.alertImage.setImageResource(R.drawable.ic_alerty);
+                    holder.typeOfAlert.setText("Advisory");
 
+                }else if(temp.getIsSnow().equalsIgnoreCase("y")){
+                    holder.alertImage.setImageResource(R.drawable.ic_alertg);
+                    holder.typeOfAlert.setText("Snow");
+                }else if(temp.getIsSuspended().equalsIgnoreCase("y")){
+                    holder.alertImage.setImageResource(R.drawable.ic_alertr);
+                    holder.typeOfAlert.setText("Suspended");
+                }else{
+                    holder.alertImage.setImageResource(R.drawable.ic_alertg);
+                    holder.typeOfAlert.setText("");
                 }
 
-*/
                 break;
             }
 
@@ -130,20 +139,15 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsHold
         return alertsList.size();
     }
 
-    public void addItem(AlertsModel model){
-            alertsList.add(model);
-            notifyItemInserted(alertsList.size());
-
-    }
     /**
      *
      */
     public class AlertsHolder extends RecyclerView.ViewHolder{
-        TextView modeText;
+        TextView typeOfAlert;
+        ImageView alertImage;
         TextView routeNameText;
         TextView updateText;
         TextView descText;
-
         CardView cardView;
 
 
@@ -154,12 +158,11 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsHold
         public AlertsHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.alerts_item_card);
-            //modeText = (TextView) itemView.findViewById(R.id.mode);
+            alertImage = (ImageView) itemView.findViewById(R.id.alert_type);
+            typeOfAlert = (TextView) itemView.findViewById(R.id.typeOfAlertText);
             routeNameText = (TextView) itemView.findViewById(R.id.route_name);
             updateText = (TextView) itemView.findViewById(R.id.lastUpdate);
             descText = (TextView) itemView.findViewById(R.id.desc);
-
-
         }
     }
 }

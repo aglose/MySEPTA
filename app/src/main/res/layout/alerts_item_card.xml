@@ -4,13 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/alerts_item_card"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="wrap_content"
     app:cardCornerRadius="2dp"
     app:cardElevation="2dp"
-    android:layout_marginBottom="@dimen/cardMarginVertical"
     android:layout_marginLeft="@dimen/cardMarginHorizontal"
     android:layout_marginRight="@dimen/cardMarginHorizontal"
-    android:layout_marginTop="@dimen/cardMarginVertical"
+    android:layout_marginTop="2dp"
     app:cardPreventCornerOverlap="false"
     app:contentPadding="0dp">
 
@@ -30,7 +29,7 @@
             android:textColor="@color/black"
             android:id="@+id/route_name"
             android:padding="5dp"
-            android:layout_centerVertical="true"
+            android:layout_alignParentTop="true"
             android:layout_alignParentStart="true" />
 
         <TextView
@@ -38,12 +37,12 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:gravity="right"
-            android:textSize="10sp"
+            android:textSize="13sp"
             android:text="Nov 11th 2015 10:53AM "
             android:textColor="@color/grey"
             android:id="@+id/lastUpdate"
             android:padding="2dp"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true" />
 
         <TextView
@@ -55,46 +54,29 @@
             android:textColor="@color/black"
             android:id="@+id/desc"
             android:padding="5dp"
+            android:layout_below="@+id/typeOfAlertText"
+            android:layout_alignParentStart="true" />
+
+
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:id="@+id/alert_type"
+            android:src="@drawable/ic_alertg"
+            android:layout_alignTop="@+id/typeOfAlertText"
+            android:layout_toStartOf="@+id/lastUpdate" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:textSize="12sp"
+            android:text="Type of Alert"
+            android:id="@+id/typeOfAlertText"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="5dp"
             android:layout_below="@+id/route_name"
-            />
-
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:id="@+id/alert_type_ADV"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/lastUpdate"
-            android:src="@drawable/ic_alertr"
-            android:visibility="invisible"
-            />
-
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:id="@+id/alert_type_DET"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/alert_type_ADV"
-            android:src="@drawable/ic_alerto"
-            android:visibility="invisible"
-            />
-
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:id="@+id/alert_type_ALRT"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/alert_type_DET"
-            android:src="@drawable/ic_alerty"
-            android:visibility="invisible"
-            />
-
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:id="@+id/alert_type_SUS"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/alert_type_ALRT"
-            android:src="@drawable/ic_alertg"/>
+            android:layout_toStartOf="@+id/alert_type" />
 
 
     </RelativeLayout>
