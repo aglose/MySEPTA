@@ -20,6 +20,12 @@
     <!--Rail CardView Child Dimensions-->
     <dimen name="railCardChildHeight">75dp</dimen>
 
+    <!--Rail CardView Connection Child Dimensions-->
+    <dimen name="railCardChildMarginTop">0dp</dimen>
+    <dimen name="railCardChildMarginLeft">50dp</dimen>
+    <dimen name="railCardChildMarginRight">20dp</dimen>
+    <dimen name="railCardChildMarginBottom">5dp</dimen>
+
     <!--Subway Button Dimensions-->
     <dimen name="subwayButtonHeight">80dp</dimen>
     <dimen name="subwayButtonWidth">220dp</dimen>

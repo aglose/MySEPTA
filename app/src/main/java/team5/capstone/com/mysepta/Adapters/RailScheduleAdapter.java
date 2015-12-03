@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,11 +18,12 @@ import team5.capstone.com.mysepta.R;
  * Adapter to define functionality of rail schedule fragment.
  * Created by Kevin on 9/30/15.
  */
-public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapter.RailScheduleHolder> {
+public class RailScheduleAdapter extends RecyclerView.Adapter {
     private Context context;
     private ArrayList<RailLocationData> rails;
     static final int TYPE_HEADER = 0;
     static final int TYPE_CELL = 1;
+    static final int TYPE_CONNECTION = 2;
     private String start;
     private String end;
 
@@ -47,12 +49,21 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
      */
     @Override
     public int getItemViewType(int position) {
+
+        if(rails.get(position).isConnection()){
+            return TYPE_CONNECTION;
+        }
+        else{
+            return TYPE_CELL;
+        }
+        /*
         switch (position) {
             //case 0:
               //  return TYPE_HEADER;
             default:
                 return TYPE_CELL;
         }
+        */
     }
 
     /**
@@ -62,7 +73,7 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
      * @return rail schedule holder for view
      */
     @Override
-    public RailScheduleAdapter.RailScheduleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
 
         switch(viewType) {
@@ -70,6 +81,11 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
                 view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.home_rail_item, parent, false);
                 return new RailScheduleHolder(view);
+            }
+            case TYPE_CONNECTION:{
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.rail_conn_list_item_card, parent, false);
+                return new RailConnectionScheduleHolder(view);
             }
             case TYPE_CELL:{
                 view = LayoutInflater.from(parent.getContext())
@@ -90,17 +106,25 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
      * @param position position of view
      */
     @Override
-    public void onBindViewHolder(RailScheduleHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch(getItemViewType(position)) {
             case TYPE_HEADER:{
-                holder.arrivalStation.setText(end);
-                holder.departureStation.setText(start);
+                ((RailScheduleHolder)holder).arrivalStation.setText(end);
+                ((RailScheduleHolder)holder).departureStation.setText(start);
                 break;
             }
             case TYPE_CELL:{
                 RailLocationData temp = rails.get(position);
+                if(position<rails.size()-1){
+                    RailLocationData temp2 = rails.get(position+1);
+                    if(temp2.isConnection()){
+                        ((RailScheduleHolder)holder).conImage.setVisibility(View.VISIBLE);
+                    }
+                }
 
-                if(temp.isConnection()){
+                /*if(temp.isConnection()){
+                    holder.cardView.setPadding(R.dimen.railCardChildMarginLeft,R.dimen.railCardChildMarginTop,
+                            R.dimen.railCardChildMarginRight,R.dimen.railCardChildMarginBottom);
                     holder.cardView.setBackgroundColor(context.getResources().getColor(R.color.blue));
                     holder.railText.setTextColor(context.getResources().getColor(R.color.white));
                     holder.railAcr.setTextColor(context.getResources().getColor(R.color.white));
@@ -108,12 +132,22 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
                     holder.trainText.setTextColor(context.getResources().getColor(R.color.white));
                 }
                 else{
-                    holder.cardView.setBackgroundColor(context.getResources().getColor(R.color.white));
-                }
-                holder.railText.setText(temp.getRailName());
-                holder.railAcr.setText(temp.getRailAcr());
-                holder.timeText.setText(temp.getTime());
-                holder.trainText.setText("#" + temp.getRailNumber() + " to " + temp.getStation());
+                */
+                        ((RailScheduleHolder) holder).cardView.setBackgroundColor(context.getResources().getColor(R.color.white));
+                //}
+                ((RailScheduleHolder)holder).railText.setText(temp.getRailName());
+                ((RailScheduleHolder)holder).railAcr.setText(temp.getRailAcr());
+                ((RailScheduleHolder)holder).timeText.setText(temp.getTime());
+                ((RailScheduleHolder)holder).trainText.setText("#" + temp.getRailNumber() + " to " + temp.getStation());
+                break;
+            }
+            case TYPE_CONNECTION:{
+                RailLocationData temp = rails.get(position);
+                ((RailConnectionScheduleHolder)holder).cardView.setBackgroundColor(context.getResources().getColor(R.color.white));
+                ((RailConnectionScheduleHolder)holder).railText.setText(temp.getRailName());
+                ((RailConnectionScheduleHolder)holder).railAcr.setText(temp.getRailAcr());
+                ((RailConnectionScheduleHolder)holder).timeText.setText(temp.getTime());
+                ((RailConnectionScheduleHolder)holder).trainText.setText("#" + temp.getRailNumber() + " to " + temp.getStation());
                 break;
             }
 
@@ -140,6 +174,7 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
         CardView cardView;
         TextView arrivalStation;
         TextView departureStation;
+        ImageView conImage;
 
         /**
          * Constructor
@@ -152,9 +187,34 @@ public class RailScheduleAdapter extends RecyclerView.Adapter<RailScheduleAdapte
             railAcr = (TextView) itemView.findViewById(R.id.lineName);
             trainText = (TextView) itemView.findViewById(R.id.trainInfo);
             timeText = (TextView) itemView.findViewById(R.id.arrivalTime);
+            conImage = (ImageView) itemView.findViewById(R.id.arrow_connection);
 
             arrivalStation = (TextView) itemView.findViewById(R.id.arrivalStation);
             departureStation = (TextView) itemView.findViewById(R.id.departureStation);
+        }
+    }
+
+    /**
+     * Creates holder for views to make item views easily retrievable.
+     */
+    public class RailConnectionScheduleHolder extends RecyclerView.ViewHolder{
+        TextView railText;
+        TextView railAcr;
+        TextView trainText;
+        TextView timeText;
+        CardView cardView;
+
+        /**
+         * Constructor
+         * @param itemView current item
+         */
+        public RailConnectionScheduleHolder(View itemView) {
+            super(itemView);
+            cardView = (CardView) itemView.findViewById(R.id.rail_conn_item_card);
+            railText = (TextView) itemView.findViewById(R.id.trainLabelConn);
+            railAcr = (TextView) itemView.findViewById(R.id.lineNameConn);
+            trainText = (TextView) itemView.findViewById(R.id.trainInfoConn);
+            timeText = (TextView) itemView.findViewById(R.id.arrivalTimeConn);
         }
     }
 }
