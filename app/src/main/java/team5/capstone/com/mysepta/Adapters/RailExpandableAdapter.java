@@ -12,6 +12,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import team5.capstone.com.mysepta.R;
@@ -39,6 +40,12 @@ public class RailExpandableAdapter extends BaseExpandableListAdapter {
         this.rails = rails;
         this.railChoices = railChoices;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if(this.railChoices == null){
+            this.railChoices = new HashMap<>();
+        }
+        if(this.rails == null){
+            this.rails = new ArrayList<>();
+        }
         this.tags = new ArrayList<>(rails);
     }
 

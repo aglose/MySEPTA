@@ -104,6 +104,9 @@ public class RailStaticActivity extends AppCompatActivity {
                     day = 2;
                     thread.start();
                 }
+                if(scheduleFrag != null){
+                    removeFragment(scheduleFrag);
+                }
             }
         });
 
@@ -132,6 +135,7 @@ public class RailStaticActivity extends AppCompatActivity {
     }
 
     private void getData(){
+
         fullSchedule = new HashMap<>();
         fullReverseSchedule = new HashMap<>();
 
@@ -305,25 +309,31 @@ public class RailStaticActivity extends AppCompatActivity {
             }
         });
 
+        Map<String,ArrayList<String>> railList = new LinkedHashMap<String,ArrayList<String>>();
         ArrayList<String> groupList = new ArrayList<String>();
-        if(!startStation.isEmpty() && stationNames.contains(startStation))
+        if(!startStation.isEmpty() && stationNames.contains(startStation)) {
             groupList.add(startStation);
+            railList.put(startStation, stationNames);
+        }
         else {
             groupList.add(start);
             startStation="";
+            railList.put(start, stationNames);
         }
-        if(!endStation.isEmpty() && stationNames.contains(endStation))
+        if(!endStation.isEmpty() && stationNames.contains(endStation)) {
             groupList.add(endStation);
+            railList.put(endStation, stationNames);
+        }
         else {
             groupList.add(end);
             endStation = "";
-
+            railList.put(end, stationNames);
         }
 
 
-        Map<String,ArrayList<String>> railList = new LinkedHashMap<String,ArrayList<String>>();
-        railList.put(start, stationNames);
-        railList.put(end, stationNames);
+
+
+
 
         railExpandableAdapter = new RailExpandableAdapter(this,groupList,railList);
     }
@@ -344,13 +354,17 @@ public class RailStaticActivity extends AppCompatActivity {
             String start="";
             String end="";
             for(TrainScheduleModel tsm:ts){
-                if(stationNamesList.get(apiStationNames.indexOf(tsm.getStationName().trim())).equalsIgnoreCase(startStation)){
-                    start = tsm.getScheduledTime();
-                    startTime = tsm.getScheduledTime();
+                try {
+                    if (stationNamesList.get(apiStationNames.indexOf(tsm.getStationName().trim())).equalsIgnoreCase(startStation)) {
+                        start = tsm.getScheduledTime();
+                        startTime = tsm.getScheduledTime();
+                    } else if (stationNamesList.get(apiStationNames.indexOf(tsm.getStationName().trim())).equalsIgnoreCase(endStation)) {
+                        end = tsm.getScheduledTime();
+                        endTime = tsm.getScheduledTime();
+                    }
                 }
-                else if(stationNamesList.get(apiStationNames.indexOf(tsm.getStationName().trim())).equalsIgnoreCase(endStation)){
-                    end = tsm.getScheduledTime();
-                    endTime = tsm.getScheduledTime();
+                catch(Exception e){
+                    Log.d("Static Rail","Station DNE:"+tsm.getStationName());
                 }
             }
 
@@ -367,13 +381,17 @@ public class RailStaticActivity extends AppCompatActivity {
                 String start="";
                 String end="";
                 for(TrainScheduleModel tsm:ts){
-                    if(stationNamesList.get(apiStationNames.indexOf(tsm.getStationName().trim())).equalsIgnoreCase(startStation)){
-                        start = tsm.getScheduledTime();
-                        startTime = tsm.getScheduledTime();
+                    try {
+                        if (stationNamesList.get(apiStationNames.indexOf(tsm.getStationName().trim())).equalsIgnoreCase(startStation)) {
+                            start = tsm.getScheduledTime();
+                            startTime = tsm.getScheduledTime();
+                        } else if (stationNamesList.get(apiStationNames.indexOf(tsm.getStationName().trim())).equalsIgnoreCase(endStation)) {
+                            end = tsm.getScheduledTime();
+                            endTime = tsm.getScheduledTime();
+                        }
                     }
-                    else if(stationNamesList.get(apiStationNames.indexOf(tsm.getStationName().trim())).equalsIgnoreCase(endStation)){
-                        end = tsm.getScheduledTime();
-                        endTime = tsm.getScheduledTime();
+                    catch(Exception e){
+                        Log.d("Static Rail", "Station DNE:" + tsm.getStationName());
                     }
                 }
 
@@ -483,6 +501,16 @@ public class RailStaticActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    public void removeFragment(Fragment fragment){
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.remove(fragment);
+
+        fragmentTransaction.commit();
+        fragmentManager.executePendingTransactions();
     }
 
 }
