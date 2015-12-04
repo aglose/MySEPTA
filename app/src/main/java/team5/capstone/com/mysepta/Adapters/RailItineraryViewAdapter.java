@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import team5.capstone.com.mysepta.MapsActivity;
@@ -66,7 +69,7 @@ public class RailItineraryViewAdapter extends RecyclerView.Adapter<RailItinerary
                 holder.cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent launch = new Intent(context,RailActivity.class);
+                        Intent launch = new Intent(context, RailActivity.class);
                         Bundle extras = new Bundle();
                         extras.putDouble(context.getResources().getString(R.string.LAST_KNOWN_LATITUDE_KEY), latitude);
                         extras.putDouble(context.getResources().getString(R.string.LAST_KNOWN_LONGITUDE_KEY), longitude);
@@ -74,6 +77,7 @@ public class RailItineraryViewAdapter extends RecyclerView.Adapter<RailItinerary
                         context.startActivity(launch);
                     }
                 });
+                holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.headerBlue));
                 break;
             case TYPE_RAIL_MAP:
                 holder.textView.setText(R.string.map_rail_label);
@@ -84,22 +88,29 @@ public class RailItineraryViewAdapter extends RecyclerView.Adapter<RailItinerary
                         context.startActivity(startMap);
                     }
                 });
+                holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.headerBlue));
                 break;
+
             case TYPE_STATIC_HEADER:
+                holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.headerBlue));
                 holder.textView.setText(R.string.static_rail_header);
                 break;
             case TYPE_RAIL:
                 String[] rails = context.getResources().getStringArray(R.array.rail_names);
                 holder.textView.setText(rails[position-3]);
+                holder.textView.setTextColor(ContextCompat.getColor(context, R.color.black));
                 holder.cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent launch = new Intent(context, RailStaticActivity.class);
-                        launch.putExtra(context.getString(R.string.name_tag),holder.textView.getText());
+                        launch.putExtra(context.getString(R.string.name_tag), holder.textView.getText());
 
                         context.startActivity(launch);
                     }
                 });
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)holder.cardView.getLayoutParams();
+                params.setMargins(25, 4, 25, 0); //substitute parameters for left, top, right, bottom
+                holder.cardView.setLayoutParams(params);
                 break;
         }
     }

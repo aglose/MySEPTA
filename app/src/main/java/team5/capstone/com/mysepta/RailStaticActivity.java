@@ -40,6 +40,7 @@ import team5.capstone.com.mysepta.Models.TrainScheduleModel;
  * Created by Kevin on 11/9/15.
  */
 public class RailStaticActivity extends AppCompatActivity {
+    private static final String TAG = "RailStaticActivity";
 
     private ExpandableListView expandableListView;
     private RailExpandableAdapter railExpandableAdapter;
@@ -172,7 +173,8 @@ public class RailStaticActivity extends AppCompatActivity {
             @Override
             public void success(Object o, Response response) {
                 ArrayList<TrainScheduleModel> trainLocationList = (ArrayList<TrainScheduleModel>) o;
-                setupRailAdapter(trainLocationList,railNumber,isReverse);
+                Log.d(TAG, "TAD"+trainLocationList);
+                setupRailAdapter(trainLocationList, railNumber,isReverse);
                 if(isFinal){
                     handler.sendMessage(handler.obtainMessage());
                 }
