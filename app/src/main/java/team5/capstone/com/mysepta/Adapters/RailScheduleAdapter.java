@@ -107,12 +107,12 @@ public class RailScheduleAdapter extends RecyclerView.Adapter {
             }
             case TYPE_CELL:{
                 RailLocationData temp = rails.get(position);
-                if(position<rails.size()-1){
+                /*if(position<rails.size()-1){
                     RailLocationData temp2 = rails.get(position+1);
                     if(temp2.isConnection()){
                         ((RailScheduleHolder)holder).conImage.setVisibility(View.VISIBLE);
                     }
-                }
+                }*/
 
                 ((RailScheduleHolder) holder).cardView.setBackgroundColor(context.getResources().getColor(R.color.white));
                 ((RailScheduleHolder)holder).railText.setText(temp.getRailName());
@@ -154,7 +154,7 @@ public class RailScheduleAdapter extends RecyclerView.Adapter {
         CardView cardView;
         //TextView arrivalStation;
         //TextView departureStation;
-        ImageView conImage;
+        //ImageView conImage;
 
         /**
          * Constructor
@@ -167,7 +167,7 @@ public class RailScheduleAdapter extends RecyclerView.Adapter {
             railAcr = (TextView) itemView.findViewById(R.id.lineName);
             trainText = (TextView) itemView.findViewById(R.id.trainInfo);
             timeText = (TextView) itemView.findViewById(R.id.arrivalTime);
-            conImage = (ImageView) itemView.findViewById(R.id.arrow_connection);
+            //conImage = (ImageView) itemView.findViewById(R.id.arrow_connection);
 
             //arrivalStation = (TextView) itemView.findViewById(R.id.arrivalStation);
             //departureStation = (TextView) itemView.findViewById(R.id.departureStation);
