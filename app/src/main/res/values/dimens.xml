@@ -22,7 +22,7 @@
 
     <!--Rail CardView Connection Child Dimensions-->
     <dimen name="railCardChildMarginTop">0dp</dimen>
-    <dimen name="railCardChildMarginLeft">50dp</dimen>
+    <dimen name="railCardChildMarginLeft">25dp</dimen>
     <dimen name="railCardChildMarginRight">20dp</dimen>
     <dimen name="railCardChildMarginBottom">5dp</dimen>
 
