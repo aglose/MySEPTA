@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="#dbdbda">
+    android:background="@color/headerBlue">
 
     <TextView
         android:id="@+id/parent_list_item_rail_title_text_view2"
@@ -11,6 +11,8 @@
         android:padding="16dp"
         android:textStyle="bold"
         android:text="@string/to_rail_text"
+        android:textSize="18sp"
+        android:textColor="@color/white"
         android:layout_marginStart="31dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />

@@ -35,7 +35,10 @@
         android:layout_marginRight="@dimen/cardHeaderMarginHorizontal"
         android:layout_marginTop="@dimen/cardHeaderMarginVertical"
         android:layout_marginBottom="@dimen/cardHeaderMarginVertical"
-        android:id="@+id/tofromlistview">
+        android:id="@+id/tofromlistview"
+        android:groupIndicator="@drawable/group_indicator"
+        android:background="@color/white"
+        >
     </ExpandableListView>
 
     <FrameLayout

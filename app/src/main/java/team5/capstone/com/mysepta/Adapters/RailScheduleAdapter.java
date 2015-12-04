@@ -56,14 +56,6 @@ public class RailScheduleAdapter extends RecyclerView.Adapter {
         else{
             return TYPE_CELL;
         }
-        /*
-        switch (position) {
-            //case 0:
-              //  return TYPE_HEADER;
-            default:
-                return TYPE_CELL;
-        }
-        */
     }
 
     /**
@@ -109,8 +101,8 @@ public class RailScheduleAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch(getItemViewType(position)) {
             case TYPE_HEADER:{
-                ((RailScheduleHolder)holder).arrivalStation.setText(end);
-                ((RailScheduleHolder)holder).departureStation.setText(start);
+                //((RailScheduleHolder)holder).arrivalStation.setText(end);
+                //((RailScheduleHolder)holder).departureStation.setText(start);
                 break;
             }
             case TYPE_CELL:{
@@ -122,19 +114,7 @@ public class RailScheduleAdapter extends RecyclerView.Adapter {
                     }
                 }
 
-                /*if(temp.isConnection()){
-                    holder.cardView.setPadding(R.dimen.railCardChildMarginLeft,R.dimen.railCardChildMarginTop,
-                            R.dimen.railCardChildMarginRight,R.dimen.railCardChildMarginBottom);
-                    holder.cardView.setBackgroundColor(context.getResources().getColor(R.color.blue));
-                    holder.railText.setTextColor(context.getResources().getColor(R.color.white));
-                    holder.railAcr.setTextColor(context.getResources().getColor(R.color.white));
-                    holder.timeText.setTextColor(context.getResources().getColor(R.color.white));
-                    holder.trainText.setTextColor(context.getResources().getColor(R.color.white));
-                }
-                else{
-                */
-                        ((RailScheduleHolder) holder).cardView.setBackgroundColor(context.getResources().getColor(R.color.white));
-                //}
+                ((RailScheduleHolder) holder).cardView.setBackgroundColor(context.getResources().getColor(R.color.white));
                 ((RailScheduleHolder)holder).railText.setText(temp.getRailName());
                 ((RailScheduleHolder)holder).railAcr.setText(temp.getRailAcr());
                 ((RailScheduleHolder)holder).timeText.setText(temp.getTime());
@@ -172,8 +152,8 @@ public class RailScheduleAdapter extends RecyclerView.Adapter {
         TextView trainText;
         TextView timeText;
         CardView cardView;
-        TextView arrivalStation;
-        TextView departureStation;
+        //TextView arrivalStation;
+        //TextView departureStation;
         ImageView conImage;
 
         /**
@@ -189,8 +169,8 @@ public class RailScheduleAdapter extends RecyclerView.Adapter {
             timeText = (TextView) itemView.findViewById(R.id.arrivalTime);
             conImage = (ImageView) itemView.findViewById(R.id.arrow_connection);
 
-            arrivalStation = (TextView) itemView.findViewById(R.id.arrivalStation);
-            departureStation = (TextView) itemView.findViewById(R.id.departureStation);
+            //arrivalStation = (TextView) itemView.findViewById(R.id.arrivalStation);
+            //departureStation = (TextView) itemView.findViewById(R.id.departureStation);
         }
     }
 
