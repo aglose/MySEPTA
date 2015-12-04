@@ -254,6 +254,76 @@
     </string-array>
 
     <string-array name="NOR_static">
+        <item>216</item>
+        <item>220</item>
+        <item>222</item>
+        <item>234</item>
+        <item>238</item>
+        <item>252</item>
+        <item>264</item>
+        <item>272</item>
+        <item>274</item>
+        <item>276</item>
+        <item>3224</item>
+        <item>3226</item>
+        <item>3240</item>
+        <item>3242</item>
+        <item>3256</item>
+        <item>4222</item>
+        <item>6212</item>
+        <item>6236</item>
+        <item>6244</item>
+        <item>6246</item>
+        <item>6248</item>
+        <item>7250</item>
+        <item>8230</item>
+        <item>8266</item>
+        <item>8270</item>
+    </string-array>
+
+    <string-array name="NOR_static_sat">
+        <item>200</item>
+        <item>202</item>
+        <item>206</item>
+        <item>208</item>
+        <item>210</item>
+        <item>212</item>
+        <item>214</item>
+        <item>216</item>
+        <item>218</item>
+        <item>220</item>
+        <item>222</item>
+        <item>224</item>
+        <item>226</item>
+        <item>228</item>
+        <item>230</item>
+        <item>232</item>
+        <item>6236</item>
+        <item>6238</item>
+        <item>8234</item>
+    </string-array>
+
+    <string-array name="NOR_static_sun">
+        <item>206</item>
+        <item>208</item>
+        <item>210</item>
+        <item>212</item>
+        <item>214</item>
+        <item>216</item>
+        <item>218</item>
+        <item>220</item>
+        <item>222</item>
+        <item>224</item>
+        <item>226</item>
+        <item>228</item>
+        <item>230</item>
+        <item>232</item>
+        <item>6200</item>
+        <item>6202</item>
+        <item>8234</item>
+    </string-array>
+
+    <string-array name="NOR_static_rev">
         <item>207</item>
         <item>227</item>
         <item>231</item>
@@ -283,7 +353,7 @@
         <item>6291</item>
     </string-array>
 
-    <string-array name="NOR_static_sat">
+    <string-array name="NOR_static_sat_rev">
         <item>205</item>
         <item>207</item>
         <item>209</item>
@@ -305,7 +375,7 @@
         <item>6241</item>
     </string-array>
 
-    <string-array name="NOR_static_sun">
+    <string-array name="NOR_static_sun_rev">
         <item>205</item>
         <item>207</item>
         <item>209</item>
@@ -325,77 +395,74 @@
         <item>6237</item>
     </string-array>
 
-    <string-array name="NOR_static_rev">
-        <item>216</item>
-        <item>220</item>
-        <item>222</item>
-        <item>234</item>
-        <item>238</item>
-        <item>252</item>
-        <item>264</item>
-        <item>272</item>
-        <item>274</item>
-        <item>276</item>
-        <item>3224</item>
-        <item>3226</item>
-        <item>3240</item>
-        <item>3242</item>
-        <item>3256</item>
-        <item>4222</item>
-        <item>6212</item>
-        <item>6236</item>
-        <item>6244</item>
-        <item>6246</item>
-        <item>6248</item>
-        <item>7250</item>
-        <item>8230</item>
-        <item>8266</item>
-        <item>8270</item>
-    </string-array>
-
-    <string-array name="NOR_static_sat_rev">
-        <item>200</item>
-        <item>202</item>
-        <item>206</item>
-        <item>208</item>
-        <item>210</item>
-        <item>212</item>
-        <item>214</item>
-        <item>216</item>
-        <item>218</item>
-        <item>220</item>
-        <item>222</item>
-        <item>224</item>
-        <item>226</item>
-        <item>228</item>
-        <item>230</item>
-        <item>232</item>
-        <item>6236</item>
-        <item>6238</item>
-        <item>8234</item>
-    </string-array>
-
-    <string-array name="NOR_static_sun_rev">
-        <item>206</item>
-        <item>208</item>
-        <item>210</item>
-        <item>212</item>
-        <item>214</item>
-        <item>216</item>
-        <item>218</item>
-        <item>220</item>
-        <item>222</item>
-        <item>224</item>
-        <item>226</item>
-        <item>228</item>
-        <item>230</item>
-        <item>232</item>
-        <item>6200</item>
-        <item>6202</item>
-        <item>8234</item>
-    </string-array>
-
     <string-array name="CHE_static">
+        <item>2718</item>
+        <item>2760</item>
+        <item>4756</item>
+        <item>5712</item>
+        <item>6730</item>
+        <item>6762</item>
+        <item>726</item>
+        <item>732</item>
+        <item>734</item>
+        <item>736</item>
+        <item>738</item>
+        <item>740</item>
+        <item>746</item>
+        <item>754</item>
+        <item>758</item>
+        <item>768</item>
+        <item>772</item>
+        <item>774</item>
+        <item>776</item>
+        <item>778</item>
+        <item>780</item>
+        <item>8752</item>
+        <item>8764</item>
+    </string-array>
+
+    <string-array name="CHE_static_sat">
+        <item>3704</item>
+        <item>3706</item>
+        <item>3708</item>
+        <item>3710</item>
+        <item>3712</item>
+        <item>3714</item>
+        <item>3716</item>
+        <item>3718</item>
+        <item>3720</item>
+        <item>3722</item>
+        <item>3724</item>
+        <item>3726</item>
+        <item>3728</item>
+        <item>3730</item>
+        <item>3732</item>
+        <item>3734</item>
+        <item>3736</item>
+        <item>738</item>
+    </string-array>
+
+    <string-array name="CHE_static_sun">
+        <item>3708</item>
+        <item>3710</item>
+        <item>3712</item>
+        <item>3714</item>
+        <item>3716</item>
+        <item>3718</item>
+        <item>3720</item>
+        <item>3722</item>
+        <item>3724</item>
+        <item>3726</item>
+        <item>3728</item>
+        <item>3730</item>
+        <item>3732</item>
+        <item>3736</item>
+        <item>6706</item>
+        <item>6734</item>
+        <item>738</item>
+    </string-array>
+
+    <string-array name="CHE_static_rev">
         <item>705</item>
         <item>707</item>
         <item>725</item>
@@ -423,7 +490,7 @@
         <item>6779</item>
     </string-array>
 
-    <string-array name="CHE_static_sat">
+    <string-array name="CHE_static_sat_rev">
         <item>7303</item>
         <item>7305</item>
         <item>7307</item>
@@ -443,7 +510,7 @@
         <item>7335</item>
     </string-array>
 
-    <string-array name="CHE_static_sun">
+    <string-array name="CHE_static_sun_rev">
         <item>703</item>
         <item>705</item>
         <item>7307</item>
@@ -461,73 +528,6 @@
         <item>7331</item>
         <item>7335</item>
         <item>6733</item>
-    </string-array>
-
-    <string-array name="CHE_static_rev">
-        <item>2718</item>
-        <item>2760</item>
-        <item>4756</item>
-        <item>5712</item>
-        <item>6730</item>
-        <item>6762</item>
-        <item>726</item>
-        <item>732</item>
-        <item>734</item>
-        <item>736</item>
-        <item>738</item>
-        <item>740</item>
-        <item>746</item>
-        <item>754</item>
-        <item>758</item>
-        <item>768</item>
-        <item>772</item>
-        <item>774</item>
-        <item>776</item>
-        <item>778</item>
-        <item>780</item>
-        <item>8752</item>
-        <item>8764</item>
-    </string-array>
-
-    <string-array name="CHE_static_sat_rev">
-        <item>3704</item>
-        <item>3706</item>
-        <item>3708</item>
-        <item>3710</item>
-        <item>3712</item>
-        <item>3714</item>
-        <item>3716</item>
-        <item>3718</item>
-        <item>3720</item>
-        <item>3722</item>
-        <item>3724</item>
-        <item>3726</item>
-        <item>3728</item>
-        <item>3730</item>
-        <item>3732</item>
-        <item>3734</item>
-        <item>3736</item>
-        <item>738</item>
-    </string-array>
-
-    <string-array name="CHE_static_sun_rev">
-        <item>3708</item>
-        <item>3710</item>
-        <item>3712</item>
-        <item>3714</item>
-        <item>3716</item>
-        <item>3718</item>
-        <item>3720</item>
-        <item>3722</item>
-        <item>3724</item>
-        <item>3726</item>
-        <item>3728</item>
-        <item>3730</item>
-        <item>3732</item>
-        <item>3736</item>
-        <item>6706</item>
-        <item>6734</item>
-        <item>738</item>
     </string-array>
 
     <string-array name="CHW_static">
