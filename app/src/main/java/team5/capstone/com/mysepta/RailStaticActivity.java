@@ -157,6 +157,10 @@ public class RailStaticActivity extends AppCompatActivity {
         String [] numbers = getResources().getStringArray(id);
         String [] numbersRev = getResources().getStringArray(idRev);
 
+        if(numbers.length == 0 && numbersRev.length == 0){
+            handler.sendMessage(handler.obtainMessage());
+        }
+
         //populate schedule
         for(String number:numbers){
             getTrainData(number,false,false);
@@ -329,11 +333,6 @@ public class RailStaticActivity extends AppCompatActivity {
             endStation = "";
             railList.put(end, stationNames);
         }
-
-
-
-
-
 
         railExpandableAdapter = new RailExpandableAdapter(this,groupList,railList);
     }
