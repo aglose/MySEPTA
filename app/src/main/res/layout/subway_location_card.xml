@@ -32,6 +32,7 @@
             android:layout_height="match_parent"
             android:background="@color/broadStreetOrange"
             android:layout_alignParentTop="true"
+            android:transitionName="@string/subway_transition_color"
             android:layout_alignStart="@+id/roundedImage"
             android:layout_marginStart="24dp"
             android:id="@+id/lineConnectingRoutes2"></View>

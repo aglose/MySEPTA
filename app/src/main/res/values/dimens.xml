@@ -36,4 +36,5 @@
 
     <dimen name="scroller">5dp</dimen>
     <integer name="anim_duration_long">500</integer>
+    <integer name="anim_duration_medium">300</integer>
 </resources>

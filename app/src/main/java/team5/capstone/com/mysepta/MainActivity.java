@@ -1,12 +1,10 @@
 package team5.capstone.com.mysepta;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Environment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,28 +16,27 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.transition.Explode;
-import android.transition.Fade;
-import android.transition.Slide;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.plus.Plus;
+import com.google.android.gms.plus.model.people.Person;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,13 +49,14 @@ import team5.capstone.com.mysepta.Fragment.RecyclerViewFragment;
 import team5.capstone.com.mysepta.Helpers.SubwayScheduleCreatorDbHelper;
 import team5.capstone.com.mysepta.Fragment.FavoritesFragment;
 import team5.capstone.com.mysepta.Fragment.RailItineraryViewFragment;
-import team5.capstone.com.mysepta.Fragment.DrawerFragment;
 import team5.capstone.com.mysepta.Fragment.SubwayItineraryViewFragment;
 import team5.capstone.com.mysepta.Managers.FavoritesManager;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, DrawerAdapter.GoogleLoginInterface{
     /*When you are debugging use this TAG as the first String (i.e. Log.d(TAG, String.valueOf(position));*/
     private static final String TAG = "MainActivity";
+    private static final int RC_SIGN_IN = 9001;
+
 
     /*Tab Id's*/
     private static final int HOME_TAB = 0;
@@ -66,11 +64,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private static final int BUS_TAB = 2;
     private static final int SUBWAY_TAB = 3;
 
-    String TITLES[] = {"Alerts","Settings","Help & Feedback", "Twitter"};
-    int ICONS[] = {R.drawable.ic_alerts,R.drawable.ic_settings,R.drawable.ic_help, R.drawable.ic_twitter};
-    String NAME = "Username";
-    String EMAIL = "username@gmail.com";
-    int PROFILE = R.drawable.profile;
 
     /*Third party library for the Material looking view pager*/
     public MaterialViewPager mViewPager;
@@ -88,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private RecyclerView drawerListView;
+    private DrawerAdapter mDrawerAdapter;
+    private static ArrayList<String> navDrawerTitles = new ArrayList<>();
 
     /*This is the Adapter that controls the Fragment views in the tabs*/
     public FragmentStatePagerAdapter fragmentPagerAdapter;
@@ -98,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public static boolean PREVENT_CLOSE = false;
 
     private GoogleApiClient mGoogleApiClient;
+    private GoogleSignInOptions gso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,12 +118,22 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);       // Creating a layout Manager
         drawerListView = (RecyclerView) findViewById(R.id.left_drawer); // Assigning the RecyclerView Object to the xml View
-        drawerListView.setHasFixedSize(true);                            // Letting the system know that the list objects are of fixed size
+        drawerListView.setHasFixedSize(false);                            // Letting the system know that the list objects are of fixed size
 
-        DrawerAdapter mAdapter = new DrawerAdapter(TITLES,ICONS,NAME,EMAIL,PROFILE,this);
+        navDrawerTitles.add("Alerts");
+        navDrawerTitles.add("Settings");
+        navDrawerTitles.add("Talk to the Team!");
+        navDrawerTitles.add("Tweet Septa");
+        mDrawerAdapter = new DrawerAdapter(navDrawerTitles, this, this);
 
-        drawerListView.setAdapter(mAdapter);                              // Setting the adapter to RecyclerView
+        drawerListView.setAdapter(mDrawerAdapter);                              // Setting the adapter to RecyclerView
         drawerListView.setLayoutManager(mLayoutManager);
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        buildGoogleApiClient();
+
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -152,20 +158,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 Log.d(TAG, String.valueOf(position));
                 switch (position % 4) {
                     case HOME_TAB:
-                        return favoritesFragment = FavoritesFragment.newInstance();
+                        return FavoritesFragment.newInstance();
                     case RAIL_TAB:
-                        RailItineraryViewFragment railViewFragment = new RailItineraryViewFragment();
-                        Bundle args = new Bundle();
-                        if(lastKnownLocation != null) {
-                            args.putDouble(getResources().getString(R.string.LAST_KNOWN_LATITUDE_KEY), lastKnownLocation.getLatitude());
-                            args.putDouble(getResources().getString(R.string.LAST_KNOWN_LONGITUDE_KEY), lastKnownLocation.getLongitude());
-                        }
-                        railViewFragment.setArguments(args);
-                        return railViewFragment;
+                        return RailItineraryViewFragment.newInstance(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
                     case BUS_TAB:
                         return RecyclerViewFragment.newInstance();
                     case SUBWAY_TAB:
-                        return subwayViewFragment = SubwayItineraryViewFragment.newInstance();
+                        return SubwayItineraryViewFragment.newInstance();
                     default:
                         return RecyclerViewFragment.newInstance();
                 }
@@ -273,6 +272,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
      public void onStop(){
         super.onStop();
         favoritesManager.storeSharedPreferences();
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
         Log.d(TAG, "ON STOP CALLED");
     }
 
@@ -324,9 +326,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
+                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
+                .addApi(Plus.API)
                 .build();
+    }
+
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
     }
 
     @Override
@@ -344,6 +354,62 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     }
 
+    private void signIn() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+        }
+    }
+
+    private void handleSignInResult(GoogleSignInResult result) {
+        Log.d(TAG, "handleSignInResult:" + result.isSuccess());
+        if (result.isSuccess()) {
+            // Signed in successfully, show authenticated UI.
+            GoogleSignInAccount acct = result.getSignInAccount();
+            TextView name = (TextView) findViewById(R.id.name);
+            TextView email = (TextView) findViewById(R.id.email);
+            ImageView profileImage = (ImageView) findViewById(R.id.circleView);
+
+            name.setText(acct.getDisplayName());
+            email.setText(acct.getEmail());
+            Person currentPerson = Plus.PeopleApi
+                    .getCurrentPerson(mGoogleApiClient);
+            Log.d(TAG, String.valueOf(currentPerson.getImage().getUrl()));
+            Picasso.with(this).load(currentPerson.getImage().getUrl()).into(profileImage);
+            updateUI(true);
+        } else {
+            // Signed out, show unauthenticated UI.
+            updateUI(false);
+        }
+    }
+
+    private void updateUI(boolean signedIn) {
+        if (signedIn) {
+            findViewById(R.id.sign_in_button).setVisibility(View.GONE);
+//            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
+        } else {
+//            mStatusTextView.setText(R.string.signed_out);
+//
+//            findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
+//            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void login() {
+        signIn();
+        navDrawerTitles.add("Logout");
+        mDrawerAdapter.setList(navDrawerTitles);
+    }
 }
 
 

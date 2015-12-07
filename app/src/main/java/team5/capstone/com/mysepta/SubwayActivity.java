@@ -1,41 +1,70 @@
 package team5.capstone.com.mysepta;
 
-import android.animation.ObjectAnimator;
+import android.animation.Animator;
+import android.annotation.TargetApi;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Criteria;
+import android.location.Geocoder;
+import android.location.LocationManager;
+import android.os.Build;
+import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Scene;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
-import team5.capstone.com.mysepta.Adapters.SubwayScheduleViewAdapter;
+import team5.capstone.com.mysepta.Fragment.SubwayArrivalFragment;
 import team5.capstone.com.mysepta.Helpers.SubwayScheduleCreatorDbHelper;
 import team5.capstone.com.mysepta.Dialogs.SubwayTimePickerFragment;
 import team5.capstone.com.mysepta.Managers.FavoritesManager;
 import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
 
-public class SubwayActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener{
+public class SubwayActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, OnMapReadyCallback {
     private static final String TAG = "SubwayActivity";
 
     private static final String SQL_SELECT = "SELECT ";
@@ -48,27 +77,61 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
     private static int stopID;
     private static String line;
 
-    private TextView text;
     private Toolbar toolbar;
-    private RecyclerView recyclerScheduleView;
-    private SubwayScheduleViewAdapter subwayScheduleViewAdapter;
     private SQLiteDatabase database;
     private SubwayScheduleCreatorDbHelper dbHelper;
     private Date pickedDate;
     private boolean customTime = false;
     private Menu mOptionsMenu;
-    private TextView directionText;
+
     private boolean favorite;
+
+    private Scene sceneSchedules;
+    private Scene sceneLineMap;
+    private FrameLayout swappingFragment;
+    private List<View> viewsToAnimate = new ArrayList<>();
+
+
+    private GoogleMap googleMap; // Might be null if Google Play services APK is not available.
+    private MapFragment mapFragment;
+    private boolean mapIsOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subway);
         initSetup();
-        ArrayList arrivals = retrieveDatabaseInfo();
-        setUpRecyclerView(arrivals);
+
+        createFragmentForArrivals(true);
+
+        setUpButtons();
     }
 
+
+    private void createFragmentForArrivals(boolean transition) {
+        ArrayList<SubwayScheduleItemModel> arrivals = retrieveDatabaseInfo();
+
+        String json = new Gson().toJson(arrivals);
+
+        SubwayArrivalFragment arrivalFragment = new SubwayArrivalFragment();
+        if(transition){
+            Slide slideTransition = new Slide(Gravity.BOTTOM);
+            slideTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+            arrivalFragment.setEnterTransition(slideTransition);
+            arrivalFragment.setAllowEnterTransitionOverlap(true);
+            arrivalFragment.setAllowReturnTransitionOverlap(true);
+        }
+
+
+        Bundle args = new Bundle();
+        args.putString(getString(R.string.SUBWAY_DIRECTION_KEY), direction);
+        args.putString(getString(R.string.SUBWAY_ARRIVALS_LIST), json);
+
+        arrivalFragment.setArguments(args);
+        arrivalFragment.setArguments(args);
+
+        getFragmentManager().beginTransaction().replace(R.id.swappingFragment, arrivalFragment, getString(R.string.sub_arrival_frag_tag)).commit();
+    }
 
     private void initSetup(){
         Bundle bundle = this.getIntent().getExtras();
@@ -94,9 +157,53 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         }
 
         dbHelper = new SubwayScheduleCreatorDbHelper(this);
+
+
+    }
+
+    private void setUpButtons() {
+        swappingFragment = (FrameLayout) findViewById(R.id.swappingFragment);
+
+        View buttonLocation = findViewById(R.id.schedulesButton);
+        buttonLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mapIsOpen = false;
+                CardView card = (CardView) findViewById(R.id.subwayHeader);
+                animateRevealColorFromCoordinates(card, R.color.broadStreetOrange, card.getWidth() / 2, 0);
+                createFragmentForArrivals(true);
+            }
+        });
+
+        View buttonLine = findViewById(R.id.lineMapButton);
+        final OnMapReadyCallback callback = this;
+        buttonLine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mapIsOpen = true;
+                CardView card = (CardView) findViewById(R.id.subwayHeader);
+                animateRevealColorFromCoordinates(card, R.color.marketFrankfordBlue, card.getWidth() / 2, 0);
+                MapFragment f = (MapFragment) getFragmentManager().findFragmentByTag(getString(R.string.sub_line_map_tag));
+
+                if (f != null) {
+                    getFragmentManager().beginTransaction().replace(R.id.swappingFragment, f, getString(R.string.sub_line_map_tag)).commit();
+                } else {
+                    mapFragment = new MapFragment();
+                    Slide slideTransition = new Slide(Gravity.TOP);
+                    slideTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+                    mapFragment.setEnterTransition(slideTransition);
+                    mapFragment.setAllowEnterTransitionOverlap(true);
+                    mapFragment.setAllowReturnTransitionOverlap(true);
+                    mapFragment.getMapAsync(callback);
+                    getFragmentManager().beginTransaction().replace(R.id.swappingFragment, mapFragment, getString(R.string.sub_arrival_frag_tag)).commit();
+                }
+            }
+        });
+
     }
 
     private void setupHeaderText() {
+
         CardView cardView = (CardView) findViewById(R.id.subwayHeader);
         if(line.equalsIgnoreCase("MFL")){
             cardView.setCardBackgroundColor(ContextCompat.getColor(this, R.color.marketFrankfordBlue));
@@ -107,6 +214,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         TextView headerText = (TextView) findViewById(R.id.locationHeaderText);
         headerText.setText(location);
         headerText.setTextColor(Color.WHITE);
+
     }
 
     private ArrayList retrieveDatabaseInfo() {
@@ -211,20 +319,8 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         dbHelper.close();
     }
 
-    private void setUpRecyclerView(ArrayList<SubwayScheduleItemModel> arrivals) {
-        recyclerScheduleView = (RecyclerView) findViewById(R.id.subwayScheduleView);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerScheduleView.setLayoutManager(layoutManager);
-
-        subwayScheduleViewAdapter = new SubwayScheduleViewAdapter(arrivals, this);
-
-        recyclerScheduleView.setAdapter(subwayScheduleViewAdapter);
-
-    }
-
     private String chooseTable() {
-        directionText = (TextView) findViewById(R.id.direction);
-        directionText.setText(direction + "BOUND");
+//        ((SubwayArrivalFragment) getFragmentManager().findFragmentById(R.id.arrivalsFragment)).changeDirectionText(direction + "BOUND");
         String tableName = "";
         Calendar c = Calendar.getInstance();
         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
@@ -282,12 +378,6 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
     }
 
     private void changeDirection() {
-        ObjectAnimator animateDirection = ObjectAnimator.ofFloat(directionText, "rotationX", 0.0f, 360f);
-        animateDirection.setDuration(800);
-        animateDirection.setInterpolator(new AccelerateDecelerateInterpolator());
-        animateDirection.start();
-
-
         if(direction.equalsIgnoreCase("NORTH")){
             direction = "SOUTH";
         }else if(direction.equalsIgnoreCase("SOUTH")){
@@ -298,10 +388,10 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
             direction = "EAST";
         }
 
-        subwayScheduleViewAdapter.clearData();
+        ((SubwayArrivalFragment) getFragmentManager().findFragmentById(R.id.swappingFragment)).changeDirectionText(direction);
 
         ArrayList arrivals = retrieveDatabaseInfo();
-        subwayScheduleViewAdapter.setList(arrivals);
+        ((SubwayArrivalFragment) getFragmentManager().findFragmentById(R.id.swappingFragment)).switchArrivalsList(arrivals);
     }
 
     private void launchTimePicker() {
@@ -331,10 +421,14 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
                 onBackPressed();
                 return true;
             case R.id.change_direction:
-                changeDirection();
+                if(!mapIsOpen){
+                    changeDirection();
+                }
                 return true;
             case R.id.timePicker:
-                launchTimePicker();
+                if(!mapIsOpen){
+                    launchTimePicker();
+                }
                 return true;
             case R.id.favoriteIcon:
                 if(favorite){
@@ -347,6 +441,17 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    private Animator animateRevealColorFromCoordinates(View viewRoot, @ColorRes int color, int x, int y) {
+        float finalRadius = (float) Math.hypot(viewRoot.getWidth(), viewRoot.getHeight());
+
+        Animator anim = ViewAnimationUtils.createCircularReveal(viewRoot, x, y, 0, finalRadius);
+        viewRoot.setBackgroundColor(ContextCompat.getColor(this, color));
+        anim.setDuration(getResources().getInteger(R.integer.anim_duration_long));
+        anim.setInterpolator(new AccelerateDecelerateInterpolator());
+        anim.start();
+        return anim;
     }
 
     private void removeLineFromFavorites() {
@@ -387,7 +492,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        Log.d(TAG, "Time : "+hourOfDay+" "+minute);
+        Log.d(TAG, "Time : " + hourOfDay + " " + minute);
         customTime = true;
         int hour = hourOfDay;
         String zero = "";
@@ -401,7 +506,8 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         }
 
         StringBuilder time = new StringBuilder();
-        time.append(zero+String.valueOf(hour));
+        time.append(zero);
+        time.append(String.valueOf(hour));
         time.append(":");
         time.append(String.valueOf(minute));
         time.append(a);
@@ -413,8 +519,49 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        ArrayList arrivals = retrieveDatabaseInfo();
-        subwayScheduleViewAdapter = new SubwayScheduleViewAdapter(arrivals, this);
-        recyclerScheduleView.swapAdapter(subwayScheduleViewAdapter, true);
+        ArrayList<SubwayScheduleItemModel> arrivals = retrieveDatabaseInfo();
+        ((SubwayArrivalFragment) getFragmentManager().findFragmentById(R.id.swappingFragment)).switchArrivalsList(arrivals);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
+
+        setZoomAndGPSLocation();
+    }
+
+    private void setZoomAndGPSLocation() {
+        //Currently this if statement is causing issues
+        // will address at a later time
+//        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            Toast.makeText(MapsActivity.this, "GPS Permission Needed", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+        Geocoder coder = new Geocoder(this);
+        List<Address> addresses;
+        Address address;
+        try {
+            addresses = coder.getFromLocationName(location + " Station, Philadelphia PA", 2);
+            address = addresses.get(0);
+            address.getLatitude();
+            address.getLongitude();
+
+            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(latLng)
+                    .zoom(16)
+                    .bearing(0)
+                    .tilt(0)
+                    .build();
+            googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            googleMap.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title(location));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        googleMap.setMyLocationEnabled(true);
     }
 }

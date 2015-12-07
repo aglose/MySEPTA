@@ -100,6 +100,7 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
      */
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+        boolean imageItem = false;
         if(getItemViewType(position) == TYPE_HEADER){
             ((SubwayLocationHeaderHolder)holder).header.setCardBackgroundColor(ContextCompat.getColor(context, R.color.headerBlue));
             ((SubwayLocationHeaderHolder)holder).headerText.setGravity(Gravity.CENTER);
@@ -118,6 +119,7 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
             if(locationName.equalsIgnoreCase("Fern Rock Transportation Center") || locationName.equalsIgnoreCase("AT&T") ||
                     locationName.equalsIgnoreCase("City Hall") || locationName.equalsIgnoreCase("69th Street Transportation Center") ||
                     locationName.equalsIgnoreCase("15th St") || locationName.equalsIgnoreCase("Frankford Transportation Center")){
+                imageItem = true;
                 if(locationName.equalsIgnoreCase("Fern Rock Transportation Center") || locationName.equalsIgnoreCase("69th Street Transportation Center")){
                     RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)((SubwayLocationItemHolder)holder).lineConnectingRoutes.getLayoutParams();
                     params.setMargins(params.leftMargin, 8, 0, 0); //substitute parameters for left, top, right, bottom
@@ -219,6 +221,7 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
 
             Log.d(TAG, String.valueOf(position)+" "+locationName);
             ((SubwayLocationItemHolder)holder).locationText.setText(locationName);
+            final boolean finalImageItem = imageItem;
             ((SubwayLocationItemHolder) holder).cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -232,7 +235,7 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
                         direction = "EAST";
                     }
                     Intent startSubwayActivity = new Intent(context, SubwayActivity.class);
-                    ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(context, Pair.create((View) ((SubwayLocationItemHolder) holder).cardView, context.getString(R.string.cardTransitionName)));
+
 
                     Bundle bundle = new Bundle();
                     bundle.putInt(context.getString(R.string.STOP_ID_KEY), stopID);
@@ -240,7 +243,7 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
                     bundle.putString(context.getString(R.string.LINE_KEY), line);
                     bundle.putString(context.getString(R.string.LOCATION_KEY), locationName);
                     startSubwayActivity.putExtras(bundle);
-                    context.startActivity(startSubwayActivity, transitionActivityOptions.toBundle());
+                    context.startActivity(startSubwayActivity);
 
                 }
             });

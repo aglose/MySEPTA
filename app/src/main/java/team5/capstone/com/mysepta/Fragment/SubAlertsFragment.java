@@ -27,7 +27,7 @@ public class SubAlertsFragment extends Fragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_alerts, container, false);
+        view = inflater.inflate(R.layout.fragment_subway_arrivals, container, false);
 
         alertsRecyclerView = (RecyclerView) view.findViewById(R.id.alertsRecyclerView);
         alertsRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));

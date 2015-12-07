@@ -546,6 +546,12 @@
     <string name ="regionalrail">Rail</string>
     <string name ="subway">Subway</string>
     <string name="bus">Bus</string>
+    <string name="SUBWAY_DIRECTION_KEY">subwaydirection</string>
+    <string name="SUBWAY_ARRIVALS_LIST">subway_arrivals_list</string>
+    <string name="sub_arrival_frag_tag">subfrag</string>
+    <string name="sub_line_map_tag">submaptag</string>
+    <string name="subway_transition_title">subtitletransition</string>
+    <string name="subway_transition_color">subtransitioncolor</string>
 
 
 </resources>
