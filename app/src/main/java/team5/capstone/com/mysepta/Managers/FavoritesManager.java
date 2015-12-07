@@ -168,7 +168,8 @@ public class FavoritesManager{
 
         if(checkForFavoriteRailModel(favoriteRailModel) == -1){
             railFavoriteList.add(favoriteRailModel);
-            recyclerView.getAdapter().notifyItemInserted(railFavoriteList.size() + HomeViewAdapter.HEADER_AMOUNT);
+            recyclerView.getAdapter().notifyItemInserted(railFavoriteList.size()
+                    + HomeViewAdapter.HEADER_AMOUNT + subwayFavoriteList.size());
             return true;
         }
 

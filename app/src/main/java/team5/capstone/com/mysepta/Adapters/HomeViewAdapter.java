@@ -123,7 +123,7 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
                 }
             });
         }else if(getItemViewType(position) == TYPE_RAIL){
-            int listPosition = position - 2 - favoritesManager.getSubwayList().size();
+            int listPosition = position - HEADER_AMOUNT - favoritesManager.getSubwayList().size();
             Log.d(TAG, "List position: "+listPosition);
             final FavoriteRailModel schedule = (FavoriteRailModel) favoritesManager.getRailList().get(listPosition);
             ((HomeViewRailItemHolder)holder).startingStation.setText(schedule.getStartingStation());
