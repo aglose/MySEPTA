@@ -82,6 +82,11 @@ dependencies {
         transitive = true;
     }
 
+    //Twitter
+    compile('com.twitter.sdk.android:tweet-composer:1.0.2@aar') {
+        transitive = true;
+    }
+
     //Smooch integration
     compile 'io.smooch:core:latest.release'
     compile 'io.smooch:ui:latest.release'

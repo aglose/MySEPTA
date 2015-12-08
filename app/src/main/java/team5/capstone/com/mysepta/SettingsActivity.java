@@ -7,16 +7,16 @@ import android.preference.PreferenceManager;
 import android.widget.TextView;
 
 public class SettingsActivity extends PreferenceActivity {
-/*
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.layout.settings);
-        showUserSettings();
+//        addPreferencesFromResource(R.layout.settings);
+//        showUserSettings();
 
     }
-
+/*
     private void showUserSettings() {
         SharedPreferences sharedPrefs = PreferenceManager
                 .getDefaultSharedPreferences(this);

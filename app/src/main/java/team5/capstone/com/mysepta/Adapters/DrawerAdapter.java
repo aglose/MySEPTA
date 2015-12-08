@@ -9,10 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.common.SignInButton;
+import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import java.util.ArrayList;
 
@@ -26,8 +28,8 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
     static final int TYPE_HEADER = 0;
     static final int TYPE_CELL = 1;
 
-    private static ArrayList<String> navIcons;
-    private static final int ICONS[] = {R.drawable.ic_alerts,R.drawable.ic_settings,R.drawable.ic_help, R.drawable.ic_twitter};
+    private static ArrayList<String> navTextList;
+    private static final int ICONS[] = {R.drawable.ic_alerts, R.drawable.ic_help, R.drawable.ic_twitter, R.drawable.ic_settings};
     private static String NAME = "Username";
     private static String EMAIL = "username@gmail.com";
     private static int PROFILE = R.drawable.profile;
@@ -37,9 +39,11 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
     private String email;
     private Context context;
     private GoogleLoginInterface loginInterface;
+    private Button tweetButton;
 
     public interface GoogleLoginInterface{
         void login();
+        void logout();
     }
 
     /**
@@ -47,8 +51,8 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
      * @param passedContext
      * @param loginInterface
      */
-    public DrawerAdapter(ArrayList<String> navIcons, Context passedContext, GoogleLoginInterface loginInterface){
-        this.navIcons = navIcons;
+    public DrawerAdapter(ArrayList<String> navTextList, Context passedContext, GoogleLoginInterface loginInterface){
+        this.navTextList = navTextList;
         this.context = passedContext;
         this.loginInterface = loginInterface;
     }
@@ -70,6 +74,8 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
         } else if (viewType == TYPE_HEADER) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.header,parent,false);
             SignInButton signInButton = (SignInButton)  v.findViewById(R.id.sign_in_button);
+            tweetButton = (Button)  v.findViewById(R.id.tweet_button);
+
             signInButton.setSize(SignInButton.SIZE_WIDE);
             signInButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -77,6 +83,8 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
                     loginInterface.login();
                 }
             });
+
+
             ViewHolder vhHeader = new ViewHolder(v,viewType, context);
             return vhHeader;
         }
@@ -91,9 +99,12 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
     @Override
     public void onBindViewHolder(DrawerAdapter.ViewHolder holder, int position) {
         if(holder.holderID == 1) {
-            holder.textView.setText(navIcons.get(position - 1));
+            holder.textView.setText(navTextList.get(position - 1));
             if(position <= 4){
                 holder.imageView.setImageResource(ICONS[position - 1]);
+                if(position == 3){
+                    holder.tweetButton.setVisibility(View.VISIBLE);
+                }
             }
 
         }else{
@@ -103,15 +114,17 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
         }
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         int holderID;
 
+        View rowBackground;
         TextView textView;
         ImageView imageView;
         ImageView profile;
         TextView name;
         TextView email;
         Context context;
+        Button tweetButton;
 
         public ViewHolder(View itemView, int ViewType, Context c) {                 // Creating ViewHolder Constructor with View and viewType As a parameter
             super(itemView);
@@ -121,6 +134,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
             if(ViewType == TYPE_CELL) {
                 textView = (TextView) itemView.findViewById(R.id.rowText);
+                rowBackground = itemView.findViewById(R.id.row_background);
 
                 RippleDrawable newImage = new RippleDrawable(
                         new ColorStateList(
@@ -134,8 +148,18 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
                                 }),
                         null,
                         null);
-                textView.setBackground(newImage);
+
+                rowBackground.setBackground(newImage);
                 imageView = (ImageView) itemView.findViewById(R.id.rowIcon);
+                tweetButton = (Button)  itemView.findViewById(R.id.tweet_button);
+                tweetButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TweetComposer.Builder builder = new TweetComposer.Builder(context)
+                                .text("Hey @SEPTA I noticed....");
+                        builder.show();
+                    }
+                });
                 holderID = 1;
             }else{
                 name = (TextView) itemView.findViewById(R.id.name);
@@ -152,19 +176,20 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
                 Intent a = new Intent(context, AlertsActivity.class);
                 context.startActivity(a);
             }else if (getPosition()==2){
-
-                Intent s = new Intent(context, SettingsActivity.class);
-                context.startActivity(s);
-            }else if (getPosition()==3) {
                 ConversationActivity.show(context);
-            }else if (getPosition()==4) {
-
+            }else if (getPosition()==3) {
                 Intent t = new Intent(context, TwitterActivity.class);
                 context.startActivity(t);
+            }else if (getPosition()==4) {
+                Intent s = new Intent(context, SettingsActivity.class);
+                context.startActivity(s);
             }else if(getPosition()==5){
                 //logout
+                loginInterface.logout();
+
             }
         }
+
     }
 
     /**
@@ -173,12 +198,17 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
      */
     @Override
     public int getItemCount() {
-        return navIcons.size()+1;
+        return navTextList.size()+1;
     }
 
-    public void setList(ArrayList navIcons){
-        this.navIcons = navIcons;
-        this.notifyItemInserted(navIcons.size()+1);
+    public void setList(ArrayList navIcons, boolean remove){
+        this.navTextList = navIcons;
+        if(remove){
+            this.notifyItemRemoved(5);
+        }else{
+            this.notifyItemInserted(navIcons.size()+1);
+        }
+
     }
     /**
      *

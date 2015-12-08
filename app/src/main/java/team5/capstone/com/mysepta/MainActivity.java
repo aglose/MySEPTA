@@ -30,7 +30,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
@@ -104,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         final Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-        Fabric.with(this, new Crashlytics());
+
 
         copyDatabase();
 
@@ -121,9 +124,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         drawerListView.setHasFixedSize(false);                            // Letting the system know that the list objects are of fixed size
 
         navDrawerTitles.add("Alerts");
-        navDrawerTitles.add("Settings");
         navDrawerTitles.add("Talk to the Team!");
-        navDrawerTitles.add("Tweet Septa");
+        navDrawerTitles.add("Septa's Twitter");
+        navDrawerTitles.add("Settings");
         mDrawerAdapter = new DrawerAdapter(navDrawerTitles, this, this);
 
         drawerListView.setAdapter(mDrawerAdapter);                              // Setting the adapter to RecyclerView
@@ -132,8 +135,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
-        buildGoogleApiClient();
 
+        buildGoogleApiClient();
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -385,6 +388,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     .getCurrentPerson(mGoogleApiClient);
             Log.d(TAG, String.valueOf(currentPerson.getImage().getUrl()));
             Picasso.with(this).load(currentPerson.getImage().getUrl()).into(profileImage);
+            navDrawerTitles.add("Logout");
+            mDrawerAdapter.setList(navDrawerTitles, false);
             updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
@@ -407,8 +412,31 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     public void login() {
         signIn();
-        navDrawerTitles.add("Logout");
-        mDrawerAdapter.setList(navDrawerTitles);
+    }
+
+    @Override
+    public void logout() {
+        Log.d(TAG, "called");
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        navDrawerTitles.remove(4);
+                        mDrawerAdapter.setList(navDrawerTitles, true);
+                    }
+                });
+
+        TextView name = (TextView) findViewById(R.id.name);
+        TextView email = (TextView) findViewById(R.id.email);
+        ImageView profileImage = (ImageView) findViewById(R.id.circleView);
+        SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
+
+        signInButton.setVisibility(View.VISIBLE);
+        name.setVisibility(View.INVISIBLE);
+        email.setVisibility(View.INVISIBLE);
+        Picasso.with(this).load(R.drawable.empty_header).into(profileImage);
+
+
     }
 }
 
