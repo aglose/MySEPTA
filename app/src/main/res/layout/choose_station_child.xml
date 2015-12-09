@@ -9,7 +9,7 @@
         android:text="Child"
         android:textSize="18sp"
         android:id="@+id/childTextView"
-        android:layout_gravity="center_vertical"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp" />
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"/>
 </RelativeLayout>

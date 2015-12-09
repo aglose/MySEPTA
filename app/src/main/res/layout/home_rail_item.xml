@@ -30,13 +30,13 @@
             android:padding="5dp"
             android:layout_toStartOf="@+id/connectionImage"
             android:layout_centerInParent="true"
-            android:layout_alignParentStart="true"/>
+            android:gravity="end" />
 
         <ImageView
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/start_end"
+            android:src="@drawable/ic_arrow_stop_go"
             android:id="@+id/connectionImage"/>
 
         <TextView
