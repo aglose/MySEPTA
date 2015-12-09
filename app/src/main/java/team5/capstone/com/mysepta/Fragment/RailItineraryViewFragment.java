@@ -45,6 +45,16 @@ public class RailItineraryViewFragment extends Fragment {
         return f;
     }
 
+    public static RailItineraryViewFragment newInstance(){
+        RailItineraryViewFragment f = new RailItineraryViewFragment();
+
+        // Supply num input as an argument.
+        Bundle args = new Bundle();
+        f.setArguments(args);
+
+        return f;
+    }
+
     /**
      * When creating, retrieve this instance's number from its arguments.
      */

@@ -107,8 +107,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         final Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-
-
         copyDatabase();
 
         /*Set to no title*/
@@ -163,7 +161,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     case HOME_TAB:
                         return FavoritesFragment.newInstance();
                     case RAIL_TAB:
-                        return RailItineraryViewFragment.newInstance(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+                        if(lastKnownLocation != null)
+                            return RailItineraryViewFragment.newInstance(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+                        else
+                            return RailItineraryViewFragment.newInstance();
                     case BUS_TAB:
                         return RecyclerViewFragment.newInstance();
                     case SUBWAY_TAB:
