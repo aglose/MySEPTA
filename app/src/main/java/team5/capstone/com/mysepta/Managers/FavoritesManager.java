@@ -4,23 +4,18 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.ArraySet;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import team5.capstone.com.mysepta.Adapters.HomeViewAdapter;
-import team5.capstone.com.mysepta.Fragment.FavoritesFragment;
+import team5.capstone.com.mysepta.Adapters.FavoritesViewAdapter;
 import team5.capstone.com.mysepta.MainActivity;
 import team5.capstone.com.mysepta.Models.FavoriteRailModel;
-import team5.capstone.com.mysepta.Models.RailLocationData;
 import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
 import team5.capstone.com.mysepta.R;
 
@@ -125,7 +120,7 @@ public class FavoritesManager{
             newSubway.setStopID(item.getStopID());
 
             subwayFavoriteList.add(newSubway);
-            recyclerView.getAdapter().notifyItemInserted(subwayFavoriteList.size() + (HomeViewAdapter.HEADER_AMOUNT - 1));
+            recyclerView.getAdapter().notifyItemInserted(subwayFavoriteList.size() + (FavoritesViewAdapter.HEADER_AMOUNT - 1));
             context.fragmentPagerAdapter.notifyDataSetChanged();
             return true;
         }
@@ -169,7 +164,7 @@ public class FavoritesManager{
         if(checkForFavoriteRailModel(favoriteRailModel) == -1){
             railFavoriteList.add(favoriteRailModel);
             recyclerView.getAdapter().notifyItemInserted(railFavoriteList.size()
-                    + HomeViewAdapter.HEADER_AMOUNT + subwayFavoriteList.size());
+                    + FavoritesViewAdapter.HEADER_AMOUNT + subwayFavoriteList.size());
             return true;
         }
 
@@ -183,7 +178,7 @@ public class FavoritesManager{
 
         if(loc != -1){
             railFavoriteList.remove(loc);
-            recyclerView.getAdapter().notifyItemRemoved(loc + subwayFavoriteList.size() + HomeViewAdapter.HEADER_AMOUNT);
+            recyclerView.getAdapter().notifyItemRemoved(loc + subwayFavoriteList.size() + FavoritesViewAdapter.HEADER_AMOUNT);
             recyclerView.getAdapter().notifyItemRangeChanged(loc, subwayFavoriteList.size());
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.refreshDrawableState();

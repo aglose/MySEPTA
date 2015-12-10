@@ -1,27 +1,19 @@
 package team5.capstone.com.mysepta.Fragment;
 
-import android.content.Context;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 
-import java.util.ArrayList;
-
-import team5.capstone.com.mysepta.Adapters.HomeViewAdapter;
+import team5.capstone.com.mysepta.Adapters.FavoritesViewAdapter;
 import team5.capstone.com.mysepta.Managers.FavoritesManager;
-import team5.capstone.com.mysepta.Models.RailLocationData;
-import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
 import team5.capstone.com.mysepta.R;
 
 /**
@@ -37,7 +29,7 @@ public class FavoritesFragment extends Fragment{
     private static final int ITEM_COUNT = 5;
 
     private FavoritesManager favoritesManager;
-    private HomeViewAdapter homeViewAdapter;
+    private FavoritesViewAdapter favoritesViewAdapter;
 
 
     /*Keep track of the rootView to pass to the adapters*/
@@ -68,9 +60,9 @@ public class FavoritesFragment extends Fragment{
 
         favoritesManager = FavoritesManager.getInstance();
 
-        homeViewAdapter = new HomeViewAdapter();
+        favoritesViewAdapter = new FavoritesViewAdapter();
 
-        mAdapter = new RecyclerViewMaterialAdapter(homeViewAdapter);
+        mAdapter = new RecyclerViewMaterialAdapter(favoritesViewAdapter);
 
 
         recyclerHomeView.setAdapter(mAdapter);

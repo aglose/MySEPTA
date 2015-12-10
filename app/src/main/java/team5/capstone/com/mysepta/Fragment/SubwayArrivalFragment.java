@@ -39,6 +39,10 @@ public class SubwayArrivalFragment extends Fragment{
     private ArrayList arrivalsList;
     private TextView directionPreText;
 
+    /**
+     * onCreate
+     * @param savedInstanceState saved state on close
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,11 +84,13 @@ public class SubwayArrivalFragment extends Fragment{
         subwayArrivalRecyclerView.setAdapter(subwayScheduleViewAdapter);
     }
 
+    /*Switch the list by its direction*/
     public void switchArrivalsList(ArrayList<SubwayScheduleItemModel> arrivalsList){
         subwayScheduleViewAdapter.clearData();
         subwayScheduleViewAdapter.setList(arrivalsList);
     }
 
+    /*Animate flipping direciton for subway schedules*/
     public void changeDirectionText(final String text){
         ObjectAnimator animateDirection = ObjectAnimator.ofFloat(directionText, "rotationX", 0.0f, 360f);
         animateDirection.addListener(new Animator.AnimatorListener() {

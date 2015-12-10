@@ -134,6 +134,8 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
 
     }
 
+    /**
+     * Clear the adapter list*/
     public void clearData() {
         int size = this.arrivals.size();
         if (size > 0) {
@@ -145,6 +147,10 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
         }
     }
 
+    /**
+     * Change the list for the adapter
+     * @param arrivals ArrayList
+     */
     public void setList(ArrayList arrivals){
         this.arrivals = arrivals;
         this.notifyItemRangeInserted(0, arrivals.size()-1);

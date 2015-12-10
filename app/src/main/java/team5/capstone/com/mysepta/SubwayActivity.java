@@ -110,6 +110,10 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
     }
 
 
+    /**
+     * createFragmentForArrivals
+     * @param transition parent container
+     */
     private void createFragmentForArrivals(boolean transition) {
         ArrayList<SubwayScheduleItemModel> arrivals = retrieveDatabaseInfo();
 
@@ -134,6 +138,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
 
         getFragmentManager().beginTransaction().replace(R.id.swappingFragment, arrivalFragment, getString(R.string.sub_arrival_frag_tag)).commit();
     }
+
 
     private void initSetup(){
         Bundle bundle = this.getIntent().getExtras();
@@ -229,6 +234,10 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
 
     }
 
+    /**
+     * retrieveDatabaseInfo
+     * @return ArrayList
+     */
     private ArrayList retrieveDatabaseInfo() {
         StringBuilder completeSQL = new StringBuilder();
         completeSQL.append(SQL_SELECT);
@@ -330,6 +339,11 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
     public void close() {
         dbHelper.close();
     }
+
+    /**
+     * chooseTable for database
+     * @return String
+     */
 
     private String chooseTable() {
 //        ((SubwayArrivalFragment) getFragmentManager().findFragmentById(R.id.arrivalsFragment)).changeDirectionText(direction + "BOUND");
@@ -454,6 +468,15 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         }
 
     }
+
+    /**
+     * Create fragment view
+     * @param viewRoot View
+     * @param color int
+     * @param x int
+     * @param y int
+     * @return Animator
+     */
 
     private Animator animateRevealColorFromCoordinates(View viewRoot, @ColorRes int color, int x, int y) {
         float finalRadius = (float) Math.hypot(viewRoot.getWidth(), viewRoot.getHeight());
@@ -585,7 +608,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         } catch (IOException e) {
             e.printStackTrace();
         } catch (IndexOutOfBoundsException e){
-            Toast.makeText(SubwayActivity.this, "Issue loading subway station location. Try pressing Location Map again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SubwayActivity.this, "Issue loading subway station location. Try pressing Location Map again", Toast.LENGTH_LONG).show();
             LatLng latLng = new LatLng(gpsLocation.getLatitude(), gpsLocation.getLongitude());
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(latLng)
