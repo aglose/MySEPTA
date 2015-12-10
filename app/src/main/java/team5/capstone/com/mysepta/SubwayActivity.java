@@ -3,6 +3,7 @@ package team5.capstone.com.mysepta;
 import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,6 +13,7 @@ import android.graphics.Color;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.support.annotation.ColorRes;
@@ -115,7 +117,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
 
         SubwayArrivalFragment arrivalFragment = new SubwayArrivalFragment();
         if(transition){
-            Slide slideTransition = new Slide(Gravity.BOTTOM);
+            Slide slideTransition = new Slide(Gravity.TOP);
             slideTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
             arrivalFragment.setEnterTransition(slideTransition);
             arrivalFragment.setAllowEnterTransitionOverlap(true);
@@ -168,10 +170,13 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         buttonLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                swappingFragment.setVisibility(View.INVISIBLE);
                 mapIsOpen = false;
                 CardView card = (CardView) findViewById(R.id.subwayHeader);
                 animateRevealColorFromCoordinates(card, R.color.broadStreetOrange, card.getWidth() / 2, 0);
                 createFragmentForArrivals(true);
+                getFragmentManager().executePendingTransactions();
+                swappingFragment.setVisibility(View.VISIBLE);
             }
         });
 
@@ -180,13 +185,17 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         buttonLine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                swappingFragment.setVisibility(View.INVISIBLE);
                 mapIsOpen = true;
                 CardView card = (CardView) findViewById(R.id.subwayHeader);
-                animateRevealColorFromCoordinates(card, R.color.marketFrankfordBlue, card.getWidth() / 2, 0);
+
                 MapFragment f = (MapFragment) getFragmentManager().findFragmentByTag(getString(R.string.sub_line_map_tag));
 
                 if (f != null) {
                     getFragmentManager().beginTransaction().replace(R.id.swappingFragment, f, getString(R.string.sub_line_map_tag)).commit();
+                    getFragmentManager().executePendingTransactions();
+                    animateRevealColorFromCoordinates(card, R.color.marketFrankfordBlue, card.getWidth() / 2, 0);
+                    swappingFragment.setVisibility(View.VISIBLE);
                 } else {
                     mapFragment = new MapFragment();
                     Slide slideTransition = new Slide(Gravity.TOP);
@@ -196,6 +205,9 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
                     mapFragment.setAllowReturnTransitionOverlap(true);
                     mapFragment.getMapAsync(callback);
                     getFragmentManager().beginTransaction().replace(R.id.swappingFragment, mapFragment, getString(R.string.sub_arrival_frag_tag)).commit();
+                    getFragmentManager().executePendingTransactions();
+                    animateRevealColorFromCoordinates(card, R.color.marketFrankfordBlue, card.getWidth() / 2, 0);
+                    swappingFragment.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -456,7 +468,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
 
     private void removeLineFromFavorites() {
         FavoritesManager.removeSubwayLineFromFavorites(line, location);
-        mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(android.R.drawable.star_big_off);
+        mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(R.drawable.star_outline);
         favorite = false;
         Toast.makeText(SubwayActivity.this, "Removed from Favorites", Toast.LENGTH_SHORT).show();
     }
@@ -478,7 +490,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
             mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(R.drawable.star_icon);
             favorite=true;
         }else{
-            mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(android.R.drawable.star_big_off);
+            mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(R.drawable.star_outline);
             favorite=false;
         }
     }
@@ -531,6 +543,9 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
     }
 
     private void setZoomAndGPSLocation() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Location gpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
         //Currently this if statement is causing issues
         // will address at a later time
 //        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -541,7 +556,16 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
         List<Address> addresses;
         Address address;
         try {
-            addresses = coder.getFromLocationName(location + " Station, Philadelphia PA", 2);
+            String googleString;
+            if(line.equalsIgnoreCase("MFL") && !location.contains("Center")){
+                googleString = location + " Station - MFL, Philadelphia, PA";
+            }else if(line.equalsIgnoreCase("BSL") && !location.contains("Center")){
+                googleString = location + " Station - BSL, Philadelphia, PA";
+            }else{
+                googleString = location + ", Philadelphia, PA";
+            }
+            Log.d(TAG, googleString);
+            addresses = coder.getFromLocationName(googleString, 2);
             address = addresses.get(0);
             address.getLatitude();
             address.getLongitude();
@@ -560,6 +584,16 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (IndexOutOfBoundsException e){
+            Toast.makeText(SubwayActivity.this, "Issue loading subway station location. Try pressing Location Map again", Toast.LENGTH_SHORT).show();
+            LatLng latLng = new LatLng(gpsLocation.getLatitude(), gpsLocation.getLongitude());
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(latLng)
+                    .zoom(16)
+                    .bearing(0)
+                    .tilt(0)
+                    .build();
+            googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
 
         googleMap.setMyLocationEnabled(true);

@@ -1,20 +1,19 @@
 package team5.capstone.com.mysepta;
 
-import android.app.Activity;
 import android.app.Application;
 import android.test.ApplicationTestCase;
-import android.test.suitebuilder.annotation.LargeTest;
 import android.test.suitebuilder.annotation.SmallTest;
 
-import java.lang.reflect.Array;
+import org.junit.Test;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import team5.capstone.com.mysepta.Adapters.RailExpandableAdapter;
 import team5.capstone.com.mysepta.Adapters.RailItineraryViewAdapter;
 import team5.capstone.com.mysepta.Adapters.RailScheduleAdapter;
 import team5.capstone.com.mysepta.Adapters.RailStaticAdapter;
+import team5.capstone.com.mysepta.Adapters.SubwayItineraryViewAdapter;
 import team5.capstone.com.mysepta.Managers.FavoritesManager;
 import team5.capstone.com.mysepta.Models.RailLocationData;
 import team5.capstone.com.mysepta.Models.StaticRailModel;
@@ -121,5 +120,24 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
 
         assertNotNull(favorites);
     }
+
+    @SmallTest
+    public void testSubwayItineraryAdapter(){
+
+        SubwayItineraryViewAdapter adapter = new SubwayItineraryViewAdapter(getContext(),null);
+
+
+        assertEquals(adapter.getItemCount(), 0);
+    }
+
+    @SmallTest
+    public void testSubwayLocationAdapter(){
+    }
+
+    @SmallTest
+    public void testSubwayScheduleAdapter(){
+
+    }
+
 
 }

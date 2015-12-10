@@ -17,9 +17,15 @@
         android:layout_height="match_parent">
         <ImageView
             android:id="@+id/backButton"
-            android:src="@drawable/up_left_arrow"
-            android:layout_width="50dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/arrow_left"
+            android:layout_width="35dp"
             android:layout_height="match_parent"></ImageView>
+        <View
+            android:id="@+id/backButtonBackground"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:foreground="?android:attr/selectableItemBackground"></View>
         <TextView
             android:id="@+id/header_title"
             android:textColor="@android:color/white"
@@ -29,7 +35,7 @@
             android:padding="8dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/backButton" />
+            android:layout_toEndOf="@+id/backButtonBackground" />
 
     </RelativeLayout>
 

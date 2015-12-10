@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">"MySEPTA "</string>
+    <string name="app_name">"MySEPTA"</string>
 
-    <string name="title_section1">Home</string>
+    <string name="title_section1">Favorites</string>
     <string name="title_section2">Rail</string>
     <string name="title_section3">Bus</string>
     <string name="title_section4">Subway</string>
 
 
-    <string name="tab_home_title">Home</string>
+    <string name="tab_home_title">Favorites</string>
     <string name="tab_rail_title">Rail</string>
     <string name="tab_bus_title">Bus</string>
     <string name="tab_subway_title">Subway</string>
@@ -17,8 +17,9 @@
 
     <string-array name="drawer_items">
         <item>Alerts</item>
+        <item>Talk to the Team</item>
+        <item>Septa\'s Twitter</item>
         <item>Settings</item>
-        <item>Help and Feedback</item>
     </string-array>
 
     <string name="openDrawer"> Open navigation drawer</string>

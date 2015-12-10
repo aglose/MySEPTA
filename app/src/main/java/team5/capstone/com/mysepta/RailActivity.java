@@ -271,7 +271,7 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
 
     private void removeLineFromFavorites() {
         FavoritesManager.removeRailLineFromFavorites(start, end);
-        mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(android.R.drawable.star_big_off);
+        mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(R.drawable.star_outline);
         favorite = false;
         //Toast.makeText(RailActivity.this, "Removed from Favorites", Toast.LENGTH_SHORT).show();
     }
@@ -283,7 +283,7 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
             return true;
         }
         else{
-            mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(android.R.drawable.star_big_off);
+            mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(R.drawable.star_outline);
             favorite=false;
             return false;
         }

@@ -73,14 +73,6 @@ public class TestRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             case TYPE_HEADER: {
                 view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.list_item_card_big, parent, false);
-                Button button = (Button) view.findViewById(R.id.button);
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent startMap = new Intent(context, MapsActivity.class);
-                        context.startActivity(startMap);
-                    }
-                });
                 return new RecyclerView.ViewHolder(view) {
                 };
             }

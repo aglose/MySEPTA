@@ -8,14 +8,14 @@
     <item
         android:id="@+id/favoriteIcon"
         android:orderInCategory="200"
-        android:icon="@drawable/star_icon"
+        android:icon="@drawable/star_outline"
         android:title="FAVORITE"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/change_direction"
         android:orderInCategory="300"
         android:title="Reverse"
-        android:icon="@drawable/change_direction"
+        android:icon="@drawable/swap_vertical"
         app:showAsAction="ifRoom"
         ></item>
 </menu>

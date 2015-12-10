@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private static final String TAG = "MainActivity";
     private static final int RC_SIGN_IN = 9001;
 
-
     /*Tab Id's*/
     private static final int HOME_TAB = 0;
     private static final int RAIL_TAB = 1;
@@ -121,10 +120,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         drawerListView = (RecyclerView) findViewById(R.id.left_drawer); // Assigning the RecyclerView Object to the xml View
         drawerListView.setHasFixedSize(false);                            // Letting the system know that the list objects are of fixed size
 
-        navDrawerTitles.add("Alerts");
-        navDrawerTitles.add("Talk to the Team!");
-        navDrawerTitles.add("Septa's Twitter");
-        navDrawerTitles.add("Settings");
+        String title[] = getResources().getStringArray(R.array.drawer_items);
+        navDrawerTitles.add(title[0]);
+        navDrawerTitles.add(title[1]);
+        navDrawerTitles.add(title[2]);
+        navDrawerTitles.add(title[3]);
         mDrawerAdapter = new DrawerAdapter(navDrawerTitles, this, this);
 
         drawerListView.setAdapter(mDrawerAdapter);                              // Setting the adapter to RecyclerView
@@ -382,6 +382,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             TextView name = (TextView) findViewById(R.id.name);
             TextView email = (TextView) findViewById(R.id.email);
             ImageView profileImage = (ImageView) findViewById(R.id.circleView);
+
+            name.setVisibility(View.VISIBLE);
+            email.setVisibility(View.VISIBLE);
 
             name.setText(acct.getDisplayName());
             email.setText(acct.getEmail());
