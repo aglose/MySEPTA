@@ -3,6 +3,7 @@ package team5.capstone.com.mysepta.Models;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * data model for alert desc
  * Created by Andrew on 12/2/2015.
  */
 public class AlertsDescriptionModel {

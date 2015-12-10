@@ -11,7 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
+ * data model for alerts
+ * Created by Matt
  */
 public class AlertsModel {
     @SerializedName("route_id")

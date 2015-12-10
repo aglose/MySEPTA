@@ -39,8 +39,9 @@ import team5.capstone.com.mysepta.Fragment.SubAlertsFragment;
 import team5.capstone.com.mysepta.Models.AlertsDescriptionModel;
 import team5.capstone.com.mysepta.Models.AlertsModel;
 
+
 /**
- *
+ * Manages and manipulates all alert data to be displayed
  */
 public class AlertsActivity extends AppCompatActivity {
     private static final String TAG = "AlertsActivity";
@@ -112,12 +113,11 @@ public class AlertsActivity extends AppCompatActivity {
     }
 
 
-
     /**
-     *
-     * @param paneId
-     * @param fragment
-     * @param placeOnBackStack
+     * Load appropriate fragment for alerts display
+     * @param paneId fragment number for display
+     * @param fragment to set type of alert
+     * @param placeOnBackStack boolean for tracing
      */
     public void loadFragment(int paneId, Fragment fragment, boolean placeOnBackStack){
         FragmentManager fragmentManager = getFragmentManager();
@@ -137,6 +137,9 @@ public class AlertsActivity extends AppCompatActivity {
         fragmentManager.executePendingTransactions();
     }
 
+    /**
+     * Retrieves and sorts alert data
+     */
     public void getAlertsData(){
         Callback callback = new Callback() {
             @Override
@@ -198,6 +201,9 @@ public class AlertsActivity extends AppCompatActivity {
         alertsViews.getAlertsView(callback);
     }
 
+    /**
+     * Retreives and sorts alert data
+     */
     private void getAlertsDescriptionData() {
         Callback callback = new Callback() {
             @Override
@@ -260,6 +266,11 @@ public class AlertsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Sets functionality to back button in toolbar
+     * @param item menu item
+     * @return item selected
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

@@ -8,13 +8,14 @@ import retrofit.http.Path;
 import team5.capstone.com.mysepta.Models.AlertsModel;
 
 /**
- *
+ * Retrieve alert data
+ * Created by Matt
  */
 public interface AlertsInterface {
 
     /**
-     *
-     * @param callback
+     * Retrieve Alert data
+     * @param callback callback to hold alert data
      */
     @GET("/hackathon/Alerts/")
     void alerts (

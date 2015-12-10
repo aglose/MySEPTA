@@ -16,7 +16,8 @@ import team5.capstone.com.mysepta.Models.AlertsModel;
 import team5.capstone.com.mysepta.R;
 
 /**
- *
+ * Adapter to define functionality of various alerts fragments.
+ * Created by Matt
  */
 public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsHolder>{
 
@@ -26,9 +27,9 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsHold
     static final int TYPE_CELL = 1;
 
     /**
-     *
-     * @param alerts
-     * @param context
+     * Constructor
+     * @param alerts List of alerts data
+     * @param context activity
      */
     public AlertsAdapter(ArrayList<AlertsModel> alerts, Context context){
         this.alertsList = alerts;
@@ -51,10 +52,10 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsHold
     }
 
     /**
-     *
-     * @param parent
-     * @param viewType
-     * @return
+     * Creates alert viewholder
+     * @param parent parent viewgroup
+     * @param viewType typeof item view
+     * @return alerts holder for view
      */
     @Override
     public AlertsAdapter.AlertsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -140,7 +141,7 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.AlertsHold
     }
 
     /**
-     *
+     * Creates holder for views to make item views easily retrievable.
      */
     public class AlertsHolder extends RecyclerView.ViewHolder{
         TextView typeOfAlert;

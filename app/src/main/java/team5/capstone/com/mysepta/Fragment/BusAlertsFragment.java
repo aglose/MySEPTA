@@ -15,7 +15,7 @@ import team5.capstone.com.mysepta.Models.AlertsModel;
 import team5.capstone.com.mysepta.R;
 
 /**
- * Created by Andrew on 12/2/2015.
+ * Displays Bus Alerts
  */
 public class BusAlertsFragment extends Fragment {
 
@@ -25,10 +25,21 @@ public class BusAlertsFragment extends Fragment {
 
     private AlertsAdapter alertsAdapter;
 
+    /**
+     * Constructor
+     * @param busList arraylist of bus alerts
+     */
     public BusAlertsFragment(ArrayList<AlertsModel> busList) {
         this.busList = busList;
     }
 
+    /**
+     * Creates view for Bus Alerts
+     * @param inflater inflates the view and formats the data
+     * @param container holds the view
+     * @param savedInstanceState saved state on close
+     * @return view
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_alerts, container, false);
 

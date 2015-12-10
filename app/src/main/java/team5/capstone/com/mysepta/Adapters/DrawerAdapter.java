@@ -24,6 +24,10 @@ import team5.capstone.com.mysepta.R;
 import team5.capstone.com.mysepta.SettingsActivity;
 import team5.capstone.com.mysepta.TwitterActivity;
 
+/**
+ * Adapter to define view functionality of drawer fragment.
+ * Created by Matt
+ */
 public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder> {
     static final int TYPE_HEADER = 0;
     static final int TYPE_CELL = 1;
@@ -48,8 +52,8 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
     /**
      * Constructor
-     * @param passedContext
-     * @param loginInterface
+     * @param passedContext activity
+     * @param loginInterface google login functionality
      */
     public DrawerAdapter(ArrayList<String> navTextList, Context passedContext, GoogleLoginInterface loginInterface){
         this.navTextList = navTextList;
@@ -60,10 +64,10 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
 
     /**
-     *
-     * @param parent
-     * @param viewType
-     * @return
+     * Creates drawer viewholder
+     * @param parent parent view group
+     * @param viewType type of item view
+     * @return drawer holder for view
      */
     @Override
     public DrawerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -114,6 +118,9 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
         }
     }
 
+    /**
+     * Creates holder for views to make item views easily retrievable.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         int holderID;
 
@@ -193,8 +200,8 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
     }
 
     /**
-     *
-     * @return
+     * Retrieves amount of
+     * @return size of itemlist
      */
     @Override
     public int getItemCount() {
@@ -212,8 +219,8 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
     }
     /**
      *
-     * @param position
-     * @return
+     * @param position location of view
+     * @return TYPE_HEADER if in position 0, otherwise TYPE_CELL
      */
     @Override
     public int getItemViewType(int position) {
@@ -225,8 +232,8 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
     /**
      *
-     * @param position
-     * @return
+     * @param position location of view
+     * @return true if item is header
      */
     private boolean isPositionHeader(int position) {
         return position == 0;

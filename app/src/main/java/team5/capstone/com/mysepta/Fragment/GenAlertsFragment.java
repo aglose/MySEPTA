@@ -15,6 +15,9 @@ import team5.capstone.com.mysepta.Adapters.AlertsAdapter;
 import team5.capstone.com.mysepta.Models.AlertsModel;
 import team5.capstone.com.mysepta.R;
 
+/**
+ * Displays General Alerts
+ */
 public class GenAlertsFragment extends Fragment {
 
     private RecyclerView alertsRecyclerView;
@@ -25,11 +28,22 @@ public class GenAlertsFragment extends Fragment {
 
     public GenAlertsFragment() {}
 
+    /**
+     * Constructor
+     * @param generalList arraylist of general alerts
+     */
     @SuppressLint("ValidFragment")
     public GenAlertsFragment(ArrayList<AlertsModel> generalList){
         this.generalList = generalList;
     }
 
+    /**
+     * Creates view for General Alerts
+     * @param inflater inflates the view and formats the data
+     * @param container holds the view
+     * @param savedInstanceState saved state on close
+     * @return view
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_alerts, container, false);
 

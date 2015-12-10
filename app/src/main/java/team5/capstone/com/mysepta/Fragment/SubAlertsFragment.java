@@ -14,6 +14,9 @@ import team5.capstone.com.mysepta.Adapters.AlertsAdapter;
 import team5.capstone.com.mysepta.Models.AlertsModel;
 import team5.capstone.com.mysepta.R;
 
+/**
+ * Displays Subway Alerts
+ */
 public class SubAlertsFragment extends Fragment {
 
     private RecyclerView alertsRecyclerView;
@@ -22,10 +25,21 @@ public class SubAlertsFragment extends Fragment {
 
     private AlertsAdapter alertsAdapter;
 
+    /**
+     * Constructor
+     * @param subList arraylist of subway alerts
+     */
     public SubAlertsFragment(ArrayList<AlertsModel> subList) {
         this.subList = subList;
     }
 
+    /**
+     * Creates view for Subway Alerts
+     * @param inflater inflates the view and formats the data
+     * @param container holds the view
+     * @param savedInstanceState saved state on close
+     * @return view
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_subway_arrivals, container, false);
 

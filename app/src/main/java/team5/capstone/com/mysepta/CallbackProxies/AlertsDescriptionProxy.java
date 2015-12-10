@@ -12,8 +12,8 @@ import team5.capstone.com.mysepta.Services.AlertsDescriptionService;
  */
 public class AlertsDescriptionProxy {
     /**
-     *
-     * @param callBack
+     * Retrieve alert data
+     * @param callBack callback to hold alert data
      */
     public void getAlertsDescriptionView(String routeID, Callback<ArrayList<AlertsDescriptionModel>> callBack) {
         AlertsDescriptionInterface alertsService = AlertsDescriptionService.getAlertsDescriptionInterface();

@@ -25,7 +25,7 @@ import team5.capstone.com.mysepta.R;
 
 
 /**
- *
+ * Organizes alert data
  */
 public class AlertsFragment extends Fragment {
 
@@ -38,14 +38,17 @@ public class AlertsFragment extends Fragment {
 
     private AlertsAdapter alertsAdapter;
 
+    /**
+     * Empty Constructor
+     */
     public AlertsFragment() {}
 
     /**
-     *
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
+     * Creates view for Alerts
+     * @param inflater inflates the view and formats the data
+     * @param container holds the view
+     * @param savedInstanceState saved state on close
+     * @return view
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,10 +65,6 @@ public class AlertsFragment extends Fragment {
         return view;
     }
 
-
-    /**
-     *
-     */
  }
 
 

@@ -13,8 +13,8 @@ import team5.capstone.com.mysepta.Services.AlertsService;
 public class AlertsProxy {
 
     /**
-     *
-     * @param callBack
+     * Retrieve alert data
+     * @param callBack callback to hold alert data
      */
     public void getAlertsView(Callback<ArrayList<AlertsModel>> callBack) {
        AlertsInterface alertsService = AlertsService.getAlertsInterface();
