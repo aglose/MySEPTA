@@ -16,6 +16,13 @@ public class AlertsDescriptionModel {
     @SerializedName("detour_message")
     private String detourMessage;
 
+    public AlertsDescriptionModel(String routeId, String currentMessage, String advisoryMessage, String detourMessage){
+        this.routeId = routeId;
+        this.currentMessage = currentMessage;
+        this.advisoryMessage = advisoryMessage;
+        this.detourMessage = detourMessage;
+    }
+
     public String getRouteId() {
         return routeId;
     }

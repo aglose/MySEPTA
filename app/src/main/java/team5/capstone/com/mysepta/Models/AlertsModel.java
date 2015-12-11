@@ -189,4 +189,16 @@ public class AlertsModel {
                 ", description='" + description + '\'' +
                 '}';
     }
+
+    public AlertsModel(String routeId, String routeName, String mode, String isAdvisory, String isDetour, String isAlert, String isSuspended, String isSnow,String lastUpdate){
+        this.routeId = routeId;
+        this.routeName = routeName;
+        this.mode = mode;
+        this.isAdvisory = isAdvisory;
+        this.isDetour = isDetour;
+        this.isAlert = isAlert;
+        this.isSuspended = isSuspended;
+        this.isSnow = isSnow;
+        this.lastUpdate = lastUpdate;
+    }
 }

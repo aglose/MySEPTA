@@ -13,6 +13,7 @@ import java.util.HashMap;
 
 import static org.mockito.Mockito.*;
 
+import team5.capstone.com.mysepta.Adapters.AlertsAdapter;
 import team5.capstone.com.mysepta.Adapters.RailExpandableAdapter;
 import team5.capstone.com.mysepta.Adapters.RailItineraryViewAdapter;
 import team5.capstone.com.mysepta.Adapters.RailScheduleAdapter;
@@ -20,6 +21,8 @@ import team5.capstone.com.mysepta.Adapters.RailStaticAdapter;
 import team5.capstone.com.mysepta.Adapters.SubwayItineraryViewAdapter;
 import team5.capstone.com.mysepta.Fragment.RailScheduleFragment;
 import team5.capstone.com.mysepta.Managers.FavoritesManager;
+import team5.capstone.com.mysepta.Models.AlertsDescriptionModel;
+import team5.capstone.com.mysepta.Models.AlertsModel;
 import team5.capstone.com.mysepta.Models.NextToArriveRailModel;
 import team5.capstone.com.mysepta.Models.RailLocationData;
 import team5.capstone.com.mysepta.Models.StaticRailModel;
@@ -68,7 +71,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         RailExpandableAdapter railExpandableAdapter = new RailExpandableAdapter(getContext(),rails,railChoices);
 
         railExpandableAdapter.updateParent(0, "Hello");
-        assertEquals((String)railExpandableAdapter.getGroup(0),"Hello");
+        assertEquals((String) railExpandableAdapter.getGroup(0), "Hello");
     }
 
     @SmallTest
@@ -146,7 +149,19 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
 
-    public void testRailScheduleService(){
+    @SmallTest
+    public void testAlertsAdapter(){
+        ArrayList<AlertsModel> alerts = new ArrayList<>();
+        alerts.add(new AlertsModel("bus route 1", " 1 ", " Bus ", "N", "N", "N", "N", "N", "Dec 11 2015 1:00pm"));
+        alerts.add(new AlertsModel("bus route 2", " 2 ", " Bus ", "N", "N", "N", "N", "N", "Dec 11 2015 1:00pm"));
+        alerts.add(new AlertsModel("bus route 3", " 3 ", " Bus ", "N", "N", "N", "N", "N", "Dec 11 2015 1:00pm"));
+        alerts.add(new AlertsModel("bus route 4", " 4 ", " Bus ", "N", "N", "N", "N", "N", "Dec 11 2015 1:00pm"));
 
+
+        AlertsAdapter adapter = new AlertsAdapter(alerts, getContext());
+
+        assertEquals(adapter.getItemCount(),4);
     }
+
+
 }
