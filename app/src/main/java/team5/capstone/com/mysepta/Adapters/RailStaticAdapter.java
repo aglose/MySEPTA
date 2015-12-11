@@ -30,6 +30,12 @@ public class RailStaticAdapter extends RecyclerView.Adapter<RailStaticAdapter.Ra
         this.trains = sortArray(trains);
     }
 
+    /**
+     * Create view holder
+     * @param parent parent group
+     * @param viewType view type
+     * @return view holder
+     */
     @Override
     public RailScheduleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
@@ -40,6 +46,11 @@ public class RailStaticAdapter extends RecyclerView.Adapter<RailStaticAdapter.Ra
         return new RailScheduleHolder(view);
     }
 
+    /**
+     * Bind values to view holder
+     * @param holder holder for current view
+     * @param position current position
+     */
     @Override
     public void onBindViewHolder(RailScheduleHolder holder, int position) {
         switch(position){
@@ -56,6 +67,10 @@ public class RailStaticAdapter extends RecyclerView.Adapter<RailStaticAdapter.Ra
         }
     }
 
+    /**
+     * Get item count.
+     * @return trains.size + 1
+     */
     @Override
     public int getItemCount() {
         return trains.size()+1;
@@ -83,6 +98,11 @@ public class RailStaticAdapter extends RecyclerView.Adapter<RailStaticAdapter.Ra
         }
     }
 
+    /**
+     * Sort array by time.
+     * @param srmArray array to sort
+     * @return sorted array
+     */
     public ArrayList<StaticRailModel> sortArray(ArrayList<StaticRailModel> srmArray){
         Collections.sort(srmArray, new Comparator<StaticRailModel>() {
             @Override

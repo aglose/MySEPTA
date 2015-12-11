@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
+ * Holds static rail data.
  * Created by Kevin on 11/15/15.
  */
 public class StaticRailModel implements Parcelable {

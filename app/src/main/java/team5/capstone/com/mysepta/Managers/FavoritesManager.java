@@ -20,6 +20,7 @@ import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
 import team5.capstone.com.mysepta.R;
 
 /**
+ * Singleton of manager for favorites.
  * Created by Andrew on 10/24/2015.
  */
 public class FavoritesManager{
@@ -31,11 +32,18 @@ public class FavoritesManager{
     private static MainActivity context;
     private static RecyclerView recyclerView;
 
+    /**
+     * Init new manager
+     */
     private FavoritesManager() {
         subwayFavoriteList = new ArrayList<>();
         railFavoriteList = new ArrayList<>();
     }
 
+    /**
+     * Get favorites manager
+     * @return instance of favorites manager
+     */
     public static FavoritesManager getInstance() {
         if(fragmentManager == null) {
             fragmentManager = new FavoritesManager();
@@ -43,15 +51,26 @@ public class FavoritesManager{
         return fragmentManager;
     }
 
+    /**
+     * Set context and build favorites
+     * @param context context of call
+     */
     public void setContext(MainActivity context){
         this.context = context;
         buildFromPreferences();
     }
 
+    /**
+     * Set recycler view
+     * @param recyclerView
+     */
     public void setRecyclerView(RecyclerView recyclerView){
         this.recyclerView = recyclerView;
     }
 
+    /**
+     * Retrieve saved rail and subway information.
+     */
     private void buildFromPreferences() {
         subwayFavoriteList = new ArrayList<>();
         railFavoriteList = new ArrayList<>();
@@ -79,6 +98,9 @@ public class FavoritesManager{
 
     }
 
+    /**
+     * Add card if subway is empty.
+     */
     private static void addSubwayWelcomeCard() {
         SubwayScheduleItemModel newSubway = new SubwayScheduleItemModel();
         newSubway.setLine("Test");
@@ -89,6 +111,10 @@ public class FavoritesManager{
         }
     }
 
+    /**
+     * Retrieve favortites
+     * @return Array list of favorites.
+     */
     public ArrayList getFavoriteList(){
         ArrayList fullList = new ArrayList<>();
         fullList.addAll(subwayFavoriteList);
@@ -96,14 +122,27 @@ public class FavoritesManager{
         return fullList;
     }
 
+    /**
+     * Return subway list
+     * @return subway favorites
+     */
     public ArrayList getSubwayList(){
         return subwayFavoriteList;
     }
 
+    /**
+     * Return rail favorites
+     * @return
+     */
     public ArrayList getRailList(){
         return railFavoriteList;
     }
 
+    /**
+     * Add subway line to favorites
+     * @param item item to add
+     * @return true if success
+     */
     public static boolean addSubwayLineToFavorites(SubwayScheduleItemModel item){
         if(subwayFavoriteList.size() == 1){
             if(subwayFavoriteList.get(0).getLine().equalsIgnoreCase("Test")){
@@ -128,6 +167,11 @@ public class FavoritesManager{
         return false;
     }
 
+    /**
+     * Remove subway line from favorites
+     * @param line line to remove
+     * @param location location to remove
+     */
     public static void removeSubwayLineFromFavorites(String line, String location) {
         boolean fav = checkForFavoriteSubwayLine(line, location);
         if(fav){
@@ -149,6 +193,12 @@ public class FavoritesManager{
         }
     }
 
+    /**
+     * Check if subway is favorited
+     * @param line subway line
+     * @param location location
+     * @return true if favorited
+     */
     public static boolean checkForFavoriteSubwayLine(String line, String location) {
         for(SubwayScheduleItemModel item: subwayFavoriteList){
             if(item.getLine().equalsIgnoreCase(line) && item.getLocation().equalsIgnoreCase(location)){
@@ -158,6 +208,12 @@ public class FavoritesManager{
         return false;
     }
 
+    /**
+     * Add rail to favorites
+     * @param startStation start station
+     * @param endStation end station
+     * @return true if success
+     */
     public static boolean addRailLineToFavorites(String startStation, String endStation){
         FavoriteRailModel favoriteRailModel = new FavoriteRailModel(startStation,endStation);
 
@@ -171,6 +227,12 @@ public class FavoritesManager{
         return false;
     }
 
+    /**
+     * Remove rail from favorites
+     * @param startStation start station
+     * @param endStation end station
+     * @return true if success
+     */
     public static boolean removeRailLineFromFavorites(String startStation,String endStation){
         FavoriteRailModel favoriteRailModel = new FavoriteRailModel(startStation,endStation);
 
@@ -189,6 +251,12 @@ public class FavoritesManager{
         return false;
     }
 
+    /**
+     * Check if rail in favorites
+     * @param startStation start station
+     * @param endStation end station
+     * @return true if exists
+     */
     public static boolean checkForFavoriteRailLine(String startStation,String endStation){
         FavoriteRailModel favoriteRailModel = new FavoriteRailModel(startStation,endStation);
 
@@ -199,6 +267,11 @@ public class FavoritesManager{
         return false;
     }
 
+    /**
+     * Check if rail exists
+     * @param favoriteRailModel model of rail
+     * @return location or -1
+     */
     private static int checkForFavoriteRailModel(FavoriteRailModel favoriteRailModel){
         for(int i=0;i<railFavoriteList.size();i++){
             FavoriteRailModel model = railFavoriteList.get(i);
@@ -210,6 +283,9 @@ public class FavoritesManager{
         return -1;
     }
 
+    /**
+     * Store favorites to preferences
+     */
     public void storeSharedPreferences(){
         if(prefs == null)
             return;

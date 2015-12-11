@@ -35,7 +35,7 @@ import team5.capstone.com.mysepta.Fragment.ToFromFragment;
 import team5.capstone.com.mysepta.Managers.FavoritesManager;
 import team5.capstone.com.mysepta.Models.NearestLocationModel;
 
-public class RailActivity extends AppCompatActivity implements ToFromFragment.OnFragmentInteractionListener {
+public class RailActivity extends AppCompatActivity {
     private static final String TAG = "RailActivity";
 
     private Toolbar toolbar;
@@ -48,6 +48,10 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
     private Menu mOptionsMenu;
     private boolean favorite;
 
+    /**
+     * Create live rail view.
+     * @param savedInstanceState saved state information
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,6 +172,11 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
 
     }
 
+    /**
+     * Create options menu
+     * @param menu menu created
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.mOptionsMenu = menu;
@@ -184,6 +193,11 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
         return true;
     }
 
+    /**
+     * Handle menu clicks.
+     * @param item item clicked
+     * @return true
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -220,6 +234,9 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
 
     }
 
+    /**
+     * Get station names and populate rail and group lists.
+     */
     public void getRails(){
         String start = this.getResources().getString(R.string.from_rail_text);
         String end = this.getResources().getString(R.string.to_rail_text);
@@ -236,6 +253,12 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
         railList.put(end, stationNames);
     }
 
+    /**
+     * Load fragment.
+     * @param paneId Id of frame to replace.
+     * @param fragment Fragment to store.
+     * @param placeOnBackStack true if back to restore, else false
+     */
     public void loadFragment(int paneId,Fragment fragment,boolean placeOnBackStack){
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -257,11 +280,10 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
         fragmentManager.executePendingTransactions();
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
 
-    }
-
+    /**
+     * Add favorite through manager and set icon.
+     */
     private void addLineToFavorites() {
         FavoritesManager.addRailLineToFavorites(start, end);
         mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(R.drawable.star_icon);
@@ -269,6 +291,9 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
         //Toast.makeText(RailActivity.this, "Added to Favorites", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Remove favorite through manager and set icon.
+     */
     private void removeLineFromFavorites() {
         FavoritesManager.removeRailLineFromFavorites(start, end);
         mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(R.drawable.star_outline);
@@ -276,6 +301,10 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
         //Toast.makeText(RailActivity.this, "Removed from Favorites", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Check if item is favorited.
+     * @return true if favorite, else false
+     */
     private boolean checkFavorite(){
         if(FavoritesManager.checkForFavoriteRailLine(start,end)){
             mOptionsMenu.findItem(R.id.favoriteIcon).setIcon(R.drawable.star_icon);
@@ -289,6 +318,9 @@ public class RailActivity extends AppCompatActivity implements ToFromFragment.On
         }
     }
 
+    /**
+     * Store favorites to preferences.
+     */
     @Override
     protected void onStop() {
         super.onStop();

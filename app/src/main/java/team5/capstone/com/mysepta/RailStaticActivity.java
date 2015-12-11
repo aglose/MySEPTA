@@ -37,6 +37,7 @@ import team5.capstone.com.mysepta.Models.StaticRailModel;
 import team5.capstone.com.mysepta.Models.TrainScheduleModel;
 
 /**
+ * Generates static rail screen.
  * Created by Kevin on 11/9/15.
  */
 public class RailStaticActivity extends AppCompatActivity {
@@ -61,6 +62,10 @@ public class RailStaticActivity extends AppCompatActivity {
     private String railLine;
     private String railLineAcro;
 
+    /**
+     * Generates static rail view.
+     * @param savedInstanceState saved state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +79,6 @@ public class RailStaticActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.rail_static_tool_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setTitle("Daily Schedule");
 
         expandableListView = (ExpandableListView) findViewById(R.id.railstaticlistview);
         dayChoice = (SegmentedGroup) findViewById(R.id.segmentedDays);
@@ -134,6 +138,9 @@ public class RailStaticActivity extends AppCompatActivity {
         thread.start();
     }
 
+    /**
+     * Gather all data on rail line for a specific day.
+     */
     private void getData(){
 
         fullSchedule = new HashMap<>();
@@ -220,6 +227,9 @@ public class RailStaticActivity extends AppCompatActivity {
         }
     });
 
+    /**
+     * Setup expandable list view.
+     */
     private void setupRailAdapter(){
         getRails();
         expandableListView.setAdapter(railExpandableAdapter);
@@ -264,6 +274,9 @@ public class RailStaticActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Generate list of stations.
+     */
     private void getRails(){
         String start = this.getResources().getString(R.string.from_rail_text);
         String end = this.getResources().getString(R.string.to_rail_text);
@@ -337,6 +350,12 @@ public class RailStaticActivity extends AppCompatActivity {
         railExpandableAdapter = new RailExpandableAdapter(this,groupList,railList);
     }
 
+    /**
+     * Load fragment.
+     * @param paneId Id of frame to replace.
+     * @param fragment Fragment to store.
+     * @param placeOnBackStack true if back to restore, else false
+     */
     public void loadFragment(int paneId,Fragment fragment,boolean placeOnBackStack){
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -502,6 +521,10 @@ public class RailStaticActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Remove active fragment.
+     * @param fragment fragment to remove.
+     */
     public void removeFragment(Fragment fragment){
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

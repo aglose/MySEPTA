@@ -91,7 +91,7 @@ public class RailScheduleFragment extends Fragment {
      * @param endStation ending station for schedule
      * @param numResults number of results
      */
-    private void getNextTrainData(final String startStation, final String endStation,String numResults) {
+    public void getNextTrainData(final String startStation, final String endStation,String numResults) {
         Callback callback = new Callback() {
             @Override
             public void success(Object o, Response response) {
@@ -116,7 +116,7 @@ public class RailScheduleFragment extends Fragment {
      * @param finalStation final station
      * @param startStation starting station
      */
-    private void setupRailAdapter(ArrayList<NextToArriveRailModel> trainList,String finalStation,String startStation){
+    public void setupRailAdapter(ArrayList<NextToArriveRailModel> trainList,String finalStation,String startStation){
         if(trainList.isEmpty()){
             Log.d("Debug", "No train data");
         }

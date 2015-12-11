@@ -18,21 +18,39 @@ import team5.capstone.com.mysepta.R;
 
 public class RailStaticFragment extends Fragment {
 
+    /**
+     * Generate instance of railstaticfragment
+     * @return new railstaticfragment
+     */
     public static RailStaticFragment newInstance() {
         RailStaticFragment fragment = new RailStaticFragment();
         return fragment;
     }
 
+    /**
+     * Empty constructor.
+     */
     public RailStaticFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * Reload state if closed.
+     * @param savedInstanceState saved state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
 
+    /**
+     * Create view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState saved state
+     * @return created view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
