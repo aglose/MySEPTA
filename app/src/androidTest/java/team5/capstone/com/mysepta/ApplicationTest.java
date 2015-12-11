@@ -1,6 +1,7 @@
 package team5.capstone.com.mysepta;
 
 import android.app.Application;
+import android.app.Fragment;
 import android.test.ApplicationTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 
@@ -108,7 +109,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         RailStaticAdapter adapter = new RailStaticAdapter(rails);
 
         rails = adapter.sortArray(rails);
-        assertEquals(rails.get(0).getTrainNumber(),"1");
+        assertEquals(rails.get(0).getTrainNumber(), "1");
     }
 
     @SmallTest
@@ -116,7 +117,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         RailItineraryViewAdapter adapter = new RailItineraryViewAdapter(0,0,getContext());
 
         assertEquals(adapter.getItemCount(),17);
-        assertEquals(adapter.getItemViewType(5),2);
+        assertEquals(adapter.getItemViewType(5), 2);
     }
 
     @SmallTest
@@ -132,7 +133,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         SubwayItineraryViewAdapter adapter = new SubwayItineraryViewAdapter(getContext(),null);
 
 
-        assertEquals(adapter.getItemCount(), 0);
+        assertEquals(adapter.getItemCount(), 2);
     }
 
     @SmallTest
@@ -145,27 +146,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
 
-    @SmallTest
-    public void testRailNextToArriveService(){
-        RailScheduleFragment fragment = Mockito.mock(RailScheduleFragment.class);
+    public void testRailScheduleService(){
 
-        fragment.getNextTrainData("Philmont","Temple University","5");
-
-        verify(fragment,times(1)).setupRailAdapter((ArrayList<NextToArriveRailModel>) anyList(),anyString(),anyString());
-    }
-
-    @SmallTest
-    public void testAllRailsNextToArriveService(){
-        RailScheduleFragment fragment = Mockito.mock(RailScheduleFragment.class);
-
-        fragment.getNextTrainData("Philmont","Temple University","5");
-
-        String[] stations = getContext().getResources().getStringArray(R.array.station_names_api);
-        for(String start:stations) {
-            for(String end:stations) {
-                fragment.getNextTrainData(start,end,"5");
-                verify(fragment, times(1)).setupRailAdapter((ArrayList<NextToArriveRailModel>) anyList(), anyString(), anyString());
-            }
-        }
     }
 }
