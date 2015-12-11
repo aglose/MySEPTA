@@ -5,18 +5,21 @@ import android.test.ApplicationTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-//import com.google.android.testing.mocking.AndroidMock;
+import static org.mockito.Mockito.*;
 
 import team5.capstone.com.mysepta.Adapters.RailExpandableAdapter;
 import team5.capstone.com.mysepta.Adapters.RailItineraryViewAdapter;
 import team5.capstone.com.mysepta.Adapters.RailScheduleAdapter;
 import team5.capstone.com.mysepta.Adapters.RailStaticAdapter;
 import team5.capstone.com.mysepta.Adapters.SubwayItineraryViewAdapter;
+import team5.capstone.com.mysepta.Fragment.RailScheduleFragment;
 import team5.capstone.com.mysepta.Managers.FavoritesManager;
+import team5.capstone.com.mysepta.Models.NextToArriveRailModel;
 import team5.capstone.com.mysepta.Models.RailLocationData;
 import team5.capstone.com.mysepta.Models.StaticRailModel;
 
@@ -142,4 +145,27 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
 
+    @SmallTest
+    public void testRailNextToArriveService(){
+        RailScheduleFragment fragment = Mockito.mock(RailScheduleFragment.class);
+
+        fragment.getNextTrainData("Philmont","Temple University","5");
+
+        verify(fragment,times(1)).setupRailAdapter((ArrayList<NextToArriveRailModel>) anyList(),anyString(),anyString());
+    }
+
+    @SmallTest
+    public void testAllRailsNextToArriveService(){
+        RailScheduleFragment fragment = Mockito.mock(RailScheduleFragment.class);
+
+        fragment.getNextTrainData("Philmont","Temple University","5");
+
+        String[] stations = getContext().getResources().getStringArray(R.array.station_names_api);
+        for(String start:stations) {
+            for(String end:stations) {
+                fragment.getNextTrainData(start,end,"5");
+                verify(fragment, times(1)).setupRailAdapter((ArrayList<NextToArriveRailModel>) anyList(), anyString(), anyString());
+            }
+        }
+    }
 }
