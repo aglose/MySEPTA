@@ -16,6 +16,8 @@ public interface NearestLocationInterface {
 
     /**
      * Retrieve train location data.
+     * @param @Query latitude
+     * @param @Query longitude
      * @param callback callback to hold train data
      */
     @GET("/hackathon/locations/get_locations.php?radius=3&type=rail_stations")

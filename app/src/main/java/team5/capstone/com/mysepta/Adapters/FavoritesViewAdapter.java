@@ -22,7 +22,7 @@ import team5.capstone.com.mysepta.SubwayActivity;
 /**
  * Created by Andrew on 10/28/2015.
  */
-public class HomeViewAdapter extends RecyclerView.Adapter {
+public class FavoritesViewAdapter extends RecyclerView.Adapter {
     private static final String TAG = "HomeViewAdapter";
     FavoritesManager favoritesManager;
 
@@ -33,7 +33,7 @@ public class HomeViewAdapter extends RecyclerView.Adapter {
     int headerCount = 1;
     Context context;
 
-    public HomeViewAdapter() {
+    public FavoritesViewAdapter() {
         this.favoritesManager = FavoritesManager.getInstance();
     }
 

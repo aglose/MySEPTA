@@ -16,6 +16,10 @@ import team5.capstone.com.mysepta.Interfaces.RailScheduleInterface;
  */
 public class RailScheduleService {
 
+    /**
+     * create and get rail schedule interface
+     * @return RailScheduleInterface
+     */
     public static RailScheduleInterface getRailScheduleInterface() {
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
