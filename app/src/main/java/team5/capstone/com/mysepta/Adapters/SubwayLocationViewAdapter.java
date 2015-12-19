@@ -154,13 +154,13 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
                                 ((SubwayLocationItemHolder)holder).circleView1.setVisibility(View.VISIBLE);
                                 switch(i){
                                     case 0:
-                                        ((SubwayLocationItemHolder)holder).circleView1.setBackground(context.getDrawable(R.drawable.circle_express_sub));
+                                        ((SubwayLocationItemHolder)holder).circleView1.setBackground(ContextCompat.getDrawable(context, R.drawable.circle_express_sub));
                                         break;
                                     case 1:
-                                        ((SubwayLocationItemHolder)holder).circleView1.setBackground(context.getDrawable(R.drawable.circle_spur_sub));
+                                        ((SubwayLocationItemHolder)holder).circleView1.setBackground(ContextCompat.getDrawable(context, R.drawable.circle_spur_sub));
                                         break;
                                     case 2:
-                                        ((SubwayLocationItemHolder)holder).circleView1.setBackground(context.getDrawable(R.drawable.circle_special_sub));
+                                        ((SubwayLocationItemHolder)holder).circleView1.setBackground(ContextCompat.getDrawable(context, R.drawable.circle_special_sub));
                                         break;
                                 }
                                 break;
@@ -168,13 +168,13 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
                                 ((SubwayLocationItemHolder)holder).circleView2.setVisibility(View.VISIBLE);
                                 switch(i){
                                     case 0:
-                                        ((SubwayLocationItemHolder)holder).circleView2.setBackground(context.getDrawable(R.drawable.circle_express_sub));
+                                        ((SubwayLocationItemHolder)holder).circleView2.setBackground(ContextCompat.getDrawable(context, R.drawable.circle_express_sub));
                                         break;
                                     case 1:
-                                        ((SubwayLocationItemHolder)holder).circleView2.setBackground(context.getDrawable(R.drawable.circle_spur_sub));
+                                        ((SubwayLocationItemHolder)holder).circleView2.setBackground(ContextCompat.getDrawable(context, R.drawable.circle_spur_sub));
                                         break;
                                     case 2:
-                                        ((SubwayLocationItemHolder)holder).circleView2.setBackground(context.getDrawable(R.drawable.circle_special_sub));
+                                        ((SubwayLocationItemHolder)holder).circleView2.setBackground(ContextCompat.getDrawable(context, R.drawable.circle_special_sub));
                                         break;
                                 }
                                 break;
@@ -182,13 +182,13 @@ public class SubwayLocationViewAdapter extends RecyclerView.Adapter {
                                 ((SubwayLocationItemHolder)holder).circleView3.setVisibility(View.VISIBLE);
                                 switch(i){
                                     case 0:
-                                        ((SubwayLocationItemHolder)holder).circleView3.setBackground(context.getDrawable(R.drawable.circle_express_sub));
+                                        ((SubwayLocationItemHolder)holder).circleView3.setBackground(ContextCompat.getDrawable(context, R.drawable.circle_express_sub));
                                         break;
                                     case 1:
-                                        ((SubwayLocationItemHolder)holder).circleView3.setBackground(context.getDrawable(R.drawable.circle_spur_sub));
+                                        ((SubwayLocationItemHolder)holder).circleView3.setBackground(ContextCompat.getDrawable(context, R.drawable.circle_spur_sub));
                                         break;
                                     case 2:
-                                        ((SubwayLocationItemHolder)holder).circleView3.setBackground(context.getDrawable(R.drawable.circle_special_sub));
+                                        ((SubwayLocationItemHolder)holder).circleView3.setBackground(ContextCompat.getDrawable(context, R.drawable.circle_special_sub));
                                         break;
                                 }
                                 break;

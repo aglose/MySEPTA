@@ -33,6 +33,7 @@ import team5.capstone.com.mysepta.R;
  * Fragment for rail schedule.
  */
 public class RailScheduleFragment extends Fragment {
+    private static final String TAG = "RailScheduleFragment";
 
     private RecyclerView railSchedule;
     private ArrayList<RailLocationData> rails;
@@ -124,18 +125,20 @@ public class RailScheduleFragment extends Fragment {
         rails = new ArrayList<>();
 
         for(NextToArriveRailModel train : trainList){
-            Log.d("Train name:",train.getOrigTrainName());
-            if(train.getIsDirect().equalsIgnoreCase("true")){
+            Log.d(TAG, train.getOrigTrainName());
+            Log.d(TAG, "Direct "+train.getIsDirect());
+            if(train.getIsDirect().equalsIgnoreCase("Yes")){
                 rails.add(new RailLocationData(railAcro.get(railNames.indexOf(train.getOrigTrainName().trim())),
                         train.getOrigTrainName(),
+                        train.getOrigDelay(),
                         finalStation,
                         train.getOrigTrainNumber(),
                         train.getOrigDepartureTime(),
                         false));
-            }
-            else{
+            }else{
                 rails.add(new RailLocationData(railAcro.get(railNames.indexOf(train.getOrigTrainName().trim())),
                         train.getOrigTrainName(),
+                        train.getOrigDelay(),
                         train.getConStation(),
                         train.getOrigTrainNumber(),
                         train.getOrigDepartureTime(),
@@ -143,6 +146,7 @@ public class RailScheduleFragment extends Fragment {
 
                 rails.add(new RailLocationData(railAcro.get(railNames.indexOf(train.getConTrainName().trim())),
                         train.getConTrainName(),
+                        train.getConDelay(),
                         finalStation,
                         train.getConTrainNumber(),
                         train.getConDepartureTime(),
@@ -151,7 +155,7 @@ public class RailScheduleFragment extends Fragment {
 
         }
 
-        railSchedule.setAdapter(new RailScheduleAdapter(rails, view.getContext(),startStation,finalStation));
+        railSchedule.setAdapter(new RailScheduleAdapter(view.getContext(), rails));
     }
 
 

@@ -114,7 +114,7 @@ public class SubwayScheduleViewAdapter extends RecyclerView.Adapter<SubwaySchedu
         holder.lineText.setText(line);
 
         if(line.equalsIgnoreCase("BSL")){
-            holder.circleView.setBackground(context.getDrawable(R.drawable.circle_bsl));
+            holder.circleView.setBackground(ContextCompat.getDrawable(context, R.drawable.circle_bsl));
         }
 
         holder.setAlarmButton.setOnClickListener(new View.OnClickListener() {

@@ -3,6 +3,7 @@ package team5.capstone.com.mysepta;
 import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.app.DialogFragment;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -73,6 +74,8 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
     private static final String SQL_FROM = " FROM ";
     private static final String SQL_SEMI_COLON = ";";
     private static final String SQL_QUOTE = "\"";
+    private final static int ANIMATION_TOP = 0;
+    private final static int ANIMATION_BOTTOM = 1;
 
     private static String direction;
     private static String location;
@@ -92,6 +95,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
     private Scene sceneLineMap;
     private FrameLayout swappingFragment;
     private List<View> viewsToAnimate = new ArrayList<>();
+
 
 
     private GoogleMap googleMap; // Might be null if Google Play services APK is not available.
@@ -121,14 +125,10 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
 
         SubwayArrivalFragment arrivalFragment = new SubwayArrivalFragment();
         if(transition){
-            Slide slideTransition = new Slide(Gravity.TOP);
-            slideTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
-            arrivalFragment.setEnterTransition(slideTransition);
-            arrivalFragment.setAllowEnterTransitionOverlap(true);
-            arrivalFragment.setAllowReturnTransitionOverlap(true);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                setSlideAnimation(arrivalFragment, ANIMATION_TOP);
+            }
         }
-
-
         Bundle args = new Bundle();
         args.putString(getString(R.string.SUBWAY_DIRECTION_KEY), direction);
         args.putString(getString(R.string.SUBWAY_ARRIVALS_LIST), json);
@@ -178,7 +178,9 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
                 swappingFragment.setVisibility(View.INVISIBLE);
                 mapIsOpen = false;
                 CardView card = (CardView) findViewById(R.id.subwayHeader);
-                animateRevealColorFromCoordinates(card, R.color.broadStreetOrange, card.getWidth() / 2, 0);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    animateRevealColorFromCoordinates(card, R.color.broadStreetOrange, card.getWidth() / 2, 0);
+                }
                 createFragmentForArrivals(true);
                 getFragmentManager().executePendingTransactions();
                 swappingFragment.setVisibility(View.VISIBLE);
@@ -199,24 +201,42 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
                 if (f != null) {
                     getFragmentManager().beginTransaction().replace(R.id.swappingFragment, f, getString(R.string.sub_line_map_tag)).commit();
                     getFragmentManager().executePendingTransactions();
-                    animateRevealColorFromCoordinates(card, R.color.marketFrankfordBlue, card.getWidth() / 2, 0);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        animateRevealColorFromCoordinates(card, R.color.marketFrankfordBlue, card.getWidth() / 2, 0);
+                    }
                     swappingFragment.setVisibility(View.VISIBLE);
                 } else {
                     mapFragment = new MapFragment();
-                    Slide slideTransition = new Slide(Gravity.TOP);
-                    slideTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
-                    mapFragment.setEnterTransition(slideTransition);
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                        setSlideAnimation(mapFragment, ANIMATION_BOTTOM);
+                    }
                     mapFragment.setAllowEnterTransitionOverlap(true);
                     mapFragment.setAllowReturnTransitionOverlap(true);
                     mapFragment.getMapAsync(callback);
                     getFragmentManager().beginTransaction().replace(R.id.swappingFragment, mapFragment, getString(R.string.sub_arrival_frag_tag)).commit();
                     getFragmentManager().executePendingTransactions();
-                    animateRevealColorFromCoordinates(card, R.color.marketFrankfordBlue, card.getWidth() / 2, 0);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        animateRevealColorFromCoordinates(card, R.color.marketFrankfordBlue, card.getWidth() / 2, 0);
+                    }
                     swappingFragment.setVisibility(View.VISIBLE);
                 }
             }
         });
 
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void setSlideAnimation(Fragment fragment, int type) {
+        Slide slideTransition;
+        if(type == ANIMATION_TOP){
+            slideTransition = new Slide(Gravity.TOP);
+        }else{
+            slideTransition = new Slide(Gravity.BOTTOM);
+        }
+        slideTransition.setDuration(getResources().getInteger(R.integer.anim_duration_medium));
+        fragment.setEnterTransition(slideTransition);
+        fragment.setAllowEnterTransitionOverlap(true);
+        fragment.setAllowReturnTransitionOverlap(true);
     }
 
     private void setupHeaderText() {
@@ -478,6 +498,7 @@ public class SubwayActivity extends AppCompatActivity implements TimePickerDialo
      * @return Animator
      */
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private Animator animateRevealColorFromCoordinates(View viewRoot, @ColorRes int color, int x, int y) {
         float finalRadius = (float) Math.hypot(viewRoot.getWidth(), viewRoot.getHeight());
 

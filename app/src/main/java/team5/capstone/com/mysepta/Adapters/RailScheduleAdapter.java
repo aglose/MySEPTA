@@ -1,16 +1,23 @@
 package team5.capstone.com.mysepta.Adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
+import team5.capstone.com.mysepta.Models.NextToArriveRailModel;
 import team5.capstone.com.mysepta.Models.RailLocationData;
 import team5.capstone.com.mysepta.R;
 
@@ -19,26 +26,22 @@ import team5.capstone.com.mysepta.R;
  * Created by Kevin on 9/30/15.
  */
 public class RailScheduleAdapter extends RecyclerView.Adapter {
+    private static final String TAG = "RailScheduleAdapter";
+
     private Context context;
     private ArrayList<RailLocationData> rails;
     static final int TYPE_HEADER = 0;
     static final int TYPE_CELL = 1;
     static final int TYPE_CONNECTION = 2;
-    private String start;
-    private String end;
 
     /**
      * Constructor
      * @param rails List of rail data
      * @param context activity
-     * @param start starting station
-     * @param end ending station
      */
-    public RailScheduleAdapter(ArrayList<RailLocationData> rails, Context context, String start,String end){
+    public RailScheduleAdapter(Context context, ArrayList<RailLocationData> rails){
         this.rails = rails;
         this.context = context;
-        this.start = start;
-        this.end = end;
     }
 
 
@@ -114,17 +117,74 @@ public class RailScheduleAdapter extends RecyclerView.Adapter {
                     }
                 }*/
 
-                ((RailScheduleHolder) holder).cardView.setBackgroundColor(context.getResources().getColor(R.color.white));
-                ((RailScheduleHolder)holder).railText.setText(temp.getRailName());
-                ((RailScheduleHolder)holder).railAcr.setText(temp.getRailAcr());
-                ((RailScheduleHolder)holder).timeText.setText(temp.getTime());
-                ((RailScheduleHolder)holder).trainText.setText("#" + temp.getRailNumber() + " to " + temp.getStation());
+                SimpleDateFormat originalTimeFormat = new SimpleDateFormat("hh:mma");
+                SimpleDateFormat newTimeFormat = new SimpleDateFormat("hh:mm a");
+
+                ((RailScheduleHolder) holder).cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white));
+                ((RailScheduleHolder)holder).railLineText.setText(temp.getRailName()+" Line");
+                ((RailScheduleHolder)holder).railAcronym.setText(temp.getRailAcr());
+                ((RailScheduleHolder)holder).trainDestinationLabel.setText("Going to " + temp.getStation());
+                ((RailScheduleHolder)holder).trainNo.setText(temp.getRailNumber());
+                String newTimeFormatString = "";
+                try {
+                    Date oldFormatDate = originalTimeFormat.parse(temp.getTime().trim());
+                    newTimeFormatString = newTimeFormat.format(oldFormatDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if(newTimeFormatString.charAt(0) == '0'){
+                    newTimeFormatString = newTimeFormatString.substring(1, newTimeFormatString.length());
+                }
+                if(temp.getDelay().equalsIgnoreCase("On Time")){
+                    ((RailScheduleHolder)holder).originalTimeLabel.setVisibility(View.INVISIBLE);
+                    ((RailScheduleHolder)holder).originalTime.setVisibility(View.INVISIBLE);
+                    ((RailScheduleHolder)holder).delayText.setVisibility(View.INVISIBLE);
+                    ((RailScheduleHolder)holder).delayLabel.setText(temp.getDelay());
+                    ((RailScheduleHolder)holder).timeText.setText(newTimeFormatString);
+                }else{
+                    ((RailScheduleHolder)holder).delayLabel.setText("Delayed - ");
+                    ((RailScheduleHolder)holder).delayText.setVisibility(View.VISIBLE);
+                    ((RailScheduleHolder)holder).delayText.setText(temp.getDelay());
+                    ((RailScheduleHolder)holder).originalTimeLabel.setVisibility(View.VISIBLE);
+                    ((RailScheduleHolder)holder).originalTime.setVisibility(View.VISIBLE);
+                    ((RailScheduleHolder)holder).originalTime.setText(newTimeFormatString);
+                    try{
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(newTimeFormat.parse(newTimeFormatString));
+                        Log.d(TAG, "Added time: "+temp.getTime().trim());
+                        String additionalTime = "";
+                        for(int i=0; i<temp.getDelay().length();i++){
+                            if(Character.isDigit(temp.getDelay().charAt(i))){
+                                additionalTime += temp.getDelay().charAt(i);
+                            }else{
+                                break;
+                            }
+                        }
+                        int additionalTimeInt = Integer.parseInt(additionalTime);
+                        Log.d(TAG, "Orig time: "+String.valueOf(additionalTimeInt));
+                        cal.add(Calendar.MINUTE, additionalTimeInt);
+                        String newTime = newTimeFormat.format(cal.getTime());
+                        if(newTime.charAt(0) == '0'){
+                            newTime = newTime.substring(1, newTime.length());
+                        }
+                        Log.d(TAG, "Final time: "+newTime);
+                        ((RailScheduleHolder)holder).timeText.setText(newTime);
+                    }catch(Exception e){
+                        Log.d(TAG, e.toString());
+                    }
+                }
+                if(temp.isConnection() == false){
+                    ((RailScheduleHolder)holder).directRoute.setText("Yes");
+                }else{
+                    ((RailScheduleHolder)holder).directRoute.setText("No");
+                }
+
                 break;
             }
             case TYPE_CONNECTION:{
                 RailLocationData temp = rails.get(position);
-                ((RailConnectionScheduleHolder)holder).cardView.setBackgroundColor(context.getResources().getColor(R.color.white));
-                ((RailConnectionScheduleHolder)holder).railText.setText(temp.getRailName());
+                ((RailConnectionScheduleHolder) holder).cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white));
+                ((RailConnectionScheduleHolder) holder).railText.setText(temp.getRailName());
                 ((RailConnectionScheduleHolder)holder).railAcr.setText(temp.getRailAcr());
                 ((RailConnectionScheduleHolder)holder).timeText.setText(temp.getTime());
                 ((RailConnectionScheduleHolder)holder).trainText.setText("#" + temp.getRailNumber() + " to " + temp.getStation());
@@ -147,14 +207,18 @@ public class RailScheduleAdapter extends RecyclerView.Adapter {
      * Creates holder for views to make item views easily retrievable.
      */
     public class RailScheduleHolder extends RecyclerView.ViewHolder{
-        TextView railText;
-        TextView railAcr;
-        TextView trainText;
-        TextView timeText;
         CardView cardView;
-        //TextView arrivalStation;
-        //TextView departureStation;
-        //ImageView conImage;
+        TextView railLineText;
+        TextView trainDestinationLabel;
+        TextView railAcronym;
+        TextView timeText;
+        TextView originalTimeLabel;
+        TextView originalTime;
+        TextView directRoute;
+        TextView trainNo;
+        TextView delayLabel;
+        TextView delayText;
+
 
         /**
          * Constructor
@@ -163,14 +227,16 @@ public class RailScheduleAdapter extends RecyclerView.Adapter {
         public RailScheduleHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.rail_item_card);
-            railText = (TextView) itemView.findViewById(R.id.trainLabel);
-            railAcr = (TextView) itemView.findViewById(R.id.lineName);
-            trainText = (TextView) itemView.findViewById(R.id.trainInfo);
+            railLineText = (TextView) itemView.findViewById(R.id.trainLineLabel);
+            trainDestinationLabel = (TextView) itemView.findViewById(R.id.trainDestinationLabel);
+            railAcronym = (TextView) itemView.findViewById(R.id.lineAcronym);
             timeText = (TextView) itemView.findViewById(R.id.arrivalTime);
-            //conImage = (ImageView) itemView.findViewById(R.id.arrow_connection);
-
-            //arrivalStation = (TextView) itemView.findViewById(R.id.arrivalStation);
-            //departureStation = (TextView) itemView.findViewById(R.id.departureStation);
+            originalTimeLabel = (TextView) itemView.findViewById(R.id.originalTimeLabel);
+            originalTime = (TextView) itemView.findViewById(R.id.originalTime);
+            directRoute = (TextView) itemView.findViewById(R.id.directRoute);
+            trainNo = (TextView) itemView.findViewById(R.id.trainNo);
+            delayLabel = (TextView) itemView.findViewById(R.id.delay);
+            delayText = (TextView) itemView.findViewById(R.id.delayText);
         }
     }
 

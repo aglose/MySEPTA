@@ -18,8 +18,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/relativeLayout">
-
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,7 +27,7 @@
             android:textAllCaps="true"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:id="@+id/lineName"
+            android:id="@+id/lineAcronym"
             android:padding="5dp"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true" />
@@ -48,41 +46,123 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="West Trenton Line"
+            android:text="Going to West Trenton"
             android:textSize="11sp"
             android:textColor="@color/black"
-            android:id="@+id/trainLabel"
-            android:paddingLeft="2dp"
-            android:paddingBottom="2dp"
-            android:paddingTop="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/lineName" />
+            android:id="@+id/trainDestinationLabel"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/lineAcronym" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:00 PM"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:id="@+id/arrivalTime"
+            android:layout_above="@+id/delay"
+            android:layout_toStartOf="@+id/textView3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8sp"
+            android:text="Delayed - "
+            android:textColor="@color/black"
+            android:id="@+id/delay"
+            android:layout_alignTop="@+id/delayText"
+            android:layout_alignStart="@+id/arrivalTime"
+            android:layout_marginLeft="3dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8sp"
+            android:text="99:99"
+            android:textColor="@color/black"
+            android:id="@+id/delayText"
+            android:visibility="visible"
+            android:layout_alignBottom="@+id/lineAcronym"
+            android:layout_toEndOf="@+id/delay" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8sp"
+            android:textColor="@color/black"
+            android:visibility="visible"
+            android:text="Original Time - "
+            android:id="@+id/originalTimeLabel"
+            android:layout_below="@+id/delay"
+            android:layout_alignStart="@+id/delay" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8sp"
+            android:textColor="@color/black"
+            android:text="99:99"
+            android:visibility="visible"
+            android:id="@+id/originalTime"
+            android:layout_alignBaseline="@+id/originalTimeLabel"
+            android:layout_alignBottom="@+id/originalTimeLabel"
+            android:layout_toEndOf="@+id/originalTimeLabel" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8sp"
+            android:text="Train No: "
+            android:id="@+id/textView3"
+            android:layout_alignBottom="@+id/trainNo"
+            android:layout_toStartOf="@+id/trainNo" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="12sp"
-            android:text="#4340 to Philmont"
+            android:textSize="8sp"
+            android:text="4340"
             android:textColor="@color/black"
-            android:id="@+id/trainInfo"
-            android:padding="2dp"
-            android:layout_alignBottom="@+id/lineName"
-            android:layout_alignStart="@+id/trainLabel" />
+            android:id="@+id/trainNo"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="3dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="12:00 PM"
-            android:textSize="16sp"
+            android:textSize="8sp"
+            android:text="Direct Route: "
+            android:id="@+id/textView6"
+            android:layout_marginLeft="3dp"
+            android:layout_alignTop="@+id/trainLineLabel"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="3dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:id="@+id/arrivalTime"
-            android:padding="5dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true" />
-
-
+            android:textSize="8sp"
+            android:text="Yes"
+            android:id="@+id/directRoute"
+            android:layout_alignBaseline="@+id/textView6"
+            android:layout_alignBottom="@+id/textView6"
+            android:layout_toEndOf="@+id/textView6" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="West Trenton Line"
+            android:textSize="11sp"
+            android:textColor="@color/black"
+            android:id="@+id/trainLineLabel"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

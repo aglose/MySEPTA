@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MySeptaKitKatTheme" parent="Theme.AppCompat.Light.NoActionBar" />
+
+    <style name="SubwayActivityTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/headerBlue</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="BroadStreetButton" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="colorButtonNormal">@color/broadStreetOrange</item>
+        <item name="android:textColorPrimary">#fff</item>
+    </style>
+</resources>

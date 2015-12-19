@@ -21,6 +21,34 @@ public class NextToArriveRailModel {
     @SerializedName("term_delay") private String conDelay;
     @SerializedName("isdirect") private String isDirect;
 
+    private String startingStation;
+    private String finalStation;
+    private String lineAcronym;
+
+    public String getLineAcronym() {
+        return lineAcronym;
+    }
+
+    public void setLineAcronym(String lineAcronym) {
+        this.lineAcronym = lineAcronym;
+    }
+
+    public String getFinalStation() {
+        return finalStation;
+    }
+
+    public void setFinalStation(String finalStation) {
+        this.finalStation = finalStation;
+    }
+
+    public String getStartingStation() {
+        return startingStation;
+    }
+
+    public void setStartingStation(String startingStation) {
+        this.startingStation = startingStation;
+    }
+
     public String getConArrivalTime() {
         return conArrivalTime;
     }
@@ -101,7 +129,15 @@ public class NextToArriveRailModel {
 
     public void setConDelay(String conDelay) {this.conDelay = conDelay;}
 
-    public String getIsDirect() {return isDirect;}
+    public String getIsDirect() {
+        String text = "";
+        if(isDirect.equalsIgnoreCase("false")){
+            text = "No";
+        }else{
+            text = "Yes";
+        }
+        return text;
+    }
 
     public void setIsDirect(String isDirect) {this.isDirect = isDirect;}
 }

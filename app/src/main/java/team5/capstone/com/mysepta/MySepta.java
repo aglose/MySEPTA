@@ -15,15 +15,20 @@ import io.smooch.core.Smooch;
  * Created by Andrew on 12/5/2015.
  */
 public class MySepta extends Application{
+    private static final boolean DEVELOPER_MODE = true;
+
     @Override
     public void onCreate() {
         MultiDex.install(this);
         super.onCreate();
 
         Smooch.init(this, "3rujej3f71sovyck6zunwg6jp");
-        Fabric.with(this, new Crashlytics());
+
+        if(!DEVELOPER_MODE){
+            Fabric.with(this, new Crashlytics());
+        }
 
         TwitterAuthConfig authConfig =  new TwitterAuthConfig("consumerKey", "consumerSecret");
-        Fabric.with(this, new TwitterCore(authConfig), new TweetComposer());
+        Fabric.with(this, new TwitterCore(authConfig), new TweetComposer(), new Crashlytics());
     }
 }

@@ -1,9 +1,11 @@
 package team5.capstone.com.mysepta.Adapters;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.RippleDrawable;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -143,20 +145,22 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
                 textView = (TextView) itemView.findViewById(R.id.rowText);
                 rowBackground = itemView.findViewById(R.id.row_background);
 
-                RippleDrawable newImage = new RippleDrawable(
-                        new ColorStateList(
-                                new int[][]{
-                                        new int[]{android.R.attr.state_pressed},
-                                        new int[]{}
-                                },
-                                new int[] {
-                                        ContextCompat.getColor(context, R.color.headerBlue),
-                                        ContextCompat.getColor(context, R.color.headerBlue),
-                                }),
-                        null,
-                        null);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    RippleDrawable newImage = new RippleDrawable(
+                            new ColorStateList(
+                                    new int[][]{
+                                            new int[]{android.R.attr.state_pressed},
+                                            new int[]{}
+                                    },
+                                    new int[] {
+                                            ContextCompat.getColor(context, R.color.headerBlue),
+                                            ContextCompat.getColor(context, R.color.headerBlue),
+                                    }),
+                            null,
+                            null);
+                    rowBackground.setBackground(newImage);
+                }
 
-                rowBackground.setBackground(newImage);
                 imageView = (ImageView) itemView.findViewById(R.id.rowIcon);
                 tweetButton = (Button)  itemView.findViewById(R.id.tweet_button);
                 tweetButton.setOnClickListener(new View.OnClickListener() {

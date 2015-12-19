@@ -10,21 +10,28 @@ public class RailLocationData {
 
     private String railName;
     private String railAcr;
-
     private String railNumber;
-
     private String station;
     private String time;
-
+    private String delay;
     private boolean isConnection;
 
-    public RailLocationData(String railAcr,String railName,String station,String railNumber,String time,boolean isConnection){
+    public RailLocationData(String railAcr,String railName, String delay, String station,String railNumber,String time,boolean isConnection){
         this.railAcr = railAcr;
         this.railName = railName;
+        this.delay = delay;
         this.railNumber = railNumber;
         this.station = station;
         this.time = time;
         this.isConnection = isConnection;
+    }
+
+    public String getDelay() {
+        return delay;
+    }
+
+    public void setDelay(String delay) {
+        this.delay = delay;
     }
 
     public void setIsConnection(boolean isConnection) {
