@@ -1,16 +1,10 @@
 package team5.capstone.com.mysepta.Fragment;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +14,9 @@ import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapte
 
 import team5.capstone.com.mysepta.Adapters.SubwayItineraryViewAdapter;
 import team5.capstone.com.mysepta.Adapters.SubwayLocationViewAdapter;
-import team5.capstone.com.mysepta.MainActivity;
+import team5.capstone.com.mysepta.Activities.MainActivity;
 import team5.capstone.com.mysepta.Models.SubwayLocationData;
 import team5.capstone.com.mysepta.R;
-import team5.capstone.com.mysepta.SubwayActivity;
 
 /**
  * Fragment for subway section of home screen.

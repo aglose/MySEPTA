@@ -20,7 +20,7 @@ import team5.capstone.com.mysepta.R;
 
 /**
  * Temporary recycler view fragment.
- * Created by florentchampigny on 24/04/15.
+ * Created by Andrew on 24/04/15.
  */
 public class RecyclerViewFragment extends Fragment {
 

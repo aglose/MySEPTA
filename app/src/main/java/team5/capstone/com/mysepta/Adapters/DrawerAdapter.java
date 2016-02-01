@@ -1,6 +1,5 @@
 package team5.capstone.com.mysepta.Adapters;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -21,10 +20,10 @@ import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 import java.util.ArrayList;
 
 import io.smooch.ui.ConversationActivity;
-import team5.capstone.com.mysepta.AlertsActivity;
+import team5.capstone.com.mysepta.Activities.AlertsActivity;
 import team5.capstone.com.mysepta.R;
-import team5.capstone.com.mysepta.SettingsActivity;
-import team5.capstone.com.mysepta.TwitterActivity;
+import team5.capstone.com.mysepta.Activities.SettingsActivity;
+import team5.capstone.com.mysepta.Activities.TwitterActivity;
 
 /**
  * Adapter to define view functionality of drawer fragment.

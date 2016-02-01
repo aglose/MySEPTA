@@ -16,8 +16,8 @@ import team5.capstone.com.mysepta.Managers.FavoritesManager;
 import team5.capstone.com.mysepta.Models.FavoriteRailModel;
 import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
 import team5.capstone.com.mysepta.R;
-import team5.capstone.com.mysepta.RailActivity;
-import team5.capstone.com.mysepta.SubwayActivity;
+import team5.capstone.com.mysepta.Activities.RailActivity;
+import team5.capstone.com.mysepta.Activities.SubwayActivity;
 
 /**
  * Created by Andrew on 10/28/2015.

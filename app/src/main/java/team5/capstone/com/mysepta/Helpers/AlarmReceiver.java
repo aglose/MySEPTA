@@ -1,14 +1,12 @@
 package team5.capstone.com.mysepta.Helpers;
 
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.NotificationCompat;
 
-import team5.capstone.com.mysepta.MainActivity;
 import team5.capstone.com.mysepta.R;
 
 /**

@@ -1,4 +1,4 @@
-package team5.capstone.com.mysepta;
+package team5.capstone.com.mysepta.Activities;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -34,6 +34,7 @@ import team5.capstone.com.mysepta.Fragment.RailScheduleFragment;
 import team5.capstone.com.mysepta.Fragment.ToFromFragment;
 import team5.capstone.com.mysepta.Managers.FavoritesManager;
 import team5.capstone.com.mysepta.Models.NearestLocationModel;
+import team5.capstone.com.mysepta.R;
 
 public class RailActivity extends AppCompatActivity {
     private static final String TAG = "RailActivity";

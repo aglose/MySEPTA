@@ -1,4 +1,4 @@
-package team5.capstone.com.mysepta;
+package team5.capstone.com.mysepta.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -48,12 +48,14 @@ import java.util.ArrayList;
 
 import io.fabric.sdk.android.Fabric;
 import team5.capstone.com.mysepta.Adapters.DrawerAdapter;
+import team5.capstone.com.mysepta.Fragment.BusLinesFragment;
 import team5.capstone.com.mysepta.Fragment.RecyclerViewFragment;
 import team5.capstone.com.mysepta.Helpers.SubwayScheduleCreatorDbHelper;
 import team5.capstone.com.mysepta.Fragment.FavoritesFragment;
 import team5.capstone.com.mysepta.Fragment.RailItineraryViewFragment;
 import team5.capstone.com.mysepta.Fragment.SubwayItineraryViewFragment;
 import team5.capstone.com.mysepta.Managers.FavoritesManager;
+import team5.capstone.com.mysepta.R;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, DrawerAdapter.GoogleLoginInterface{
     /*When you are debugging use this TAG as the first String (i.e. Log.d(TAG, String.valueOf(position));*/
@@ -166,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                         else
                             return RailItineraryViewFragment.newInstance();
                     case BUS_TAB:
-                        return RecyclerViewFragment.newInstance();
+                        return BusLinesFragment.newInstance();
                     case SUBWAY_TAB:
                         return SubwayItineraryViewFragment.newInstance();
                     default:

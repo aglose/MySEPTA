@@ -1,4 +1,4 @@
-package team5.capstone.com.mysepta;
+package team5.capstone.com.mysepta.Activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

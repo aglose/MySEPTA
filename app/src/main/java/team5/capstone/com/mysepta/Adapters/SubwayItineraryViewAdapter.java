@@ -1,11 +1,9 @@
 package team5.capstone.com.mysepta.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +11,7 @@ import android.widget.Button;
 
 import java.util.List;
 
-import team5.capstone.com.mysepta.Fragment.SubwayItineraryViewFragment;
-import team5.capstone.com.mysepta.MainActivity;
-import team5.capstone.com.mysepta.MapsActivity;
+import team5.capstone.com.mysepta.Activities.MainActivity;
 import team5.capstone.com.mysepta.R;
 
 /**

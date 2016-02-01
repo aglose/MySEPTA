@@ -1,4 +1,4 @@
-package team5.capstone.com.mysepta;
+package team5.capstone.com.mysepta.Activities;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -35,6 +35,7 @@ import team5.capstone.com.mysepta.CallbackProxies.RailScheduleProxy;
 import team5.capstone.com.mysepta.Fragment.RailStaticFragment;
 import team5.capstone.com.mysepta.Models.StaticRailModel;
 import team5.capstone.com.mysepta.Models.TrainScheduleModel;
+import team5.capstone.com.mysepta.R;
 
 /**
  * Generates static rail screen.

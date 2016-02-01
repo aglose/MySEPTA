@@ -1,4 +1,4 @@
-package team5.capstone.com.mysepta;
+package team5.capstone.com.mysepta.Activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -38,6 +38,7 @@ import team5.capstone.com.mysepta.Fragment.RRAlertsFragment;
 import team5.capstone.com.mysepta.Fragment.SubAlertsFragment;
 import team5.capstone.com.mysepta.Models.AlertsDescriptionModel;
 import team5.capstone.com.mysepta.Models.AlertsModel;
+import team5.capstone.com.mysepta.R;
 
 
 /**

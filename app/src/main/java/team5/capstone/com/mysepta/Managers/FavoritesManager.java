@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import team5.capstone.com.mysepta.Adapters.FavoritesViewAdapter;
-import team5.capstone.com.mysepta.MainActivity;
+import team5.capstone.com.mysepta.Activities.MainActivity;
 import team5.capstone.com.mysepta.Models.FavoriteRailModel;
 import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
 import team5.capstone.com.mysepta.R;

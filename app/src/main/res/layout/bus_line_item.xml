@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="50dp">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:background="@color/headerBlue"
+        android:id="@+id/busLineView"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="999"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:id="@+id/busNumberText"
+        android:paddingLeft="10dp"
+        android:layout_alignTop="@+id/busLineName"
+        android:layout_toStartOf="@+id/busLineName" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Corner of the Nearest Location "
+        android:id="@+id/busLineName"
+        android:textSize="16sp"
+        android:paddingLeft="10dp"
+        android:textColor="@color/white"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

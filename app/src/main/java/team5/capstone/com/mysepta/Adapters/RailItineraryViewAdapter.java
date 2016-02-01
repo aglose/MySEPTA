@@ -2,7 +2,6 @@ package team5.capstone.com.mysepta.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
@@ -10,15 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import team5.capstone.com.mysepta.MapsActivity;
+import team5.capstone.com.mysepta.Activities.MapsActivity;
 import team5.capstone.com.mysepta.R;
-import team5.capstone.com.mysepta.RailActivity;
-import team5.capstone.com.mysepta.RailStaticActivity;
+import team5.capstone.com.mysepta.Activities.RailActivity;
+import team5.capstone.com.mysepta.Activities.RailStaticActivity;
 
 /**
  * Creates adapter to handle RailItinerary view.

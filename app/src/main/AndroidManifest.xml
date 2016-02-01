@@ -17,9 +17,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:name="MySepta">
+        android:name=".MySeptaApplication">
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,7 +36,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".Activities.MapsActivity"
             android:label="@string/title_activity_maps" >
         </activity>
 
@@ -45,38 +45,44 @@
             android:value="cefcd29e20097cc376a5d63caabdf38d6398af4b" />
 
         <activity
-            android:name=".SubwayActivity"
+            android:name=".Activities.SubwayActivity"
             android:label="@string/title_activity_subway"
             android:theme="@style/SubwayActivityTheme">
         </activity>
 
         <activity
-            android:name="RailActivity"
+            android:name=".Activities.RailActivity"
             android:label="RailActivity"
             android:theme="@style/SubwayActivityTheme">
         </activity>
 
         <activity
-            android:name="RailStaticActivity"
+            android:name=".Activities.RailStaticActivity"
             android:label="RailStaticActivity"
             android:theme="@style/SubwayActivityTheme">
         </activity>
 
         <activity
-            android:name="AlertsActivity"
+            android:name=".Activities.AlertsActivity"
             android:label="AlertsActivity"
             android:theme="@style/SubwayActivityTheme">
         </activity>
 
         <activity
-            android:name="SettingsActivity"
+            android:name=".Activities.SettingsActivity"
             android:label="SettingsActivity"
             android:theme="@style/SubwayActivityTheme">
         </activity>
 
         <activity
-            android:name=".TwitterActivity"
+            android:name=".Activities.TwitterActivity"
             android:label="TwitterActivity"
+            android:theme="@style/SubwayActivityTheme">
+        </activity>
+
+        <activity
+            android:name=".Activities.BusStopsActivity"
+            android:label="BusStopsActivity"
             android:theme="@style/SubwayActivityTheme">
         </activity>
 

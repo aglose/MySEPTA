@@ -14,7 +14,7 @@ import io.smooch.core.Smooch;
 /**
  * Created by Andrew on 12/5/2015.
  */
-public class MySepta extends Application{
+public class MySeptaApplication extends Application{
     private static final boolean DEVELOPER_MODE = true;
 
     @Override
@@ -26,9 +26,10 @@ public class MySepta extends Application{
 
         if(!DEVELOPER_MODE){
             Fabric.with(this, new Crashlytics());
+            TwitterAuthConfig authConfig =  new TwitterAuthConfig("consumerKey", "consumerSecret");
+            Fabric.with(this, new TwitterCore(authConfig), new TweetComposer(), new Crashlytics());
         }
 
-        TwitterAuthConfig authConfig =  new TwitterAuthConfig("consumerKey", "consumerSecret");
-        Fabric.with(this, new TwitterCore(authConfig), new TweetComposer(), new Crashlytics());
+
     }
 }

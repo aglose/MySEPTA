@@ -1,9 +1,7 @@
-package team5.capstone.com.mysepta;
+package team5.capstone.com.mysepta.Activities;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -13,7 +11,6 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -40,6 +37,7 @@ import retrofit.client.Response;
 import team5.capstone.com.mysepta.AsyncTasks.RetrieveTrainMapTask;
 import team5.capstone.com.mysepta.CallbackProxies.RailLocationProxy;
 import team5.capstone.com.mysepta.Models.RailModel;
+import team5.capstone.com.mysepta.R;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     private static final String TAG = MapsActivity.class.getName();

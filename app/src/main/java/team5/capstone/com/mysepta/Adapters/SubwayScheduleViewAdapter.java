@@ -1,13 +1,11 @@
 package team5.capstone.com.mysepta.Adapters;
 
 import android.app.AlarmManager;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +23,6 @@ import java.util.Date;
 import team5.capstone.com.mysepta.Helpers.AlarmReceiver;
 import team5.capstone.com.mysepta.Models.SubwayScheduleItemModel;
 import team5.capstone.com.mysepta.R;
-import team5.capstone.com.mysepta.SubwayActivity;
 
 /**
  * Adapter for subway schedule view.
