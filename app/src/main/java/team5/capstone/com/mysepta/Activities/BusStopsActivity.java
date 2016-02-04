@@ -1,12 +1,18 @@
 package team5.capstone.com.mysepta.Activities;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
@@ -24,7 +30,7 @@ import team5.capstone.com.mysepta.R;
 /**
  * Created by Andrew on 1/27/2016.
  */
-public class BusStopsActivity extends AppCompatActivity {
+public class BusStopsActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     private static final String TAG = "BusStopsActivity";
 
     private Toolbar toolbar;
@@ -47,6 +53,7 @@ public class BusStopsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Bus Stop " + busLine);
         
         retrieveStops();
+
     }
 
     private void retrieveStops() {
@@ -83,6 +90,31 @@ public class BusStopsActivity extends AppCompatActivity {
         return false;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_bus_stops, menu);
+
+        final MenuItem item = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        searchView.setOnQueryTextListener(this);
+
+        MenuItemCompat.setOnActionExpandListener(item,
+                new MenuItemCompat.OnActionExpandListener() {
+                    @Override
+                    public boolean onMenuItemActionCollapse(MenuItem item) {
+                        // Do something when collapsed
+                        return true; // Return true to collapse action view
+                    }
+
+                    @Override
+                    public boolean onMenuItemActionExpand(MenuItem item) {
+                        // Do something when expanded
+                        return true; // Return true to expand action view
+                    }
+                });
+        return true;
+    }
+
     private void setUpRecyclerView(){
         adapter = new BusStopsAdapter(this, bustStopsList);
 
@@ -90,5 +122,15 @@ public class BusStopsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 }

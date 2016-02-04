@@ -1,0 +1,51 @@
+{
+  "project_info": {
+    "project_id": "mysepta-1062",
+    "project_number": "999272771339",
+    "name": "MySEPTA"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:999272771339:android:c6ba5cfcdb483741",
+        "client_id": "android:team5.capstone.com.mysepta",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "team5.capstone.com.mysepta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "999272771339-v6v8c7v9tcoaojjnjcgvkngb372gq6gf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "team5.capstone.com.mysepta",
+            "certificate_hash": "4DC2E9DBA7A194AE2085775209DC872A668CA2FE"
+          }
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}

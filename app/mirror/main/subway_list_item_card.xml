@@ -1,0 +1,14 @@
+<!-- [ Mirror metadata ] generatedAt: 1447429461711 -->
+<!-- Generated screen file. Fill the id tags below with content with
+which to populate your previewed layout. For a complete specification
+of sample data, please see http://jimulabs.com/sample-data-specifications/ 
+
+Valid attributes on <screen> tag: theme="@style/someTheme" inEditMode="false" overlay="@drawable/mockup" -->
+<screen>
+    <_content layout="@layout/subway_list_item_card">
+        <!-- TextView Examples:
+        <locationText text="@string/string_resource" />
+        <locationText text="Text literal" textSize="14sp" /> -->
+        <locationText />
+    </_content>
+</screen>

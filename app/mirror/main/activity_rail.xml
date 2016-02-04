@@ -1,0 +1,29 @@
+<!-- [ Mirror metadata ] generatedAt: 1447429461583 -->
+<!-- Generated screen file. Fill the id tags below with content with
+which to populate your previewed layout. For a complete specification
+of sample data, please see http://jimulabs.com/sample-data-specifications/ 
+
+Valid attributes on <screen> tag: theme="@style/someTheme" inEditMode="false" overlay="@drawable/mockup" -->
+<screen>
+    <_content layout="@layout/activity_rail">
+        <!-- TextView Examples:
+        <textView4 text="@string/string_resource" />
+        <textView4 text="Text literal" textSize="14sp" /> -->
+        <textView4 />
+        <locationText />
+        <tofromfrag>
+            <!-- Replace this FrameLayout with a fragment like so:
+            <_content layout="@layout/my_fragment_layout">
+                <my_text_view>TextView in fragment</my_text_view>
+            </_content>
+            -->
+        </tofromfrag>
+        <schedulefrag>
+            <!-- Replace this FrameLayout with a fragment like so:
+            <_content layout="@layout/my_fragment_layout">
+                <my_text_view>TextView in fragment</my_text_view>
+            </_content>
+            -->
+        </schedulefrag>
+    </_content>
+</screen>

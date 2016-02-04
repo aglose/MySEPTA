@@ -80,7 +80,7 @@ public class BusLinesFragment extends Fragment implements BusLinesAdapter.Filter
             reader = new BufferedReader(new InputStreamReader(in));
             while((line = reader.readLine()) != null){
                 BusLineModel busLineModel = new BusLineModel();
-                int firstComma = line.indexOf(",");  //15057,1,Parx Casino to 54th-City,3
+                int firstComma = line.indexOf(",");  //(ex.) 15057,1,Parx Casino to 54th-City,3
                 String routeID = line.substring(0, firstComma);
                 int secondComma = line.indexOf(",", firstComma + 1);
                 String shortName = line.substring(firstComma + 1, secondComma);
@@ -95,51 +95,6 @@ public class BusLinesFragment extends Fragment implements BusLinesAdapter.Filter
                 busLineList.add(busLineModel);
             }
 
-//            Collections.sort(busLineList, new Comparator<BusLineModel>() {
-//                @Override
-//                public int compare(BusLineModel lhs, BusLineModel rhs) {
-//                    Integer left = 0;
-//                    Integer right = 0;
-//                    try {
-//                        left = Integer.valueOf(lhs.getRouteShortName());
-//                        right = Integer.valueOf(rhs.getRouteShortName());
-//                    } catch (NumberFormatException e) {
-//                        String charLeftString = "";
-//                        for (char c : lhs.getRouteShortName().toCharArray()) {
-//                            int character = Character.digit(c, 9);
-//
-//                            if (character > -1) {
-//                                charLeftString += character;
-//                            }
-//
-//                        }
-//                        if (charLeftString.length() == 0) {
-//                            left = lhs.getRouteShortName().charAt(0) + 999;
-//                        } else {
-//                            left = Integer.valueOf(charLeftString);
-//                        }
-//                        Log.d(TAG, ""+left);
-//
-//
-//                        String charRightString = "";
-//                        for (char d : rhs.getRouteShortName().toCharArray()) {
-//                            int character = Character.digit(d, 9);
-//                            if (character > -1) {
-//                                charRightString += character;
-//                            }
-//                        }
-//
-//                        if (charRightString.length() == 0) {
-//                            right = rhs.getRouteShortName().charAt(0) + 999;
-//                        } else {
-//                            right = Integer.valueOf(charRightString);
-//                        }
-//                        Log.d(TAG, ""+right);
-//                    }
-//
-//                    return left.compareTo(right);
-//                }
-//            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -166,14 +121,8 @@ public class BusLinesFragment extends Fragment implements BusLinesAdapter.Filter
                         return false;
                     }
                 });
-//        materialAdapter.notifyItemRemoved(i);
-//        materialAdapter.notifyItemRangeChanged(i, busLineList.size());
 
         ArrayList<BusLineModel> elements = Lists.newArrayList(filtered);
-
-        for(BusLineModel model : filtered){
-            Log.d(TAG, "line: "+model.getRouteShortName());
-        }
 
         basicAdapter.clearData(elements);
         basicAdapter.notifyDataSetChanged();

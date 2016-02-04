@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:text="Large Text"
         android:textColor="@color/black"
+        android:clickable="true"
         android:textSize="15sp"
         android:id="@+id/stopLocationText"
         android:layout_gravity="center_horizontal" />
