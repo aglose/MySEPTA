@@ -39,8 +39,8 @@ import team5.capstone.com.mysepta.CallbackProxies.RailLocationProxy;
 import team5.capstone.com.mysepta.Models.RailModel;
 import team5.capstone.com.mysepta.R;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-    private static final String TAG = MapsActivity.class.getName();
+public class DefaultMapsActivity extends FragmentActivity implements OnMapReadyCallback {
+    private static final String TAG = DefaultMapsActivity.class.getName();
     private final int[] trainColors = {Color.BLACK, Color.BLUE, Color.GREEN, Color.MAGENTA, Color.CYAN, Color.RED, Color.YELLOW, Color.rgb(255, 0, 0), Color.rgb(255, 0, 255), Color.rgb(255, 255, 222), Color.rgb(255, 0, 13), Color.rgb(33, 0, 255)};
     private GoogleMap googleMap; // Might be null if Google Play services APK is not available.
     private MapFragment mapFragment;
@@ -87,7 +87,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(MapsActivity.this, "Refresh", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DefaultMapsActivity.this, "Refresh", Toast.LENGTH_SHORT).show();
                     getAllTrainLocations();
                 }
             });

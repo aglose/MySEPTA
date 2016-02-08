@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import team5.capstone.com.mysepta.Activities.MapsActivity;
+import team5.capstone.com.mysepta.Activities.DefaultMapsActivity;
 import team5.capstone.com.mysepta.R;
 import team5.capstone.com.mysepta.Activities.RailActivity;
 import team5.capstone.com.mysepta.Activities.RailStaticActivity;
@@ -81,7 +81,7 @@ public class RailItineraryViewAdapter extends RecyclerView.Adapter<RailItinerary
                 holder.cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent startMap = new Intent(context, MapsActivity.class);
+                        Intent startMap = new Intent(context, DefaultMapsActivity.class);
                         context.startActivity(startMap);
                     }
                 });

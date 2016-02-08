@@ -6,11 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import team5.capstone.com.mysepta.Activities.BusStopsMapActivity;
 import team5.capstone.com.mysepta.Activities.BusTimesActivity;
 import team5.capstone.com.mysepta.Models.BusStopModel;
 import team5.capstone.com.mysepta.R;
@@ -49,6 +51,16 @@ public class BusStopsAdapter extends RecyclerView.Adapter {
 //                timeActivity.putExtra("direction", busStopsList.get(position).ge);
             }
         });
+        busHolder.mapBusStopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mapsActivity = new Intent(context, BusStopsMapActivity.class);
+                mapsActivity.putExtra("busLong", busStopsList.get(position).getLongitude());
+                mapsActivity.putExtra("busLat", busStopsList.get(position).getLatitude());
+                context.startActivity(mapsActivity);
+//                timeActivity.putExtra("direction", busStopsList.get(position).ge);
+            }
+        });
     }
 
     @Override
@@ -58,10 +70,12 @@ public class BusStopsAdapter extends RecyclerView.Adapter {
 
     public static class BusStopsViewHolder extends RecyclerView.ViewHolder{
         private TextView stopLocationText;
+        private Button mapBusStopButton;
 
         public BusStopsViewHolder(View itemView) {
             super(itemView);
             stopLocationText = (TextView) itemView.findViewById(R.id.stopLocationText);
+            mapBusStopButton = (Button) itemView.findViewById(R.id.mapBusStopButton);
         }
     }
 }

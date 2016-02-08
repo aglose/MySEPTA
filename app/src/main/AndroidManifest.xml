@@ -36,7 +36,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".Activities.MapsActivity"
+            android:name=".Activities.DefaultMapsActivity"
             android:label="@string/title_activity_maps"></activity>
 
         <meta-data
@@ -75,6 +75,10 @@
         <activity
             android:name=".Activities.BusTimesActivity"
             android:label="@string/title_activity_bus_times">
+        </activity>
+        <activity
+            android:name=".Activities.BusStopsMapActivity"
+            android:label="@string/title_activity_maps_bus_stops">
         </activity>
     </application>
 

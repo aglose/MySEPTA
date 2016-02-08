@@ -1,0 +1,14 @@
+<!-- [ Mirror metadata ] generatedAt: 1447429461606 -->
+<!-- Generated screen file. Fill the id tags below with content with
+which to populate your previewed layout. For a complete specification
+of sample data, please see http://jimulabs.com/sample-data-specifications/ 
+
+Valid attributes on <screen> tag: theme="@style/someTheme" inEditMode="false" overlay="@drawable/mockup" -->
+<screen>
+    <_content layout="@layout/choose_station_parent2">
+        <!-- TextView Examples:
+        <parent_list_item_rail_title_text_view2 text="@string/string_resource" />
+        <parent_list_item_rail_title_text_view2 text="Text literal" textSize="14sp" /> -->
+        <parent_list_item_rail_title_text_view2 />
+    </_content>
+</screen>

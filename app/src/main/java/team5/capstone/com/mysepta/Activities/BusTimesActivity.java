@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -67,6 +68,21 @@ public class BusTimesActivity extends AppCompatActivity {
         retrieveSchedule();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return false;
+    }
+
     private void retrieveSchedule() {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://www3.septa.org/hackathon/BusSchedules/?req1="+stopId+"&req3=i&req6=7";
@@ -98,29 +114,42 @@ public class BusTimesActivity extends AppCompatActivity {
     private void createList(JSONObject response) {
         busModelHolder = new BusModelHolder();
         JSONArray busLineNames = response.names();
-        for(int i = 0; i< busLineNames.length(); i++){
-            try {
-                String busLineName = busLineNames.get(i).toString();
-                Log.d(TAG, "arrayName"+busLineName);
-                JSONObject busLineObject = response.getJSONObject(busLineName);
-                JSONArray busLineObjectOrder = busLineObject.names();
-                for(int j=0; j<busLineObjectOrder.length(); j++) {
-                    busLineObject.getJSONArray((String) busLineObjectOrder.get(j));
-                    for (int k = 0; k < busLineObject.length(); k++) {
+        try {
+            for(int i = 0; i< busLineNames.length(); i++){
 
+                String busLineName = busLineNames.get(i).toString();
+                Log.d(TAG, "bus line: "+busLineName);
+                if(response.get(busLineName) instanceof JSONObject){
+                    JSONObject jsonObject = (JSONObject) response.get(busLineName);
+                    JSONArray names = jsonObject.names();
+                    for(int j=0; j<names.length(); j++) {
+                        JSONObject jsonTimeObject = jsonObject.getJSONObject(names.get(j).toString());
                         BusTimeModel busTimeModel = new BusTimeModel();
-                        JSONObject jsonObject = jsonArray.getJSONObject(k);
-                        Log.d(TAG, "jsonObject" + jsonObject.toString());
+                        Log.d(TAG, "jsonObject" + jsonTimeObject.toString());
+                        busTimeModel.setRoute(jsonTimeObject.getString("Route"));
+                        busTimeModel.setDate(jsonTimeObject.getString("date"));
+                        busTimeModel.setDirection(jsonTimeObject.getString("Direction"));
+
+                        busModelHolder.addBusScheduleModel(busTimeModel);
+                    }
+                }else{
+                    JSONArray jsonOrderArray = (JSONArray) response.get(busLineName);
+                    Log.d(TAG, "jsonOrderArray length: " + jsonOrderArray.length());
+                    for(int j=0; j<jsonOrderArray.length(); j++) {
+                        JSONObject jsonObject = jsonOrderArray.getJSONObject(j);
+                        BusTimeModel busTimeModel = new BusTimeModel();
+                        Log.d(TAG, "jsonOrderArray" + jsonObject.toString());
                         busTimeModel.setRoute(jsonObject.getString("Route"));
                         busTimeModel.setDate(jsonObject.getString("date"));
-                        busTimeModel.setDirection(jsonObject.getString("direction"));
+                        busTimeModel.setDirection(jsonObject.getString("Direction"));
 
                         busModelHolder.addBusScheduleModel(busTimeModel);
                     }
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
+
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         setUpRecyclerView();
     }

@@ -8,14 +8,10 @@
 
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:fitsSystemWindows">true</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-        <item name="android:windowTranslucentStatus" tools:targetApi="21">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
         <!-- Toolbar Theme / Apply white arrow -->
         <item name="colorControlNormal">@android:color/white</item>
-        <item name="actionBarTheme">@style/AppTheme.ActionBarTheme</item>
         <!-- Material Theme -->
         <item name="colorPrimary">@color/headerBlue</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
